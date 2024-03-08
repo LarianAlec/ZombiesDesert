@@ -4,9 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementComponent : MonoBehaviour
 {
-    private PlayerControls controls;
     private CharacterController characterController;
-    private Animator animator;
 
     [Header("Movement info")]
     [SerializeField] private float walkSpeed = 3.0f;
@@ -25,47 +23,59 @@ public class PlayerMovementComponent : MonoBehaviour
     private Vector2 aimInput;
     private bool isRunningKeyPressed;
 
+    public void SetMoveInput(Vector2 inputVector)
+    {
+        moveInput = inputVector;
+    }
+
+    public void SetAimInput(Vector2 inputVector)
+    {
+        aimInput = inputVector;
+    }
+
+    public void SetRunningKey(bool inputKey)
+    { 
+        isRunningKeyPressed = inputKey;
+    }
+
+    public void SetMovementSpeed(float newSpeed)
+    { 
+        speed = newSpeed;
+    }
+
     public Vector3 GetMovementDirection()
     {
         return movementDirection;
     }
-    
-    public bool IsRunningKeyPressed()
-    { return isRunningKeyPressed; }
 
-
-    private void Awake()
-    {
-        controls = new PlayerControls();
-
-        controls.Character.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
-        controls.Character.Movement.canceled += context => moveInput = Vector2.zero;
-
-        controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
-        controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
-
-        controls.Character.Run.performed += context =>
-        {
-            speed = runSpeed;
-            isRunningKeyPressed = true;
-        };
-
-        controls.Character.Run.canceled += context =>
-        {
-            speed = walkSpeed;
-            isRunningKeyPressed = false;
-        };
+    public float GetWalkSpeed()
+    {  
+        return walkSpeed;
     }
 
-    private void OnEnable()
+    public float GetRunSpeed()
+    { 
+        return runSpeed;
+    }
+
+    public bool IsRunningKeyPressed()
+    { 
+        return isRunningKeyPressed;
+    }
+
+    public float GetXVelocity()
     {
-        controls.Enable();
+        return Vector3.Dot(movementDirection.normalized, transform.right);
+    }
+ 
+    public float GetZVelocity()
+    {
+        return Vector3.Dot(movementDirection.normalized, transform.forward);
     }
 
     private void Start()
     {
         characterController = gameObject.GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
 
         speed = walkSpeed;
     }
@@ -74,7 +84,6 @@ public class PlayerMovementComponent : MonoBehaviour
     {
         ApplyMovement();
         AimTowardMousePositon();
-        //HandleAnimations();
     }
 
     private void AimTowardMousePositon()
@@ -117,22 +126,4 @@ public class PlayerMovementComponent : MonoBehaviour
         movementDirection.y = verticalVelocity;
     }
 
-    private void OnDisable()
-    {
-        controls.Disable();
-    }
-
-    /*
-    private void HandleAnimations()
-    {
-        float xVelocity = Vector3.Dot(movementDirection.normalized, transform.right);
-        float zVelocity = Vector3.Dot(movementDirection.normalized, transform.forward);
-
-        animator.SetFloat("xVelocity", xVelocity, 0.1f, Time.deltaTime);
-        animator.SetFloat("zVelocity", zVelocity, 0.1f, Time.deltaTime);
-
-        bool isRunning = movementDirection.magnitude > 0.15f && isRunningKeyPressed;
-        animator.SetBool("isRunning", isRunning);
-    }
-    */
 }

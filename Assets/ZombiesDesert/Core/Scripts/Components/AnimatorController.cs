@@ -1,15 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovementComponent))]
-public class AnimationHandler : MonoBehaviour
+public class AnimatorController : MonoBehaviour
 {
     private Animator animator;
+    private Player player;
     private PlayerMovementComponent movementComponent;
 
     private void Start()
     {
+        player = GetComponent<Player>();
         animator = GetComponentInChildren<Animator>();
-        movementComponent = GetComponent<PlayerMovementComponent>();
+        movementComponent = player.GetMovementComponent();
     }
 
     private void Update()
@@ -19,13 +20,18 @@ public class AnimationHandler : MonoBehaviour
 
     private void HandleAnimations()
     {
-        float xVelocity = Vector3.Dot(movementComponent.GetMovementDirection().normalized, transform.right);
-        float zVelocity = Vector3.Dot(movementComponent.GetMovementDirection().normalized, transform.forward);
+        float xVelocity = movementComponent.GetXVelocity();
+        float zVelocity = movementComponent.GetZVelocity();
 
         animator.SetFloat("xVelocity", xVelocity, 0.1f, Time.deltaTime);
         animator.SetFloat("zVelocity", zVelocity, 0.1f, Time.deltaTime);
 
         bool isRunning = movementComponent.GetMovementDirection().magnitude > 0.15f && movementComponent.IsRunningKeyPressed();
         animator.SetBool("isRunning", isRunning);
+    }
+
+    public void RunShootAnimation()
+    {
+        animator.SetTrigger("MakeShoot");
     }
 }
