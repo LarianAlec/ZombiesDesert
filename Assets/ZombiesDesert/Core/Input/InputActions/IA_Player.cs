@@ -62,6 +62,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipFirstSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""90c88cb7-6028-4eec-8f11-c61899c89f9b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipSecondSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""3344961c-46b3-4d39-afbb-1bd68d8549ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipThirdSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""36bb2516-fe3c-4175-92ac-dbb73744c750"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +179,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b76e2e19-bd08-4d1e-9596-979104e7cf23"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipFirstSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c467acc7-3ea3-4ada-98e9-9a322fe7ce1f"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipSecondSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f25dbd3c-ccce-43b0-82fd-2c2bca559755"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipThirdSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +224,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_Movement = m_Character.FindAction("Movement", throwIfNotFound: true);
         m_Character_Aim = m_Character.FindAction("Aim", throwIfNotFound: true);
         m_Character_Run = m_Character.FindAction("Run", throwIfNotFound: true);
+        m_Character_EquipFirstSlot = m_Character.FindAction("EquipFirstSlot", throwIfNotFound: true);
+        m_Character_EquipSecondSlot = m_Character.FindAction("EquipSecondSlot", throwIfNotFound: true);
+        m_Character_EquipThirdSlot = m_Character.FindAction("EquipThirdSlot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +292,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Movement;
     private readonly InputAction m_Character_Aim;
     private readonly InputAction m_Character_Run;
+    private readonly InputAction m_Character_EquipFirstSlot;
+    private readonly InputAction m_Character_EquipSecondSlot;
+    private readonly InputAction m_Character_EquipThirdSlot;
     public struct CharacterActions
     {
         private @PlayerControls m_Wrapper;
@@ -237,6 +303,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Character_Movement;
         public InputAction @Aim => m_Wrapper.m_Character_Aim;
         public InputAction @Run => m_Wrapper.m_Character_Run;
+        public InputAction @EquipFirstSlot => m_Wrapper.m_Character_EquipFirstSlot;
+        public InputAction @EquipSecondSlot => m_Wrapper.m_Character_EquipSecondSlot;
+        public InputAction @EquipThirdSlot => m_Wrapper.m_Character_EquipThirdSlot;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +327,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @EquipFirstSlot.started += instance.OnEquipFirstSlot;
+            @EquipFirstSlot.performed += instance.OnEquipFirstSlot;
+            @EquipFirstSlot.canceled += instance.OnEquipFirstSlot;
+            @EquipSecondSlot.started += instance.OnEquipSecondSlot;
+            @EquipSecondSlot.performed += instance.OnEquipSecondSlot;
+            @EquipSecondSlot.canceled += instance.OnEquipSecondSlot;
+            @EquipThirdSlot.started += instance.OnEquipThirdSlot;
+            @EquipThirdSlot.performed += instance.OnEquipThirdSlot;
+            @EquipThirdSlot.canceled += instance.OnEquipThirdSlot;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -274,6 +352,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @EquipFirstSlot.started -= instance.OnEquipFirstSlot;
+            @EquipFirstSlot.performed -= instance.OnEquipFirstSlot;
+            @EquipFirstSlot.canceled -= instance.OnEquipFirstSlot;
+            @EquipSecondSlot.started -= instance.OnEquipSecondSlot;
+            @EquipSecondSlot.performed -= instance.OnEquipSecondSlot;
+            @EquipSecondSlot.canceled -= instance.OnEquipSecondSlot;
+            @EquipThirdSlot.started -= instance.OnEquipThirdSlot;
+            @EquipThirdSlot.performed -= instance.OnEquipThirdSlot;
+            @EquipThirdSlot.canceled -= instance.OnEquipThirdSlot;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -297,5 +384,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnEquipFirstSlot(InputAction.CallbackContext context);
+        void OnEquipSecondSlot(InputAction.CallbackContext context);
+        void OnEquipThirdSlot(InputAction.CallbackContext context);
     }
 }

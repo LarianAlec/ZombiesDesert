@@ -2,10 +2,13 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovementComponent))]
 [RequireComponent(typeof(AnimatorController))]
+[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerWeaponController))]
 public class Player : MonoBehaviour
 {
     private PlayerMovementComponent movementComponent;
     private AnimatorController animatorController;
+    private PlayerWeaponController weaponController;
 
     public PlayerMovementComponent GetMovementComponent() 
     { 
@@ -14,7 +17,7 @@ public class Player : MonoBehaviour
 
     public void Fire()
     {
-        animatorController.RunShootAnimation();
+        weaponController.Shoot();
     }
 
     public void Move(Vector2 input)
@@ -49,9 +52,25 @@ public class Player : MonoBehaviour
         movementComponent.SetRunningKey(false);
     }
 
+    public void EquipFirstSlot()
+    {
+        GetComponentInChildren<WeaponVisualComponent>().SwitchOnFirstSlot();
+    }
+
+    public void EquipSecondSlot()
+    {
+        GetComponentInChildren<WeaponVisualComponent>().SwitchOnSecondSlot();
+    }
+
+    public void EquipThirdSlot()
+    {
+        GetComponentInChildren<WeaponVisualComponent>().SwitchOnThirdSlot();
+    }
+
     private void Start()
     {
         movementComponent = GetComponent<PlayerMovementComponent>();
         animatorController = GetComponent<AnimatorController>();
+        weaponController = GetComponent<PlayerWeaponController>();
     }
 }
