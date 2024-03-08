@@ -10,7 +10,9 @@ public class PlayerMovementComponent : MonoBehaviour
 
     [Header("Movement info")]
     [SerializeField] private float walkSpeed = 3.0f;
+    [SerializeField] private float runSpeed = 5.0f;
     [SerializeField] private float gravityScale = 9.81f;
+    private float speed;
     private Vector3 movementDirection;
     private float verticalVelocity;
 
@@ -21,6 +23,15 @@ public class PlayerMovementComponent : MonoBehaviour
 
     private Vector2 moveInput;
     private Vector2 aimInput;
+    private bool isRunningKeyPressed;
+
+    public Vector3 GetMovementDirection()
+    {
+        return movementDirection;
+    }
+    
+    public bool IsRunningKeyPressed()
+    { return isRunningKeyPressed; }
 
 
     private void Awake()
@@ -32,6 +43,18 @@ public class PlayerMovementComponent : MonoBehaviour
 
         controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
         controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
+
+        controls.Character.Run.performed += context =>
+        {
+            speed = runSpeed;
+            isRunningKeyPressed = true;
+        };
+
+        controls.Character.Run.canceled += context =>
+        {
+            speed = walkSpeed;
+            isRunningKeyPressed = false;
+        };
     }
 
     private void OnEnable()
@@ -43,13 +66,15 @@ public class PlayerMovementComponent : MonoBehaviour
     {
         characterController = gameObject.GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+
+        speed = walkSpeed;
     }
 
     private void Update()
     {
         ApplyMovement();
         AimTowardMousePositon();
-        AnimatorControllers();
+        //HandleAnimations();
     }
 
     private void AimTowardMousePositon()
@@ -75,7 +100,7 @@ public class PlayerMovementComponent : MonoBehaviour
 
         if (movementDirection.magnitude > 0)
         {
-            characterController.Move(movementDirection * walkSpeed * Time.deltaTime);
+            characterController.Move(movementDirection * speed * Time.deltaTime);
         }
     }
 
@@ -87,7 +112,7 @@ public class PlayerMovementComponent : MonoBehaviour
         }
         else
         {
-            verticalVelocity = -0.5f;
+            verticalVelocity = -0.05f;
         }
         movementDirection.y = verticalVelocity;
     }
@@ -97,12 +122,17 @@ public class PlayerMovementComponent : MonoBehaviour
         controls.Disable();
     }
 
-    private void AnimatorControllers()
+    /*
+    private void HandleAnimations()
     {
         float xVelocity = Vector3.Dot(movementDirection.normalized, transform.right);
         float zVelocity = Vector3.Dot(movementDirection.normalized, transform.forward);
 
         animator.SetFloat("xVelocity", xVelocity, 0.1f, Time.deltaTime);
         animator.SetFloat("zVelocity", zVelocity, 0.1f, Time.deltaTime);
+
+        bool isRunning = movementDirection.magnitude > 0.15f && isRunningKeyPressed;
+        animator.SetBool("isRunning", isRunning);
     }
+    */
 }

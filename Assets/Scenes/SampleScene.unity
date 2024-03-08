@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 477582501}
   - component: {fileID: 477582500}
   - component: {fileID: 477582499}
+  - component: {fileID: 477582502}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -934,6 +935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 2
+  runSpeed: 4
   gravityScale: 9.81
   aim: {fileID: 682626220}
   aimLayerMask:
@@ -973,14 +975,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477582498}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.015234491, y: -0.0121585615, z: -0.000853963, w: 0.9998097}
+  m_LocalPosition: {x: -0.0019693286, y: 0.00044125319, z: 0.028849011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543450653515669850}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.747, y: -1.392, z: -0.077}
+--- !u!114 &477582502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477582498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09f01cd8baa82784788f41d2a71f70d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &484178550
 GameObject:
   m_ObjectHideFlags: 0
