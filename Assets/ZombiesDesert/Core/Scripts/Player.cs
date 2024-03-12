@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         GetComponentInChildren<WeaponVisualComponent>().SwitchOnThirdSlot();
     }
 
-    private void Start()
+    private void Awake()
     {
         movementComponent = GetComponent<PlayerMovementComponent>();
         animatorController = GetComponent<AnimatorController>();

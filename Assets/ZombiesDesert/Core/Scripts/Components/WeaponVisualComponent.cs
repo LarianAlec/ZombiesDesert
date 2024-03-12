@@ -6,9 +6,9 @@ public class WeaponVisualComponent : MonoBehaviour
 {
     [SerializeField] private Transform[] gunTransforms;
 
-    [SerializeField] private Transform pistolTransform;
-    [SerializeField] private Transform rifleTransform;
-    [SerializeField] private Transform autoRifleTransform;
+    [SerializeField] private Transform firstWeaponTransform;
+    [SerializeField] private Transform secondWeaponTransform;
+    [SerializeField] private Transform thirdWeaponTransform;
 
     public void SwitchOffGuns()
     {
