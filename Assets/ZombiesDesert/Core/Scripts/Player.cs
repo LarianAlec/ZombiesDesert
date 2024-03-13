@@ -67,6 +67,11 @@ public class Player : MonoBehaviour
         GetComponentInChildren<WeaponVisualComponent>().SwitchOnThirdSlot();
     }
 
+    public void EquipFourthSlot()
+    {
+        GetComponentInChildren<WeaponVisualComponent>().SwitchOnFourthSlot();
+    }
+
     private void Awake()
     {
         movementComponent = GetComponent<PlayerMovementComponent>();

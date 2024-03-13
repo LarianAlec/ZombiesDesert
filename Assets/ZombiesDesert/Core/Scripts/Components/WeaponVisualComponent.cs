@@ -1,55 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponVisualComponent : MonoBehaviour
 {
-    [SerializeField] private Transform[] gunTransforms;
+    [SerializeField] private GameObject[] guns;
 
-    [SerializeField] private Transform firstWeaponTransform;
-    [SerializeField] private Transform secondWeaponTransform;
-    [SerializeField] private Transform thirdWeaponTransform;
+    private GameObject currentGun;
+    private Animator animator;
+
+    [Header("Left hand IK")]
+    [SerializeField] private string IKTagKey = "leftHandIK";
+    [SerializeField] private Transform leftHandTransform; 
 
     public void SwitchOffGuns()
     {
-        foreach (Transform gun in gunTransforms)
+        foreach (GameObject gun in guns)
         {
-            gun.gameObject.SetActive(false);
+            gun.SetActive(false);
         }
+    }
+
+    public void SwitchOn(int slotIndex)
+    {
+        if (guns.Length < slotIndex)
+        {
+            return;
+        }
+
+        SwitchOffGuns();
+        currentGun = guns[slotIndex];
+        currentGun.SetActive(true);
+        AttachLeftHand();
     }
 
     public void SwitchOnFirstSlot()
     {
-        if (gunTransforms.Length < 0)
-        {
-            return;
-        }
-        SwitchOffGuns();
-        gunTransforms[0].gameObject.SetActive(true);
+        SwitchOn(0);
+        SwitchAnimationLayer(2);
     }
 
     public void SwitchOnSecondSlot()
     {
-        if (gunTransforms.Length < 1)
-        {
-            return;
-        }
-        SwitchOffGuns();
-        gunTransforms[1].gameObject.SetActive(true);
+        SwitchOn(1);
+        SwitchAnimationLayer(3);
     }
 
     public void SwitchOnThirdSlot()
     {
-        if (gunTransforms.Length < 2)
-        {
-            return;
-        }
-        SwitchOffGuns();
-        gunTransforms[2].gameObject.SetActive(true);
+        SwitchOn(2);
+        SwitchAnimationLayer(4);
+    }
+
+    public void SwitchOnFourthSlot()
+    {
+        SwitchOn(3);
+        SwitchAnimationLayer(5);
     }
 
     private void Start()
     {
         SwitchOffGuns();
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    private void AttachLeftHand()
+    {
+        Transform targetIKTransform = Helper.FindGameObjectInChildWithTag(currentGun, IKTagKey).transform;
+
+        leftHandTransform.localPosition = targetIKTransform.localPosition;
+        leftHandTransform.localRotation = targetIKTransform.localRotation;
+    }
+
+    private void SwitchAnimationLayer(int layerIndex)
+    {
+        if (layerIndex > animator.layerCount)
+        {
+            return;
+        }
+
+        for (int i = 1; i < animator.layerCount; i++)
+        {
+            animator.SetLayerWeight(i, 0);
+        }
+
+        animator.SetLayerWeight(layerIndex, 1);
     }
 }
