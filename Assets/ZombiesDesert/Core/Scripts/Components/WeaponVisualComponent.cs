@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class WeaponVisualComponent : MonoBehaviour
 {
@@ -7,6 +8,11 @@ public class WeaponVisualComponent : MonoBehaviour
 
     private GameObject currentGun;
     private Animator animator;
+    private Rig rig;
+
+    [Header("Rig")]
+    [SerializeField] private float rigIncreaseStep;
+    private bool isRigWeightShoulBeIncreased;
 
     [Header("Left hand IK")]
     [SerializeField] private string IKTagKey = "leftHandIK";
@@ -57,10 +63,32 @@ public class WeaponVisualComponent : MonoBehaviour
         SwitchAnimationLayer(5);
     }
 
+    public void PlayReloadAnimation()
+    {
+        animator.SetTrigger("Reload");
+        rig.weight = 0.0f;
+    }
+
+    public void SetRigWeightToOne() => isRigWeightShoulBeIncreased = true;
+
     private void Start()
     {
         SwitchOffGuns();
         animator = GetComponentInChildren<Animator>();
+        rig = GetComponentInChildren<Rig>();
+    }
+
+    private void Update()
+    {
+        if (isRigWeightShoulBeIncreased)
+        {
+            rig.weight += rigIncreaseStep * Time.deltaTime;
+
+            if (rig.weight >= 1.0f)
+            {
+                isRigWeightShoulBeIncreased = false;
+            }
+        }
     }
 
     private void AttachLeftHand()

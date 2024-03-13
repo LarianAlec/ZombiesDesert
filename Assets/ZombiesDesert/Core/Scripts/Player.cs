@@ -20,6 +20,12 @@ public class Player : MonoBehaviour
         weaponController.Shoot();
     }
 
+    public void Reload()
+    {
+        // NEEDS TO REFACTOR!!!!
+        GetComponentInChildren<WeaponVisualComponent>().PlayReloadAnimation();
+    }
+
     public void Move(Vector2 input)
     {
         movementComponent.SetMoveInput(input);

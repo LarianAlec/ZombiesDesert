@@ -98,6 +98,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9325857-e112-4a33-8fbd-2c07526a80d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""EquipFourthSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""586439e1-40b7-4e0f-8e84-07a19cf2a325"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_EquipSecondSlot = m_Character.FindAction("EquipSecondSlot", throwIfNotFound: true);
         m_Character_EquipThirdSlot = m_Character.FindAction("EquipThirdSlot", throwIfNotFound: true);
         m_Character_EquipFourthSlot = m_Character.FindAction("EquipFourthSlot", throwIfNotFound: true);
+        m_Character_Reload = m_Character.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_EquipSecondSlot;
     private readonly InputAction m_Character_EquipThirdSlot;
     private readonly InputAction m_Character_EquipFourthSlot;
+    private readonly InputAction m_Character_Reload;
     public struct CharacterActions
     {
         private @PlayerControls m_Wrapper;
@@ -329,6 +351,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @EquipSecondSlot => m_Wrapper.m_Character_EquipSecondSlot;
         public InputAction @EquipThirdSlot => m_Wrapper.m_Character_EquipThirdSlot;
         public InputAction @EquipFourthSlot => m_Wrapper.m_Character_EquipFourthSlot;
+        public InputAction @Reload => m_Wrapper.m_Character_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EquipFourthSlot.started += instance.OnEquipFourthSlot;
             @EquipFourthSlot.performed += instance.OnEquipFourthSlot;
             @EquipFourthSlot.canceled += instance.OnEquipFourthSlot;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -390,6 +416,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EquipFourthSlot.started -= instance.OnEquipFourthSlot;
             @EquipFourthSlot.performed -= instance.OnEquipFourthSlot;
             @EquipFourthSlot.canceled -= instance.OnEquipFourthSlot;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -417,5 +446,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnEquipSecondSlot(InputAction.CallbackContext context);
         void OnEquipThirdSlot(InputAction.CallbackContext context);
         void OnEquipFourthSlot(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

@@ -1221,6 +1221,7 @@ MonoBehaviour:
   - {fileID: 335935013}
   - {fileID: 1852377465}
   - {fileID: 333889920}
+  rigIncreaseStep: 2.5
   IKTagKey: LeftHandIK
   leftHandTransform: {fileID: 1235438241}
 --- !u!1 &484178550
@@ -4937,6 +4938,7 @@ GameObject:
   - component: {fileID: 919132149245885409}
   - component: {fileID: 919132149245885411}
   - component: {fileID: 919132149245885410}
+  - component: {fileID: 919132149245885412}
   m_Layer: 0
   m_Name: Mannequin
   m_TagString: Untagged
@@ -5068,6 +5070,18 @@ MonoBehaviour:
   - m_Rig: {fileID: 1968603273}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &919132149245885412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149245885408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e18bfdcc342dae4280a29c952c002fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1193340830003549835
 GameObject:
   m_ObjectHideFlags: 0

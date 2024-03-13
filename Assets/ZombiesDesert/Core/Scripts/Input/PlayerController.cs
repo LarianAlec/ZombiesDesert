@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         controls.Character.Run.canceled += context => player.StopRunning();
 
         controls.Character.Fire.performed += context => player.Fire();
+        controls.Character.Reload.performed += context => player.Reload();
 
         controls.Character.EquipFirstSlot.performed += context => player.EquipFirstSlot();
         controls.Character.EquipSecondSlot.performed += context => player.EquipSecondSlot();
