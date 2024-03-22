@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2678668300564060976}
+  - component: {fileID: 7047389998938867216}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -24,14 +25,71 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492153027971526139}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.032248132, y: -0.07582706, z: -0.029457638, w: 0.99616396}
+  m_LocalPosition: {x: 0.016, y: -0.0023, z: 0.009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 54130570845899499}
+  - {fileID: 5045490514105040765}
+  - {fileID: 4843057204813778208}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.427, y: -8.815, z: -3.652}
+--- !u!114 &7047389998938867216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492153027971526139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleSocket: {fileID: 5045490514105040765}
+  leftHandIKSoket: {fileID: 4843057204813778208}
+  characterOwner: {fileID: 0}
+  weaponType: 1
+  weaponFireMode: 0
+  ammoType: 1
+  maxAmmo: 12
+  bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
+    type: 3}
+  bulletSpeed: 20
+  reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}
+  equipClip: {fileID: 0}
+--- !u!1 &974480818553976727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4843057204813778208}
+  m_Layer: 0
+  m_Name: SocketLeftHandIK
+  m_TagString: LeftHandIK
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4843057204813778208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974480818553976727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.25322425, y: 0.031145226, z: 0.9669003, w: -0.0033779335}
+  m_LocalPosition: {x: -0.014, y: -0.02, z: -0.141}
+  m_LocalScale: {x: 0.09999995, y: 0.09999999, z: 0.099999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2678668300564060976}
+  m_LocalEulerAnglesHint: {x: -3.551, y: 29.368, z: -180.53}
 --- !u!1 &985699641194390004
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,3 +173,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6382815758221220754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5045490514105040765}
+  m_Layer: 0
+  m_Name: SocketMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5045490514105040765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382815758221220754}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0976, z: 0.2201}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2678668300564060976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

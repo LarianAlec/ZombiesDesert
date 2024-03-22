@@ -107,6 +107,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AimPrecisely"",
+                    ""type"": ""Button"",
+                    ""id"": ""3339d59e-94b4-4150-85dc-7295a2e56fc0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TargetLocking"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a10f8ea-c1b7-4bd6-a23b-d7c9a3103e66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropCurrentWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4bac6f9-bb2c-4c0d-8a9c-2c7f55fc4aa3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipItem"",
+                    ""type"": ""Value"",
+                    ""id"": ""df4a5ea9-58cc-477e-b151-a75d960fbeba"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -252,6 +288,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""862e83b0-ce8d-4daa-9604-913fe201e425"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AimPrecisely"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c424f98-ec5a-47f5-9129-2cd4bf6e1ac3"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TargetLocking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a7e6ad8-acff-41cf-b76b-306d71d4b46f"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DropCurrentWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7b72a9c-ca88-40ca-8b34-979fb9792e8a"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +349,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_EquipThirdSlot = m_Character.FindAction("EquipThirdSlot", throwIfNotFound: true);
         m_Character_EquipFourthSlot = m_Character.FindAction("EquipFourthSlot", throwIfNotFound: true);
         m_Character_Reload = m_Character.FindAction("Reload", throwIfNotFound: true);
+        m_Character_AimPrecisely = m_Character.FindAction("AimPrecisely", throwIfNotFound: true);
+        m_Character_TargetLocking = m_Character.FindAction("TargetLocking", throwIfNotFound: true);
+        m_Character_DropCurrentWeapon = m_Character.FindAction("DropCurrentWeapon", throwIfNotFound: true);
+        m_Character_EquipItem = m_Character.FindAction("EquipItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +423,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_EquipThirdSlot;
     private readonly InputAction m_Character_EquipFourthSlot;
     private readonly InputAction m_Character_Reload;
+    private readonly InputAction m_Character_AimPrecisely;
+    private readonly InputAction m_Character_TargetLocking;
+    private readonly InputAction m_Character_DropCurrentWeapon;
+    private readonly InputAction m_Character_EquipItem;
     public struct CharacterActions
     {
         private @PlayerControls m_Wrapper;
@@ -352,6 +440,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @EquipThirdSlot => m_Wrapper.m_Character_EquipThirdSlot;
         public InputAction @EquipFourthSlot => m_Wrapper.m_Character_EquipFourthSlot;
         public InputAction @Reload => m_Wrapper.m_Character_Reload;
+        public InputAction @AimPrecisely => m_Wrapper.m_Character_AimPrecisely;
+        public InputAction @TargetLocking => m_Wrapper.m_Character_TargetLocking;
+        public InputAction @DropCurrentWeapon => m_Wrapper.m_Character_DropCurrentWeapon;
+        public InputAction @EquipItem => m_Wrapper.m_Character_EquipItem;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +480,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @AimPrecisely.started += instance.OnAimPrecisely;
+            @AimPrecisely.performed += instance.OnAimPrecisely;
+            @AimPrecisely.canceled += instance.OnAimPrecisely;
+            @TargetLocking.started += instance.OnTargetLocking;
+            @TargetLocking.performed += instance.OnTargetLocking;
+            @TargetLocking.canceled += instance.OnTargetLocking;
+            @DropCurrentWeapon.started += instance.OnDropCurrentWeapon;
+            @DropCurrentWeapon.performed += instance.OnDropCurrentWeapon;
+            @DropCurrentWeapon.canceled += instance.OnDropCurrentWeapon;
+            @EquipItem.started += instance.OnEquipItem;
+            @EquipItem.performed += instance.OnEquipItem;
+            @EquipItem.canceled += instance.OnEquipItem;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -419,6 +523,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @AimPrecisely.started -= instance.OnAimPrecisely;
+            @AimPrecisely.performed -= instance.OnAimPrecisely;
+            @AimPrecisely.canceled -= instance.OnAimPrecisely;
+            @TargetLocking.started -= instance.OnTargetLocking;
+            @TargetLocking.performed -= instance.OnTargetLocking;
+            @TargetLocking.canceled -= instance.OnTargetLocking;
+            @DropCurrentWeapon.started -= instance.OnDropCurrentWeapon;
+            @DropCurrentWeapon.performed -= instance.OnDropCurrentWeapon;
+            @DropCurrentWeapon.canceled -= instance.OnDropCurrentWeapon;
+            @EquipItem.started -= instance.OnEquipItem;
+            @EquipItem.performed -= instance.OnEquipItem;
+            @EquipItem.canceled -= instance.OnEquipItem;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -447,5 +563,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnEquipThirdSlot(InputAction.CallbackContext context);
         void OnEquipFourthSlot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnAimPrecisely(InputAction.CallbackContext context);
+        void OnTargetLocking(InputAction.CallbackContext context);
+        void OnDropCurrentWeapon(InputAction.CallbackContext context);
+        void OnEquipItem(InputAction.CallbackContext context);
     }
 }

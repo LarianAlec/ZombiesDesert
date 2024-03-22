@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &66222627517690981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 854081896598027677}
+  m_Layer: 0
+  m_Name: SocketLeftHandIK
+  m_TagString: LeftHandIK
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &854081896598027677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66222627517690981}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.23145987, y: -0.4981085, z: -0.6814468, w: 0.48367816}
+  m_LocalPosition: {x: -0.3962, y: 0.0077, z: -0.1162}
+  m_LocalScale: {x: 0.09999995, y: 0.09999999, z: 0.099999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3201110881203228164}
+  m_LocalEulerAnglesHint: {x: -64.525, y: -22.759, z: -94.786}
 --- !u!1 &3142844652857876466
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3201110881203228164}
+  - component: {fileID: 3344769314914399702}
   m_Layer: 0
   m_Name: ShotgunBenelle
   m_TagString: Untagged
@@ -24,13 +56,70 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3142844652857876466}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.045398936, y: 0.0010790224, z: 0.0019305898, w: 0.99896646}
+  m_LocalPosition: {x: 0.0003, y: 0.0196, z: -0.0048}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7901425313318551720}
+  - {fileID: 6349106267334137042}
+  - {fileID: 854081896598027677}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -5.204, y: 0.114, z: 0.216}
+--- !u!114 &3344769314914399702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3142844652857876466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleSocket: {fileID: 6349106267334137042}
+  leftHandIKSoket: {fileID: 854081896598027677}
+  characterOwner: {fileID: 0}
+  weaponType: 2
+  weaponFireMode: 0
+  ammoType: 2
+  maxAmmo: 6
+  bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
+    type: 3}
+  bulletSpeed: 15
+  reloadClip: {fileID: 7400000, guid: 02b6770b5933dc14088d923e76f69624, type: 2}
+  equipClip: {fileID: 0}
+--- !u!1 &7325482893584773818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6349106267334137042}
+  m_Layer: 0
+  m_Name: SocketMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6349106267334137042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325482893584773818}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.04539894, y: -0.0010790225, z: -0.0019305899, w: 0.9989665}
+  m_LocalPosition: {x: 0.0001, y: 0.0749, z: 0.5717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3201110881203228164}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8379449451292128311
 GameObject:

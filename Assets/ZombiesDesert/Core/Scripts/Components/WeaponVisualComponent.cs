@@ -1,24 +1,38 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class WeaponVisualComponent : MonoBehaviour
 {
-    [SerializeField] private GameObject[] guns;
 
-    private GameObject currentGun;
     private Animator animator;
     private Rig rig;
+    private bool isEquippingWeapon = false;
 
     [Header("Rig")]
-    [SerializeField] private float rigIncreaseStep;
+    [SerializeField] private float rigWeightIncreaseRate = 3.0f;
     private bool isRigWeightShoulBeIncreased;
 
-    [Header("Left hand IK")]
-    [SerializeField] private string IKTagKey = "leftHandIK";
-    [SerializeField] private Transform leftHandTransform; 
+    
+    [SerializeField] private Transform leftHandTransform;
 
-    public void SwitchOffGuns()
+    private void Start()
+    {
+        //SwitchOffGuns();
+        animator = GetComponentInChildren<Animator>();
+        rig = GetComponentInChildren<Rig>();
+    }
+
+    private void Update()
+    {
+        UpdateRigWeight();
+    }
+
+    public void SetRigWeightToZero() => rig.weight = 0;
+
+    public void SetRigWeightToOne() => isRigWeightShoulBeIncreased = true;
+
+    /*public void SwitchOffGuns()
     {
         foreach (GameObject gun in guns)
         {
@@ -41,48 +55,27 @@ public class WeaponVisualComponent : MonoBehaviour
 
     public void SwitchOnFirstSlot()
     {
+        RunEquipAnimation();
         SwitchOn(0);
         SwitchAnimationLayer(2);
     }
+*/
 
-    public void SwitchOnSecondSlot()
+
+
+    public void OnEquipAnimationEnd_Impl()
     {
-        SwitchOn(1);
-        SwitchAnimationLayer(3);
+        isEquippingWeapon = false;
+        animator.SetBool("IsEquippingWeapon", isEquippingWeapon);
     }
 
-    public void SwitchOnThirdSlot()
-    {
-        SwitchOn(2);
-        SwitchAnimationLayer(4);
-    }
+    
 
-    public void SwitchOnFourthSlot()
-    {
-        SwitchOn(3);
-        SwitchAnimationLayer(5);
-    }
-
-    public void PlayReloadAnimation()
-    {
-        animator.SetTrigger("Reload");
-        rig.weight = 0.0f;
-    }
-
-    public void SetRigWeightToOne() => isRigWeightShoulBeIncreased = true;
-
-    private void Start()
-    {
-        SwitchOffGuns();
-        animator = GetComponentInChildren<Animator>();
-        rig = GetComponentInChildren<Rig>();
-    }
-
-    private void Update()
+    private void UpdateRigWeight()
     {
         if (isRigWeightShoulBeIncreased)
         {
-            rig.weight += rigIncreaseStep * Time.deltaTime;
+            rig.weight += rigWeightIncreaseRate * Time.deltaTime;
 
             if (rig.weight >= 1.0f)
             {
@@ -91,26 +84,17 @@ public class WeaponVisualComponent : MonoBehaviour
         }
     }
 
-    private void AttachLeftHand()
+    
+
+   
+
+    private void RunEquipAnimation()
     {
-        Transform targetIKTransform = Helper.FindGameObjectInChildWithTag(currentGun, IKTagKey).transform;
+        SetRigWeightToZero();
+        animator.SetTrigger("EquipWeapon");
 
-        leftHandTransform.localPosition = targetIKTransform.localPosition;
-        leftHandTransform.localRotation = targetIKTransform.localRotation;
-    }
+        isEquippingWeapon = true;
 
-    private void SwitchAnimationLayer(int layerIndex)
-    {
-        if (layerIndex > animator.layerCount)
-        {
-            return;
-        }
-
-        for (int i = 1; i < animator.layerCount; i++)
-        {
-            animator.SetLayerWeight(i, 0);
-        }
-
-        animator.SetLayerWeight(layerIndex, 1);
+        animator.SetBool("IsEquippingWeapon", isEquippingWeapon);
     }
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(BaseCharacter))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerControls controls;
-    private Player player;
+    private PlayerCharacter player;
 
     public PlayerControls GetControls() 
     { 
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerCharacter>();
 
         AssignInputEvents();
     }
@@ -44,12 +44,26 @@ public class PlayerController : MonoBehaviour
         controls.Character.Run.performed += context => player.StartRunning();
         controls.Character.Run.canceled += context => player.StopRunning();
 
-        controls.Character.Fire.performed += context => player.Fire();
+        controls.Character.Fire.performed += context => player.StartFire();
+        controls.Character.Fire.canceled += context => player.StopFire();
+
+        controls.Character.AimPrecisely.performed += context => player.ChangeAimingState();
+
+        controls.Character.TargetLocking.performed += context => player.SwitchTargetLockingState();
+
         controls.Character.Reload.performed += context => player.Reload();
 
-        controls.Character.EquipFirstSlot.performed += context => player.EquipFirstSlot();
-        controls.Character.EquipSecondSlot.performed += context => player.EquipSecondSlot();
-        controls.Character.EquipThirdSlot.performed += context => player.EquipThirdSlot();
-        controls.Character.EquipFourthSlot.performed += context => player.EquipFourthSlot();
+        controls.Character.EquipItem.performed += context =>
+        {
+            if (context.ReadValue<float>() > 0)
+                player.NextItem();
+            else
+                player.PreviousItem();
+        };
+
+        controls.Character.EquipFirstSlot.performed += context => player.EquipItemInSlot(1);
+        controls.Character.EquipSecondSlot.performed += context => player.EquipItemInSlot(2);
+        controls.Character.EquipThirdSlot.performed += context => player.EquipItemInSlot(3);
+        controls.Character.EquipFourthSlot.performed += context => player.EquipItemInSlot(4);
     }
 }

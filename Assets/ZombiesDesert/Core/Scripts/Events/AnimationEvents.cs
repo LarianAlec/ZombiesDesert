@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
-    private WeaponVisualComponent visualComponent;
+    private AnimatorController animatorController;
 
     private void Start()
     {
-        visualComponent = GetComponentInParent<WeaponVisualComponent>();
+        animatorController = GetComponentInParent<AnimatorController>();
     }
 
-    public void OnReloadOver()
+    public void OnEndReload()
     {
-        visualComponent.SetRigWeightToOne();
+        animatorController.ReturnRigWeight();
+    }
+
+    public void OnStartEquip()
+    {
+        animatorController.SetRigWeightToZero();
+    }
+
+    public void OnEndEquip()
+    {
+        animatorController.ReturnRigWeight();
     }
 }
