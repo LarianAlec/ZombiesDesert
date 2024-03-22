@@ -56,7 +56,7 @@ MonoBehaviour:
   maxAmmo: 30
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
-  bulletSpeed: 30
+  bulletSpeed: 50
   reloadClip: {fileID: 7400000, guid: 75b382d8e8b4e1f41b5326c6f0d61f24, type: 2}
   equipClip: {fileID: 0}
 --- !u!1 &5584490324517711522
