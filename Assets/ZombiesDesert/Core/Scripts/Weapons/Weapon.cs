@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-
 [System.Serializable]
 public class Weapon : MonoBehaviour
 {
@@ -15,27 +14,29 @@ public class Weapon : MonoBehaviour
     public Transform muzzleSocket;
     public Transform leftHandIKSoket;
     public BaseCharacter characterOwner;
-
-    [Space]
-
-    [Header("Weapon attributes")]
-    [SerializeField] protected WeaponType weaponType;
-    [SerializeField] protected WeaponFireMode weaponFireMode;
-    [SerializeField] protected AmmunitionType ammoType;
-    [SerializeField] protected int maxAmmo = 30;
-
     private int ammo = 0;
     private bool bIsReloading = false;
     private bool bIsFiring = false;
+    private Coroutine firingModeCoroutine;
 
     [Space]
+    [Header("Weapon attributes")]
+    [SerializeField] protected WeaponType weaponType;
+    [SerializeField] protected AmmunitionType ammoType;
+    [SerializeField] protected int maxAmmo = 30;
 
+    [Space]
+    [Header("FireMode")]
+    [SerializeField] protected WeaponFireMode weaponFireMode;
+    [SerializeField] protected float fireRate = 1.0f; // Bullets per second
+    private float lastShootTime;
+
+    [Space]
     [Header("Bullet")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
 
     [Space]
-
     [Header("Animations")]
     [SerializeField] private AnimationClip reloadClip;
     [SerializeField] private AnimationClip equipClip;
@@ -49,11 +50,6 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         InitializeCharacterOwner();
-    }
-
-    bool IsFiring()
-    {
-        return bIsFiring;
     }
 
     public void StartReload()
@@ -93,16 +89,28 @@ public class Weapon : MonoBehaviour
 
     public void StartFire()
     {
-        MakeShot();
-        if (weaponFireMode == WeaponFireMode.FullAuto)
+        bIsFiring = true;
+        switch (weaponFireMode)
         {
-            Debug.Log("Weapon::StartFire() : Require implementation full auto fire mode");
+            case WeaponFireMode.Single:
+                MakeShot();
+                Debug.Log("Weapon::StartFire() : Fire mode is SINGLE");
+                break;
+
+            case WeaponFireMode.FullAuto:
+                firingModeCoroutine = StartCoroutine(FullAutoFiring(GetShotTimerInterval()));
+                Debug.Log("Weapon::StartFire() : Fire mode is FULLAUTO");
+                break;
         }
     }
 
     public void StopFire() 
     {
-        // clear shot timer
+        bIsFiring = false;
+        if (weaponFireMode == WeaponFireMode.FullAuto)
+        {
+            StopCoroutine(firingModeCoroutine);
+        }
     }
 
     public void MakeShot()
@@ -125,15 +133,18 @@ public class Weapon : MonoBehaviour
 
         SetAmmo(ammo - 1);
 
-        GameObject bullet = Instantiate(bulletPrefab, muzzleSocket.position, Quaternion.LookRotation(muzzleSocket.forward));
+        GameObject bullet = ObjectPool.instance.GetBullet();
+
+        bullet.transform.position = muzzleSocket.position;
+        bullet.transform.rotation = Quaternion.LookRotation(muzzleSocket.forward);
+
         bullet.GetComponent<Rigidbody>().velocity = GetBulletDirection() * bulletSpeed;
-        Destroy(bullet, 10);
     }
 
     #region Utility methods
     public bool CanShoot()
     {
-        return ammo > 0;
+        return ammo > 0 && ReadyToFire();
     }
 
     private void InitializeCharacterOwner()
@@ -188,6 +199,21 @@ public class Weapon : MonoBehaviour
         return equipClip;
     }
 
+    private bool ReadyToFire()
+    {
+        if (Time.time > lastShootTime + 1/fireRate)
+        {
+            lastShootTime = Time.time;
+            return true;
+        }
+        return false;
+    }
+
+    private float GetShotTimerInterval()
+    {
+        return 1.0f / fireRate;
+    }
+
     #endregion
 
     #region Coroutines
@@ -197,6 +223,15 @@ public class Weapon : MonoBehaviour
         float reloadDuration = reloadClip.length;
         yield return new WaitForSeconds(reloadDuration);
         doLast();
+    }
+
+    IEnumerator FullAutoFiring(float shotInterval)
+    {
+        while (bIsFiring)
+        {
+            MakeShot();
+            yield return new WaitForSeconds(shotInterval);
+        }
     }
 
     #endregion

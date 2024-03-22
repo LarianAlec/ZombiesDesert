@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
             GameObject impactFX = Instantiate(hitVFX, contact.point, Quaternion.LookRotation(contact.normal));
             Destroy(impactFX, 1.0f);
         }
-        
-        Destroy(gameObject);
+
+        ObjectPool.instance.ReturnBullet(gameObject);
     }
 }

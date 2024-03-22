@@ -82,9 +82,10 @@ MonoBehaviour:
   leftHandIKSoket: {fileID: 854081896598027677}
   characterOwner: {fileID: 0}
   weaponType: 2
-  weaponFireMode: 0
   ammoType: 2
   maxAmmo: 6
+  weaponFireMode: 0
+  fireRate: 0.8
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
   bulletSpeed: 15
