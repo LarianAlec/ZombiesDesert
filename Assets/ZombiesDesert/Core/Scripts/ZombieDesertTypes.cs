@@ -52,4 +52,8 @@ public static class Constants
     public const int ShotgunLayer = 3;
     public const int AutoRifleLayer = 4;
     public const int SniperLayer = 5;
+
+    // AnimBoolNames for AI state machine
+    public const string idleBoolName = "Idle";
+    public const string moveBoolName = "Move";
 }

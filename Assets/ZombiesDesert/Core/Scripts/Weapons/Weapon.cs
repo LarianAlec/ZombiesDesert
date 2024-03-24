@@ -30,6 +30,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponFireMode weaponFireMode;
     [SerializeField] protected float fireRate = 1.0f; // Bullets per second
     private float lastShootTime;
+    [Header("Spread")]
+    [SerializeField] protected float spreadAmount = 0.5f;
 
     [Space]
     [Header("Bullet")]
@@ -138,21 +140,32 @@ public class Weapon : MonoBehaviour
         bullet.transform.position = muzzleSocket.position;
         bullet.transform.rotation = Quaternion.LookRotation(muzzleSocket.forward);
 
-        bullet.GetComponent<Rigidbody>().velocity = GetBulletDirection() * bulletSpeed;
+        Vector3 shotDirection = GetBulletDirection();
+        shotDirection = GetBulletSpreadOffset(shotDirection);
+
+        bullet.GetComponent<Rigidbody>().velocity = shotDirection * bulletSpeed;
     }
 
     #region Utility methods
+
+    public WeaponType GetWeaponType()
+    {
+        return weaponType;
+    }
+
+    public AmmunitionType GetAmmoType()
+    {
+        return ammoType;
+    }
+
     public bool CanShoot()
     {
         return ammo > 0 && ReadyToFire();
     }
 
-    private void InitializeCharacterOwner()
+    public AnimationClip GetCharacterEquipClip()
     {
-        if (characterOwner == null)
-        {
-            characterOwner = Helper.TryGetCharacterOwner(this.gameObject);
-        }
+        return equipClip;
     }
 
     public BaseCharacter GetCharacterOwner()
@@ -178,25 +191,30 @@ public class Weapon : MonoBehaviour
 
     public int GetMaxAmmo() => maxAmmo;
 
+    private void InitializeCharacterOwner()
+    {
+        if (characterOwner == null)
+        {
+            characterOwner = Helper.TryGetCharacterOwner(this.gameObject);
+        }
+    }
+
+    private float GetShotTimerInterval()
+    {
+        return 1.0f / fireRate;
+    }
+
     private Vector3 GetBulletDirection()
     {
         Vector3 aimDirection = characterOwner.aim.GetAimDirection();
         return aimDirection;
     }
 
-    public AmmunitionType GetAmmoType()
+    private Vector3 GetBulletSpreadOffset(Vector3 originalDirection)
     {
-        return ammoType;
-    }
-
-    public WeaponType GetWeaponType()
-    {
-        return weaponType;
-    }
-
-    public AnimationClip GetCharacterEquipClip()
-    {
-        return equipClip;
+        float randomizedValue = UnityEngine.Random.Range(-spreadAmount, spreadAmount);
+        Quaternion spreadRoatation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
+        return spreadRoatation * originalDirection;
     }
 
     private bool ReadyToFire()
@@ -209,10 +227,6 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    private float GetShotTimerInterval()
-    {
-        return 1.0f / fireRate;
-    }
 
     #endregion
 
