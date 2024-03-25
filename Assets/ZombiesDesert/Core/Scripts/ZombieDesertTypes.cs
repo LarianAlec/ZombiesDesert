@@ -53,7 +53,10 @@ public static class Constants
     public const int AutoRifleLayer = 4;
     public const int SniperLayer = 5;
 
-    // AnimBoolNames for AI state machine
+    // AnimBoolNames for AI state machine (used in Animation Controller)
     public const string idleBoolName = "Idle";
     public const string moveBoolName = "Move";
+    public const string recoveryBoolName = "Recovery";
+    public const string chaseBoolName = "Chase";
+    public const string attackBoolName = "Attack";
 }

@@ -77,7 +77,7 @@ public class Weapon : MonoBehaviour
         }
 
         bIsReloading = false;
-        Debug.Log("Reload complete!");
+
         if (bIsSuccess && OnReloadComplete != null)
         {
             OnReloadComplete.Invoke();

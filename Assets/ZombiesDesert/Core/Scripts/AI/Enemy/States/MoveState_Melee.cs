@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveState_Melee : EnemyState
 {
@@ -18,6 +19,7 @@ public class MoveState_Melee : EnemyState
 
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
+        enemy.agent.speed = enemy.walkSpeed;
     }
 
     public override void Exit()
@@ -29,7 +31,18 @@ public class MoveState_Melee : EnemyState
     {
         base.Update();
 
-        if (enemy.agent.remainingDistance <= 0.5)
+        if (enemy.IsPlayerInAggroRange())
+        {
+            stateMachine.ChangeState(enemy.recoveryState);
+            return;
+        }
+
+        enemy.transform.rotation = enemy.SetFocus(GetNextPathPoint());
+
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance + .05f)
+        {
             stateMachine.ChangeState(enemy.idleState);
+        }
     }
+
 }
