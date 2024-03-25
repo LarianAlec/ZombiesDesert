@@ -9,7 +9,7 @@ public class EnemyState
     protected string animBoolName;
     protected float stateTimer;
 
-    protected bool triggerCalled;
+    protected bool shouldChangeState;
 
     public EnemyState(Enemy baseEnemy, EnemyStateMachine stateMachine, string animBoolName)
     {
@@ -21,7 +21,7 @@ public class EnemyState
     public virtual void Enter() 
     {
         enemyBase.animator.SetBool(animBoolName, true);
-        triggerCalled = false;
+        shouldChangeState = false;
     }
 
     public virtual void Update() 
@@ -34,7 +34,7 @@ public class EnemyState
         enemyBase.animator.SetBool(animBoolName, false);
     }
 
-    public void AnimationTrigger() => triggerCalled = true;
+    public void ExitCurrentAIStateThrouAnimEvent() => shouldChangeState = true;
 
     protected Vector3 GetNextPathPoint()
     {

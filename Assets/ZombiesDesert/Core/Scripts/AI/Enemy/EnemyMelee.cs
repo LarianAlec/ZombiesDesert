@@ -2,8 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct AttackData
+{
+    public string attackName;
+    public float attackRange;
+    public float moveSpeed;
+    public float attackIndex;
+    [Range(1f, 3f)]
+    public float animationSpeed;
+    public AttackType_Melee attackType;
+}
+
+public enum AttackType_Melee
+{
+    Close,
+    Charge
+}
+
 public class EnemyMelee : Enemy
 {
+    [Header("Attack Data")]
+    public AttackData attackData;
+    public List<AttackData> attackList;
+
     public IdleState_Melee idleState {  get; private set; }
     public MoveState_Melee moveState { get; private set; }
     public RecoveryState_Melee recoveryState { get; private set; }
@@ -21,6 +43,7 @@ public class EnemyMelee : Enemy
         attackState = new AttackState_Melee(this, stateMachine, Constants.attackBoolName);
     }
 
+
     protected override void Start()
     {
         base.Start();
@@ -34,5 +57,15 @@ public class EnemyMelee : Enemy
 
         stateMachine.currentState.Update();
 
+    }
+
+    public bool IsPlayerInAttackRange() => Vector3.Distance(transform.position, player.position) < attackData.attackRange;
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
     }
 }

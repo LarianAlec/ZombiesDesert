@@ -56,7 +56,13 @@ public static class Constants
     // AnimBoolNames for AI state machine (used in Animation Controller)
     public const string idleBoolName = "Idle";
     public const string moveBoolName = "Move";
-    public const string recoveryBoolName = "Recovery";
     public const string chaseBoolName = "Chase";
     public const string attackBoolName = "Attack";
+    public const string attackAnimationSpeedName = "AttackAnimationSpeed";
+    public const string attackAnimationIndexName = "AttackIndex";
+    public const string recoveryBoolName = "Recovery";
+    public const string recoveryAnimationIndexName = "RecoveryIndex";
+    public const float slowRecoveryValue = 0.0f;
+    public const float quickRecoveryValue = 1.0f;
+
 }

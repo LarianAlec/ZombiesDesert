@@ -11,10 +11,14 @@ public class EnemyAnimationEvents : MonoBehaviour
         enemy = GetComponentInParent<Enemy>();        
     }
 
-    public void AnimationTrigger() => enemy.AnimationTrigger();
+    public void ExitCurrentAIState() => enemy.ExitCurrentAIStateViaAnimEvent();
 
     public void StartManualMovement() => enemy.SetManualMovement(true);
 
     public void StopManualMovement() => enemy.SetManualMovement(false);
+
+    public void StartManualRotation() => enemy.SetManualRotation(true);
+
+    public void StopManualRotation() => enemy.SetManualRotation(false);
     
 }

@@ -5909,6 +5909,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
         type: 3}
+      propertyPath: attackData.moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackData.attackIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackData.attackRange
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackData.animationSpeed
+      value: 1.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1371600494}
@@ -5922,6 +5947,51 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[2]
       value: 
       objectReference: {fileID: 401984554}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[0].moveSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[0].attackName
+      value: Forward moving attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[0].attackType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[1].attackName
+      value: Slash zombie attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[0].attackRange
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[1].attackIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[1].attackRange
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[0].animationSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
+        type: 3}
+      propertyPath: attackList.Array.data[1].animationSpeed
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135319724435032591, guid: 36f6b0e26c73b254780627c238e71a69,
         type: 3}
       propertyPath: m_ApplyRootMotion

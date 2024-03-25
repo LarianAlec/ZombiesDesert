@@ -3,14 +3,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float aggroRange = 5.0f;
-
-    [Header("Attack data")]
-    public float attackRange;
-    public float attackMoveSpeed;
 
     [Header("Idle data")]
     public float idleTime;
+    public float aggroRange = 5.0f;
 
     [Header("Move data")]
     public float walkSpeed;
@@ -19,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     private int currentPatrolIndex;
     private bool isManualMovementEnabled;
+    private bool isManualRotationEnabled;
 
     public Transform player { get; private set; }
     public Animator animator { get; private set; }
@@ -43,16 +40,15 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void SetManualMovement(bool manualMovement)
-    {
-        isManualMovementEnabled = manualMovement;
-    }
+    public void SetManualMovement(bool manualMovement) => isManualMovementEnabled = manualMovement;
+    public void SetManualRotation(bool manualRotation) => isManualRotationEnabled = manualRotation;
 
-    public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
+    public void ExitCurrentAIStateViaAnimEvent() => stateMachine.currentState.ExitCurrentAIStateThrouAnimEvent();
 
     public bool IsManualMovementEnabled() => isManualMovementEnabled;
+    public bool IsManualRotationEnabled() => isManualRotationEnabled;
     public bool IsPlayerInAggroRange() => Vector3.Distance(transform.position, player.position) < aggroRange;
-    public bool IsPlayerInAttackRange() => Vector3.Distance(transform.position, player.position) < attackRange;
+
 
     public Vector3 GetPatrolDestination()
     {
@@ -73,10 +69,8 @@ public class Enemy : MonoBehaviour
         return Quaternion.Euler(currentEulerAngles.x, yRotation, currentEulerAngles.z);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggroRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere (transform.position, attackRange);
     }
 }
