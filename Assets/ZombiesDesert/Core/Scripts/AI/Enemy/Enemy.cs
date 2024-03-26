@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
+using System.Collections;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-
     [Header("Idle data")]
     public float idleTime;
     public float aggroRange = 5.0f;
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
     public Animator animator { get; private set; }
     public NavMeshAgent agent { get; private set; }
     public EnemyStateMachine stateMachine { get; private set; }
+    public HealthController_Enemy health { get; private set; }
 
     protected virtual void Awake()
     {
@@ -28,6 +31,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         player = GameObject.Find("Player").GetComponent<Transform>();
+        health = GetComponent<HealthController_Enemy>();
     }
 
     protected virtual void Start()
@@ -36,6 +40,32 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void Update()
+    {
+
+    }
+
+    public virtual void GetHit()
+    {
+        health.ReduceHealth();
+
+        if (health.ShouldDie())
+            Die();
+
+        EnterBattleMode();
+    }
+
+    public virtual void GetHitImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb) 
+    {
+        if (health.ShouldDie())
+            StartCoroutine(HitImpactCoroutine(force, hitPoint, rb));
+    }
+
+    public virtual void Die()
+    {
+
+    }
+
+    public virtual void EnterBattleMode()
     {
 
     }
@@ -49,6 +79,12 @@ public class Enemy : MonoBehaviour
     public bool IsManualRotationEnabled() => isManualRotationEnabled;
     public bool IsPlayerInAggroRange() => Vector3.Distance(transform.position, player.position) < aggroRange;
 
+    private IEnumerator  HitImpactCoroutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    {
+        yield return new WaitForSeconds(.1f);
+
+        rb.AddForceAtPosition(force,hitPoint, ForceMode.Impulse);
+    }
 
     public Vector3 GetPatrolDestination()
     {

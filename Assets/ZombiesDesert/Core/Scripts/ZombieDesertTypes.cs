@@ -60,9 +60,11 @@ public static class Constants
     public const string attackBoolName = "Attack";
     public const string attackAnimationSpeedName = "AttackAnimationSpeed";
     public const string attackAnimationIndexName = "AttackIndex";
+    public const string slashAttackAnimationIndexName = "SlashAttackIndex";
     public const string recoveryBoolName = "Recovery";
     public const string recoveryAnimationIndexName = "RecoveryIndex";
     public const float slowRecoveryValue = 0.0f;
     public const float quickRecoveryValue = 1.0f;
+    public const string deadBoolName = "Dead";
 
 }

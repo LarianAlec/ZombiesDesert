@@ -31,6 +31,9 @@ public class EnemyMelee : Enemy
     public RecoveryState_Melee recoveryState { get; private set; }
     public ChaseState_Melee chaseState { get; private set; }
     public AttackState_Melee attackState { get; private set; }
+    public DeadState_Melee deadState { get; private set; }
+
+
 
     protected override void Awake()
     {
@@ -41,6 +44,7 @@ public class EnemyMelee : Enemy
         recoveryState = new RecoveryState_Melee(this, stateMachine, Constants.recoveryBoolName);
         chaseState = new ChaseState_Melee(this, stateMachine, Constants.chaseBoolName);
         attackState = new AttackState_Melee(this, stateMachine, Constants.attackBoolName);
+        deadState = new DeadState_Melee(this, stateMachine, Constants.idleBoolName); // In dead state used ragdoll, then idle anim like placeholder
     }
 
 
@@ -67,5 +71,23 @@ public class EnemyMelee : Enemy
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        if (stateMachine.currentState != deadState)
+            stateMachine.ChangeState(deadState);
+    }
+
+    public override void EnterBattleMode()
+    {
+        base.EnterBattleMode();
+
+        if (stateMachine.currentState == deadState)
+            return;
+
+        stateMachine.ChangeState(chaseState);
     }
 }

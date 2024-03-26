@@ -54,7 +54,7 @@ MonoBehaviour:
   ammoType: 3
   maxAmmo: 30
   weaponFireMode: 1
-  fireRate: 10
+  fireRate: 8
   spreadAmount: 5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}

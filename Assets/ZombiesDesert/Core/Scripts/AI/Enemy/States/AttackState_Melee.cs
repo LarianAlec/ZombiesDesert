@@ -22,6 +22,7 @@ public class AttackState_Melee : EnemyState
         attackMoveSpeed = enemy.attackData.moveSpeed;
         enemy.animator.SetFloat(Constants.attackAnimationSpeedName, enemy.attackData.animationSpeed);
         enemy.animator.SetFloat(Constants.attackAnimationIndexName, enemy.attackData.attackIndex);
+        enemy.animator.SetFloat(Constants.slashAttackAnimationIndexName, Random.Range(0,2)); // HardCode! Needs to refactoring!
 
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
@@ -37,7 +38,7 @@ public class AttackState_Melee : EnemyState
 
     private void SetupNextAttack()
     {
-        if (enemy.IsPlayerInAttackRange())
+        if (IsPlayerClose())
         {
             enemy.animator.SetFloat(Constants.recoveryAnimationIndexName, Constants.quickRecoveryValue);
         }
@@ -81,6 +82,10 @@ public class AttackState_Melee : EnemyState
         {
             // If enemy close to player validAttacks should contain attacks only witn AttackType_Melee.Close 
             validAttacks.RemoveAll(predicate => predicate.attackType == AttackType_Melee.Charge);
+        }
+        else
+        {
+            validAttacks.RemoveAll(predicate => predicate.attackType == AttackType_Melee.Close);
         }
 
         int randomIndex = Random.Range(0, validAttacks.Count);

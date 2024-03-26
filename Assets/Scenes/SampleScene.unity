@@ -870,24 +870,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2007796579}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &306452468 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7651893915314873554, guid: 36f6b0e26c73b254780627c238e71a69,
-    type: 3}
-  m_PrefabInstance: {fileID: 1571955253797405483}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &306452471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306452468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef7b1dc61a9a9e47b047a3df9a8fcc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5620,6 +5602,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1993450621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -40}
+--- !u!1 &2068279345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6583865152156949801, guid: 36f6b0e26c73b254780627c238e71a69,
+    type: 3}
+  m_PrefabInstance: {fileID: 1571955253797405483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068279352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068279345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8260a37ae969613449db5216c18f066d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 0
 --- !u!1 &2102025504
 GameObject:
   m_ObjectHideFlags: 0
@@ -5879,61 +5881,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
         type: 3}
-      propertyPath: turnRate
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: aggroRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: chaseSpeed
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackMoveSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackData.moveSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackData.attackIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackData.attackRange
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackData.animationSpeed
-      value: 1.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1371600494}
@@ -5947,94 +5894,19 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[2]
       value: 
       objectReference: {fileID: 401984554}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[0].moveSpeed
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[0].attackName
-      value: Forward moving attack
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[0].attackType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[1].attackName
-      value: Slash zombie attack
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[0].attackRange
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[1].attackIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[1].attackRange
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[0].animationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917585612402371383, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: attackList.Array.data[1].animationSpeed
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4135319724435032591, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6108212144495975319, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6583865152156949801, guid: 36f6b0e26c73b254780627c238e71a69,
         type: 3}
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7833721713926708060, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_Speed
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7833721713926708060, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7833721713926708060, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_AutoBraking
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7833721713926708060, guid: 36f6b0e26c73b254780627c238e71a69,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7651893915314873554, guid: 36f6b0e26c73b254780627c238e71a69,
+    - targetCorrespondingSourceObject: {fileID: 6583865152156949801, guid: 36f6b0e26c73b254780627c238e71a69,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 306452471}
+      addedObject: {fileID: 2068279352}
   m_SourcePrefab: {fileID: 100100000, guid: 36f6b0e26c73b254780627c238e71a69, type: 3}
 --- !u!1001 &5261574959322995460
 PrefabInstance:
