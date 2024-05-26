@@ -130,7 +130,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
         currentEquippedWeapon.gameObject.SetActive(true);
     }
 
-
     public void UnEquipCurrentItem()
     {
         if (currentEquippedWeapon)
@@ -152,7 +151,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
         int currentSlotIndex = (int)currentEquippedSlot;
         int nextSlotIndex = NextWeaponArraySlotIndex(currentSlotIndex);
 
-        while (currentSlotIndex != nextSlotIndex && !weaponsArray[(EquipmentSlots)nextSlotIndex])
+        while (currentSlotIndex != nextSlotIndex && weaponsArray[(EquipmentSlots)nextSlotIndex] == null)
         {
             nextSlotIndex = NextWeaponArraySlotIndex(nextSlotIndex);
         }
@@ -168,7 +167,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
         int currentSlotIndex = (int)currentEquippedSlot;
         int previousSlotIndex = PreviousWeaponArraySlotIndex(currentSlotIndex);
 
-        while (currentSlotIndex != previousSlotIndex && weaponsArray[(EquipmentSlots)previousSlotIndex] != null)
+        while (currentSlotIndex != previousSlotIndex && weaponsArray[(EquipmentSlots)previousSlotIndex] == null)
         {
             previousSlotIndex = PreviousWeaponArraySlotIndex(previousSlotIndex);
         }
@@ -181,7 +180,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
     private int NextWeaponArraySlotIndex(int currentSlotIndex)
     {
-        if (currentSlotIndex == weaponsArray.Count - 1)
+        if (currentSlotIndex == weaponsArray.Count)
         {
             return (int)weaponsArray.First().Key;
         }
@@ -193,9 +192,9 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
     private int PreviousWeaponArraySlotIndex(int currentSlotIndex)
     {
-        if (currentSlotIndex == 0)
+        if (currentSlotIndex == 1)
         {
-            return weaponsArray.Count - 1;
+            return weaponsArray.Count;
         }
         else
         {
@@ -260,10 +259,4 @@ public class CharacterEquipmentComponent : MonoBehaviour
         }
     }
 
-
-    IEnumerator SetEquippingBoolToFalse(float time)
-    {
-        bIsEquipping = false;
-        yield return new WaitForSeconds(time);
-    }
 }

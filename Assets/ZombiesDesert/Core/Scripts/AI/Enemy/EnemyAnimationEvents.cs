@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     private Enemy enemy;
+    private EnemyMelee enemyMelee;
 
     void Awake()
     {
-        enemy = GetComponentInParent<Enemy>();        
+        enemy = GetComponentInParent<Enemy>();
+        enemyMelee = enemy as EnemyMelee;
     }
 
     public void ExitCurrentAIState() => enemy.ExitCurrentAIStateViaAnimEvent();
@@ -20,5 +22,6 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void StartManualRotation() => enemy.SetManualRotation(true);
 
     public void StopManualRotation() => enemy.SetManualRotation(false);
-    
+
+    public void AttackCast() => enemyMelee?.AttackCast();    
 }

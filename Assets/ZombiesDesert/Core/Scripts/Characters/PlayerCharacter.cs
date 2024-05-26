@@ -1,10 +1,20 @@
-
 using UnityEngine;
 
 public class PlayerCharacter : BaseCharacter
 {
-    
+    public HealthController_Player health {  get; private set; }
+
+    public RagdollComponent ragdoll { get; private set; }
+
     private bool bIsRunning = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        health = GetComponent<HealthController_Player>();
+        ragdoll = GetComponent<RagdollComponent>();
+    }
 
     public bool IsRunning() => bIsRunning;
 
@@ -37,4 +47,14 @@ public class PlayerCharacter : BaseCharacter
     {
         movementComponent.StopRunning();
     }
+
+    // =================== DEBUG SECTION ==========================
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            health.ReduceHealth();
+        }
+    }
+
 }

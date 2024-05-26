@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TopDownAimComponent : MonoBehaviour
 {
-    private BaseCharacter player;
+    private PlayerCharacter player;
     private Vector2 aimInput;
 
     [Header("Aim info")]
@@ -29,11 +29,14 @@ public class TopDownAimComponent : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<BaseCharacter>();
+        player = GetComponent<PlayerCharacter>();
     }
 
     private void Update()
     {
+        if (player.health.isDead)
+            return;
+
         UpdateAimTargetPosition();
         UpdateCameraPosition();
     }

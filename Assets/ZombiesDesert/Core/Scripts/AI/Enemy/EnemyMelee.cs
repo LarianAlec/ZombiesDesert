@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,6 +26,7 @@ public class EnemyMelee : Enemy
     [Header("Attack Data")]
     public AttackData attackData;
     public List<AttackData> attackList;
+    [SerializeField] private LayerMask playerLayer;
 
     public IdleState_Melee idleState {  get; private set; }
     public MoveState_Melee moveState { get; private set; }
@@ -32,8 +34,6 @@ public class EnemyMelee : Enemy
     public ChaseState_Melee chaseState { get; private set; }
     public AttackState_Melee attackState { get; private set; }
     public DeadState_Melee deadState { get; private set; }
-
-
 
     protected override void Awake()
     {
@@ -71,6 +71,9 @@ public class EnemyMelee : Enemy
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
+
+        // DEBUG
+        Gizmos.DrawLine(transform.position + new Vector3(0, 1.0f, 0), transform.position + new Vector3(0, 1.0f, 0) + transform.forward * 2.0f);
     }
 
     public override void Die()
@@ -90,4 +93,19 @@ public class EnemyMelee : Enemy
 
         stateMachine.ChangeState(chaseState);
     }
+
+    public void AttackCast()
+    {
+        Vector3 attackDirection = transform.position + transform.forward *attackData.attackRange;
+        
+        if (Physics.SphereCast(transform.position + new Vector3(0, 1.0f, 0), 0.4f, transform.forward, out var hitInfo, 2.0f, playerLayer))
+        {
+            Debug.Log("Attack " + hitInfo.collider.gameObject.name);
+
+            IDamagable damagable = hitInfo.collider.gameObject.GetComponent<IDamagable>();
+            damagable?.TakeDamage();
+        }
+    }
+
+    
 }

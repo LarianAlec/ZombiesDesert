@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        InitializePatrolPoints();
     }
 
     protected virtual void Update()
@@ -108,5 +108,16 @@ public class Enemy : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggroRange);
+    }
+
+    private void InitializePatrolPoints()
+    {
+        if (patrolPoints.Length == 0)
+            return;
+
+        foreach (Transform point in patrolPoints)
+        {
+            point.parent = null;
+        }
     }
 }

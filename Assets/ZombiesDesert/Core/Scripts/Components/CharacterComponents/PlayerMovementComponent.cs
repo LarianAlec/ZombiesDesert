@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementComponent : MonoBehaviour
 {
-    private BaseCharacter player;
+    private PlayerCharacter player;
     private CharacterController characterController;
 
     [Header("Movement info")]
@@ -58,7 +58,7 @@ public class PlayerMovementComponent : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<BaseCharacter>();
+        player = GetComponent<PlayerCharacter>();
         characterController = GetComponent<CharacterController>();
 
         speed = walkSpeed;
@@ -66,6 +66,9 @@ public class PlayerMovementComponent : MonoBehaviour
 
     private void Update()
     {
+        if (player.health.isDead)
+            return;
+
         ApplyMovement();
         ApplyRotation();
     }

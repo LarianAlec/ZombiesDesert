@@ -72,7 +72,7 @@ public class AttackState_Melee : EnemyState
         }
     }
 
-    private bool IsPlayerClose() => Vector3.Distance(enemy.transform.position, enemy.player.position) <= 1;
+    private bool IsPlayerClose() => Vector3.Distance(enemy.transform.position, enemy.player.position) <= enemy.attackData.attackRange + 1.0f;
 
     private AttackData GetRandomAttackData()
     {

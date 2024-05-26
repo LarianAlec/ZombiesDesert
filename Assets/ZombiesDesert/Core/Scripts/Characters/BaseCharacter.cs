@@ -13,7 +13,7 @@ public class BaseCharacter : MonoBehaviour
     protected PlayerMovementComponent movementComponent;
     protected AnimatorController animInstance { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         aim = GetComponent<TopDownAimComponent>();
         movementComponent = GetComponent<PlayerMovementComponent>();
