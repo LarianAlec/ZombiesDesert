@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class HealthController_Player : HealthController
 {
+    public delegate void FOnHealthChanged(float health, float maxHealth);
+    public event FOnHealthChanged OnHealthChangedEvent;
+
     private PlayerCharacter player;
-    private PlayerHUD playerHUD;
     public bool isDead { get; private set; }
 
     protected override void Awake()
@@ -15,11 +17,6 @@ public class HealthController_Player : HealthController
         player = GetComponent<PlayerCharacter>();
     }
 
-    private void Start()
-    {
-        playerHUD = FindObjectOfType<UI_Manager>().playerHUD;
-    }
-
     public override void ReduceHealth()
     {
         base.ReduceHealth();
@@ -27,9 +24,8 @@ public class HealthController_Player : HealthController
         if (ShouldDie())
             Die();
 
-        playerHUD.UpdateHealthUI(currentHealth, maxHealth);
+        OnCurrentHealthChanged(currentHealth, maxHealth);
     }
-
 
     private void Die()
     {
@@ -40,5 +36,13 @@ public class HealthController_Player : HealthController
         player.GetComponent<CharacterController>().enabled = false;
 
         player.ragdoll.EnableRagdoll();
+    }
+
+    private void OnCurrentHealthChanged(float health, float maxHealth)
+    {
+        if (OnHealthChangedEvent != null)
+        {
+            OnHealthChangedEvent(health, maxHealth);
+        }
     }
 }

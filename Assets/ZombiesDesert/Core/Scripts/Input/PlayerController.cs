@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         player = GetComponent<PlayerCharacter>();
-
         AssignInputEvents();
     }
 

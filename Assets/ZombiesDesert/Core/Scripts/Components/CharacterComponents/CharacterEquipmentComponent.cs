@@ -231,7 +231,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
         Debug.Log("AmmoLoadout : "+ string.Join(',', ammunitionArray));
     }
 
-    private int GetAvaliableAmmunitionForCurrentWeapon()
+    public int GetAvaliableAmmunitionForCurrentWeapon()
     {
         if (currentEquippedWeapon == null)
         {
