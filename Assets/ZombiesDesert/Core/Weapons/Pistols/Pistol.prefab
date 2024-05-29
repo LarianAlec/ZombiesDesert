@@ -55,11 +55,13 @@ MonoBehaviour:
   maxAmmo: 12
   weaponFireMode: 0
   fireRate: 6
+  spreadAmount: 0.5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
   bulletSpeed: 20
   reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}
   equipClip: {fileID: 0}
+  fireSoundClip: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
 --- !u!1 &974480818553976727
 GameObject:
   m_ObjectHideFlags: 0

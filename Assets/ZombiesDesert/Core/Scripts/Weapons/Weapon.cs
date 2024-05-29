@@ -43,6 +43,10 @@ public class Weapon : MonoBehaviour
     [SerializeField] private AnimationClip reloadClip;
     [SerializeField] private AnimationClip equipClip;
 
+    [Space]
+    [Header("SFX")]
+    [SerializeField] private AudioClip fireSoundClip;
+
     private void Awake()
     {
         muzzleSocket = transform.Find(Constants.MuzzleSocket);
@@ -132,6 +136,11 @@ public class Weapon : MonoBehaviour
 
         AnimatorController animInstance = characterOwner.GetAnimInstance();
         animInstance.RunShootAnimation();
+
+        if (SoundFXManager.instance != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(fireSoundClip, gameObject.transform, 1f);
+        }
 
         SetAmmo(ammo - 1);
 
