@@ -1,15 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BaseCharacter))]
+
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private PlayerCharacter playerCharacter;
     private PlayerControls controls;
-    private PlayerCharacter player;
-
-    public PlayerControls GetControls() 
-    { 
-        return controls; 
-    }
 
     private void Awake()
     {
@@ -18,7 +13,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<PlayerCharacter>();
+        if (playerCharacter == null)
+        {
+            playerCharacter = FindObjectOfType<PlayerCharacter>();
+        }
         AssignInputEvents();
     }
 
@@ -34,35 +32,37 @@ public class PlayerController : MonoBehaviour
 
     private void AssignInputEvents()
     {
-        controls.Character.Movement.performed += context => player.Move(context.ReadValue<Vector2>());
-        controls.Character.Movement.canceled += context => player.StopMove();
+        controls.Character.Movement.performed += context => playerCharacter.Move(context.ReadValue<Vector2>());
+        controls.Character.Movement.canceled += context => playerCharacter.StopMove();
 
-        controls.Character.Aim.performed += context => player.LookAtPoint(context.ReadValue<Vector2>());
-        controls.Character.Aim.canceled += context => player.StopLooking();
+        controls.Character.Aim.performed += context => playerCharacter.LookAtPoint(context.ReadValue<Vector2>());
+        controls.Character.Aim.canceled += context => playerCharacter.StopLooking();
 
-        controls.Character.Run.performed += context => player.StartRunning();
-        controls.Character.Run.canceled += context => player.StopRunning();
+        controls.Character.Run.performed += context => playerCharacter.StartRunning();
+        controls.Character.Run.canceled += context => playerCharacter.StopRunning();
 
-        controls.Character.Fire.performed += context => player.StartFire();
-        controls.Character.Fire.canceled += context => player.StopFire();
+        controls.Character.Fire.performed += context => playerCharacter.StartFire();
+        controls.Character.Fire.canceled += context => playerCharacter.StopFire();
 
-        controls.Character.AimPrecisely.performed += context => player.ChangeAimingState();
+        controls.Character.AimPrecisely.performed += context => playerCharacter.ChangeAimingState();
 
-        controls.Character.TargetLocking.performed += context => player.SwitchTargetLockingState();
+        controls.Character.TargetLocking.performed += context => playerCharacter.SwitchTargetLockingState();
 
-        controls.Character.Reload.performed += context => player.Reload();
+        controls.Character.Reload.performed += context => playerCharacter.Reload();
 
         controls.Character.EquipItem.performed += context =>
         {
             if (context.ReadValue<float>() > 0)
-                player.NextItem();
+                playerCharacter.NextItem();
             else
-                player.PreviousItem();
+                playerCharacter.PreviousItem();
         };
 
-        controls.Character.EquipFirstSlot.performed += context => player.EquipItemInSlot(1);
-        controls.Character.EquipSecondSlot.performed += context => player.EquipItemInSlot(2);
-        controls.Character.EquipThirdSlot.performed += context => player.EquipItemInSlot(3);
-        controls.Character.EquipFourthSlot.performed += context => player.EquipItemInSlot(4);
+        controls.Character.EquipFirstSlot.performed += context => playerCharacter.EquipItemInSlot(1);
+        controls.Character.EquipSecondSlot.performed += context => playerCharacter.EquipItemInSlot(2);
+        controls.Character.EquipThirdSlot.performed += context => playerCharacter.EquipItemInSlot(3);
+        controls.Character.EquipFourthSlot.performed += context => playerCharacter.EquipItemInSlot(4);
+
     }
+
 }

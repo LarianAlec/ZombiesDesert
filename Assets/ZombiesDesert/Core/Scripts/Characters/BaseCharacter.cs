@@ -3,7 +3,6 @@ using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(PlayerMovementComponent))]
 [RequireComponent(typeof(AnimatorController))]
-[RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(CharacterEquipmentComponent))]
 public class BaseCharacter : MonoBehaviour
 {

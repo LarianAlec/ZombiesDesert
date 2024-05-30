@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 1444788530806542962}
   - component: {fileID: 3921633471571898160}
   - component: {fileID: 3418381423113640852}
+  - component: {fileID: 3393793163714351063}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PlayerHUD
   m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3393793163714351063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225122544087871753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d3eff37618fcb47a65aaa3baf94684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 1312922191869397704}
+  ammoWidget: {fileID: 7229682711121261173}
 --- !u!1 &1102443615610701893
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,9 +315,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4922137530612737575}
-  - component: {fileID: 7652347933712103031}
   m_Layer: 5
-  m_Name: PlayerHUD
+  m_Name: HUDGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,20 +342,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7652347933712103031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3045829998178694889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7d3eff37618fcb47a65aaa3baf94684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1312922191869397704}
-  ammoWidget: {fileID: 7229682711121261173}
 --- !u!1 &3061177806487108170
 GameObject:
   m_ObjectHideFlags: 0
