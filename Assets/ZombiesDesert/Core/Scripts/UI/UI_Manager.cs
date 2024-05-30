@@ -9,7 +9,7 @@ public class UI_Manager : MonoBehaviour
 
     [Header("Prefabs to create")]
     [SerializeField] private PlayerHUD playerHUDPrefab;
-    [SerializeField] private Menu menuPrefab;
+    [SerializeField] private MainMenu menuPrefab;
 
     private bool isMenuOpened= false;
 
@@ -24,7 +24,7 @@ public class UI_Manager : MonoBehaviour
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
 
-    public Menu menu;
+    public MainMenu mainMenu;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
 
@@ -40,11 +40,10 @@ public class UI_Manager : MonoBehaviour
     {
         // Creating canvases
         playerHUD = Instantiate(playerHUDPrefab);
-        menu = Instantiate(menuPrefab);
+        mainMenu = Instantiate(menuPrefab);
 
-        // Set active canvas (as default it's playerHUD) and hide non-active
+        // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
-        menu.gameObject.SetActive(false);
 
         // Find player character to assign purpose
         playerCharacter = FindObjectOfType<PlayerCharacter>();
@@ -115,20 +114,30 @@ public class UI_Manager : MonoBehaviour
         if (isMenuOpened)
         {
             // Close menu
-            Unpause();
-            ToggleCanvas(playerHUD.gameObject);
-            isMenuOpened = false;
+            UntoggleMainMenu();
         }
         else
         {
             // Open menu
-            Pause();
-            ToggleCanvas(menu.gameObject);
-            isMenuOpened = true;
+            ToggleMainMenu();
         }
     }
 
     #endregion
+
+    public void ToggleMainMenu()
+    {
+        Pause();
+        ToggleCanvas(mainMenu.gameObject);
+        isMenuOpened = true;
+    }
+
+    public void UntoggleMainMenu()
+    {
+        Unpause();
+        ToggleCanvas(playerHUD.gameObject);
+        isMenuOpened = false;
+    }
 
     private void ToggleCanvas(GameObject canvasToToggleGO)
     {
