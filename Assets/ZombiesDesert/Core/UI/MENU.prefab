@@ -1420,6 +1420,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuCanvasGO: {fileID: 3774575738503424639}
   settingsCanvasGO: {fileID: 6270634968453901773}
+  firstSelectedButtonForMainMenu: {fileID: 8750661244585338734}
+  firstSelectedButtonForSettingsMenu: {fileID: 6399795190243756660}
 --- !u!1 &6270634968453901773
 GameObject:
   m_ObjectHideFlags: 0

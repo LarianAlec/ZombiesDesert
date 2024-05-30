@@ -1,10 +1,15 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Menu Canvas Objects")]
     [SerializeField] private GameObject mainMenuCanvasGO;
     [SerializeField] private GameObject settingsCanvasGO;
+
+    [Header("First Selected Options")]
+    [SerializeField] private GameObject firstSelectedButtonForMainMenu;
+    [SerializeField] public GameObject firstSelectedButtonForSettingsMenu;
 
     private void Start()
     {
@@ -12,24 +17,34 @@ public class MainMenu : MonoBehaviour
         settingsCanvasGO.SetActive(false);
     }
 
-    public void OpenMainMenu()
+    #region Callback Canvas Open Functions
+
+    public void OnMainMenuOpened()
     {
-        mainMenuCanvasGO.SetActive(true);
-        settingsCanvasGO.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(firstSelectedButtonForMainMenu);
     }
 
+    public void OnSettingsMenuOpened()
+    {
+        EventSystem.current.SetSelectedGameObject(firstSelectedButtonForSettingsMenu);
+    }
 
-    #region Main Menu Buttons Actions
+    #endregion
 
+    #region Button Actions
+
+    // -------------- Main Menu Buttons -------------
     public void OnMainMenuSettingsPress()
     {
         settingsCanvasGO.SetActive(true);
         mainMenuCanvasGO.SetActive(false);
+
+        OnSettingsMenuOpened();
     }
 
     public void OnMainMenuResumePress()
     {
-        UI_Manager.instance.UntoggleMainMenu();
+        UI_Manager.instance.CloseMainMenu();
     }
 
     public void OnMainMenuExitPress()
@@ -37,10 +52,14 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+
+    // ---------------- Setting Menu buttons -------------
     public void OnSettingsBackPress()
     {
         settingsCanvasGO.SetActive(false);
         mainMenuCanvasGO.SetActive(true);
+
+        OnMainMenuOpened();
     }
 
     #endregion

@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UI_Manager : MonoBehaviour
@@ -92,8 +93,6 @@ public class UI_Manager : MonoBehaviour
         {
             component.enabled = false;
         }
-
-        
     }
 
     public void Unpause()
@@ -114,25 +113,27 @@ public class UI_Manager : MonoBehaviour
         if (isMenuOpened)
         {
             // Close menu
-            UntoggleMainMenu();
+            CloseMainMenu();
         }
         else
         {
             // Open menu
-            ToggleMainMenu();
+            OpenMainMenu();
         }
     }
 
     #endregion
 
-    public void ToggleMainMenu()
+    public void OpenMainMenu()
     {
         Pause();
         ToggleCanvas(mainMenu.gameObject);
         isMenuOpened = true;
+
+        mainMenu.OnMainMenuOpened();
     }
 
-    public void UntoggleMainMenu()
+    public void CloseMainMenu()
     {
         Unpause();
         ToggleCanvas(playerHUD.gameObject);

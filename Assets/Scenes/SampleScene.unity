@@ -2130,7 +2130,7 @@ MonoBehaviour:
   characterEquipmentComponent: {fileID: 29234945}
   playerController: {fileID: 1479532441}
   activeCanvasGO: {fileID: 0}
-  menu: {fileID: 0}
+  mainMenu: {fileID: 0}
   playerHUD: {fileID: 0}
   playerCharacter: {fileID: 0}
 --- !u!4 &788547586
@@ -6438,6 +6438,7 @@ SceneRoots:
   - {fileID: 1101651027}
   - {fileID: 1479532440}
   - {fileID: 897057081}
+  - {fileID: 1540148592}
   - {fileID: 1993450621}
   - {fileID: 682626220}
   - {fileID: 1248202984}
@@ -6462,4 +6463,3 @@ SceneRoots:
   - {fileID: 1637474293}
   - {fileID: 1406677779}
   - {fileID: 230482868}
-  - {fileID: 1540148592}
