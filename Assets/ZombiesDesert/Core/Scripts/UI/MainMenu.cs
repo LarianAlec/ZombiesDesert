@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour
         ToggleCanvasGO(mainMenuCanvasGO);
     }
 
-    #region Callback Canvas Open Functions
+    #region Open Canvas Callback Functions
 
     private void OnMainMenuOpened()
     {
