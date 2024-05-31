@@ -15,13 +15,6 @@ public class UI_Manager : MonoBehaviour
     private bool isMenuOpened= false;
 
     [Space]
-    [Header("Pause components to deactivate")]
-    [SerializeField] private TopDownAimComponent topDownAimComponent;
-    [SerializeField] private CharacterEquipmentComponent characterEquipmentComponent;
-    [SerializeField] private PlayerController playerController;
-    MonoBehaviour[] components;
-
-    [Space]
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
 
@@ -53,8 +46,6 @@ public class UI_Manager : MonoBehaviour
         AssignAmmoWidget();
         AssignHealthWidget();
 
-        // Components to deactivate when paused
-        components = new MonoBehaviour[3] { topDownAimComponent, characterEquipmentComponent, playerController };
     }
 
 
@@ -88,20 +79,12 @@ public class UI_Manager : MonoBehaviour
 
     public void Pause()
     {
-        Time.timeScale = 0.0f;
-        foreach (MonoBehaviour component in components)
-        {
-            component.enabled = false;
-        }
+        PauseManager.instance.Pause();
     }
 
     public void Unpause()
     {
-        Time.timeScale = 1.0f;
-        foreach (MonoBehaviour component in components)
-        {
-            component.enabled = true;
-        }
+        PauseManager.instance.Unpause();
     }
 
     #endregion
@@ -127,10 +110,11 @@ public class UI_Manager : MonoBehaviour
     public void OpenMainMenu()
     {
         Pause();
-        ToggleCanvas(mainMenu.gameObject);
-        isMenuOpened = true;
 
-        mainMenu.OnMainMenuOpened();
+        ToggleCanvas(mainMenu.gameObject);
+        mainMenu.OpenMainMenu();
+        
+        isMenuOpened = true;
     }
 
     public void CloseMainMenu()
