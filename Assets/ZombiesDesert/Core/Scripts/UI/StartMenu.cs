@@ -1,14 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
     [Header("Loading properties")]
-    [SerializeField] private Scene sceneToLoad;
-    [SerializeField] private Scene sceneGYM;
-    [SerializeField] private GameObject loadingBarGO;
+    [SerializeField] private GameObject loadingBar;
+    [SerializeField] private Scrollbar loadingBarScrollbar;
     [SerializeField] private GameObject[] objectsToHide;
+    private List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
+
+    [Header("Scenes to load")]
+    [SerializeField] private SceneField persistentData;
+    [SerializeField] private SceneField levelScene;
+
 
     [Header("Menu Canvas Objects")]
     [SerializeField] private GameObject startMenuContentGO;
@@ -28,7 +36,7 @@ public class StartMenu : MonoBehaviour
 
     private void Awake()
     {
-        loadingBarGO.SetActive(false);
+        loadingBar.SetActive(false);
         
         // by default
         activeGO = startMenuContentGO;
@@ -38,12 +46,12 @@ public class StartMenu : MonoBehaviour
     {
         HideMenu();
 
-        if (sceneToLoad != null)
-        {
-            SceneManager.LoadScene(sceneToLoad.GetHashCode(), LoadSceneMode.Single);
-        }
+        loadingBar.SetActive(true);
 
-        //update the loading bar
+        scenesToLoad.Add(SceneManager.LoadSceneAsync(persistentData));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync(levelScene, LoadSceneMode.Additive));
+
+        StartCoroutine(ProgressLoadingBar());
     }
 
     private void HideMenu()
@@ -171,4 +179,19 @@ public class StartMenu : MonoBehaviour
     }
 
     #endregion
+
+    private IEnumerator ProgressLoadingBar()
+    {
+        float loadProgress = 0f;
+        for (int i = 0; i < scenesToLoad.Count; i++)
+        {
+            while (!scenesToLoad[i].isDone)
+            {
+                loadProgress += scenesToLoad[i].progress;
+                loadingBarScrollbar.size = loadProgress / scenesToLoad.Count;
+                yield return null;
+            }
+        }
+
+    }
 }

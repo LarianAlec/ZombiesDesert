@@ -45,16 +45,6 @@ public class TopDownAimComponent : MonoBehaviour
 
     public bool IsTargetLockingEnabled() => isTargetLockingEnabled;
 
-    public Transform GetTarget()
-    {
-        Transform target = null;
-
-        if (GetMouseHitInfo().transform.GetComponent<AimLockable>() != null)
-        {
-            target = GetMouseHitInfo().transform;
-        }
-        return target;
-    }
 
     public void SetAimInput(Vector2 inputVector)
     {
@@ -99,6 +89,23 @@ public class TopDownAimComponent : MonoBehaviour
         return lastKnownMouseHit;
     }
 
+    public Transform GetTarget()
+    {
+        Transform target = null;
+        Transform hittedObj = GetMouseHitInfo().transform;
+
+        if (hittedObj != null)
+        {
+            // try to get AimLocableComponent from hitted obj
+            if (hittedObj.GetComponent<AimLockable>() != null)
+            {
+                target = GetMouseHitInfo().transform;
+            }
+        }
+
+        return target;
+    }
+
     private void UpdateAimTargetPosition()
     {
         if (ShouldLockToTarget())
@@ -107,7 +114,17 @@ public class TopDownAimComponent : MonoBehaviour
         }
 
         RaycastHit hitInfo = GetMouseHitInfo();
-        if(!isAimingPrecisely)
+
+        // if mouseHitInfo is null then target position in front of character
+        if (hitInfo.transform == null)
+        {
+            Vector3 playerPosition = gameObject.transform.position;
+            aimTarget.position = new Vector3(playerPosition.x, playerPosition.y + YTargetOffset, playerPosition.z) + Vector3.forward;
+            return;
+        }
+
+
+        if (!isAimingPrecisely)
         {
             aimTarget.position = new Vector3(hitInfo.point.x, transform.position.y + YTargetOffset, hitInfo.point.z);
         }

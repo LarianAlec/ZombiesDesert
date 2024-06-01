@@ -146,6 +146,11 @@ public class Weapon : MonoBehaviour
 
         GameObject bullet = ObjectPool.instance.GetBullet();
 
+        if (bullet == null)
+        {
+            Debug.Log("Weapon::MakeShot() : Need object pool instance for bullets!");
+        }
+
         bullet.transform.position = muzzleSocket.position;
         bullet.transform.rotation = Quaternion.LookRotation(muzzleSocket.forward);
 

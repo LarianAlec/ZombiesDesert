@@ -3012,7 +3012,7 @@ GameObject:
   - component: {fileID: 2459730962033686274}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3025,14 +3025,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6694315875581050154}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.015235553, y: -0.012156039, z: -0.00085692015, w: 0.9998097}
-  m_LocalPosition: {x: -0.0019693286, y: 0.00044125319, z: 0.028849011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7052721611458628189}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.747, y: -1.392, z: -0.077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3971975759688473676
 CharacterController:
   m_ObjectHideFlags: 0
