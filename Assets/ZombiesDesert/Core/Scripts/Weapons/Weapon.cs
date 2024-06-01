@@ -45,7 +45,8 @@ public class Weapon : MonoBehaviour
 
     [Space]
     [Header("SFX")]
-    [SerializeField] private AudioClip fireSoundClip;
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip emptyAmmoSound;
 
     private void Awake()
     {
@@ -131,17 +132,18 @@ public class Weapon : MonoBehaviour
 
         if (!CanShoot())
         {
+            if (ammo == 0)
+            {
+                SoundFXManager.instance?.PlaySoundFXClip(emptyAmmoSound, gameObject.transform, 1f);
+            }
             return;
         }
 
+        SoundFXManager.instance?.PlaySoundFXClip(fireSound, gameObject.transform, 1f);
+
         AnimatorController animInstance = characterOwner.GetAnimInstance();
         animInstance.RunShootAnimation();
-
-        if (SoundFXManager.instance != null)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(fireSoundClip, gameObject.transform, 1f);
-        }
-
+        
         SetAmmo(ammo - 1);
 
         GameObject bullet = ObjectPool.instance.GetBullet();

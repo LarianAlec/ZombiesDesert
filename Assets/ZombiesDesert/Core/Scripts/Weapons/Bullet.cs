@@ -5,6 +5,12 @@ public class Bullet : MonoBehaviour
     public float impactForce = 1.0f; // placeholder
 
     [SerializeField] private GameObject hitVFX;
+    [SerializeField] private AudioClip fleshImpactSound;
+    [SerializeField] private AudioClip sandImpactSound;
+    [SerializeField] private AudioClip metalImpactSound;
+    [Range(0.0001f, 1.0f)]
+    [SerializeField] private float SFXVolume = 1.0f;
+
     private Rigidbody rb => GetComponent<Rigidbody>();
 
     private void OnCollisionEnter(Collision collision)
@@ -17,6 +23,7 @@ public class Bullet : MonoBehaviour
         {
             ContactPoint contact = collision.contacts[0];
             GameObject impactFX = Instantiate(hitVFX, contact.point, Quaternion.LookRotation(contact.normal));
+            PlayImpactSound(collision, impactFX.transform);
             Destroy(impactFX, 1.0f);
         }
 
@@ -34,5 +41,31 @@ public class Bullet : MonoBehaviour
 
             enemy.GetHitImpact(force, hitPoint, hitRigidbody);
         }
+    }
+
+    private void PlayImpactSound(Collision collision, Transform impact)
+    {
+        int collisionLayer = collision.gameObject.layer;
+
+        int groundLayerMask = LayerMask.GetMask("Enemy");
+
+
+        if (1 << collisionLayer == groundLayerMask)
+        {
+            if (fleshImpactSound != null)
+                SoundFXManager.instance?.PlaySoundFXClip(fleshImpactSound, impact, SFXVolume/2);
+        }
+        else if (1 << collisionLayer == LayerMask.GetMask("Ground"))
+        {
+            if (sandImpactSound != null)
+                SoundFXManager.instance?.PlaySoundFXClip(sandImpactSound, impact, SFXVolume);
+        }
+        else if (1 << collisionLayer == LayerMask.GetMask("Obstacles"))
+        {
+            if (metalImpactSound != null)
+                SoundFXManager.instance?.PlaySoundFXClip(metalImpactSound, impact, SFXVolume);
+        }
+
+        
     }
 }

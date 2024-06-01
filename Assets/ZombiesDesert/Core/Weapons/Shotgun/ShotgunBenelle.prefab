@@ -92,7 +92,8 @@ MonoBehaviour:
   bulletSpeed: 15
   reloadClip: {fileID: 7400000, guid: 02b6770b5933dc14088d923e76f69624, type: 2}
   equipClip: {fileID: 0}
-  fireSoundClip: {fileID: 8300000, guid: 122e1bc442181464ca037ca291edb46b, type: 3}
+  fireSound: {fileID: 8300000, guid: e062871ff4d90d3489c1b978712c00df, type: 3}
+  emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
 --- !u!1 &7325482893584773818
 GameObject:
   m_ObjectHideFlags: 0

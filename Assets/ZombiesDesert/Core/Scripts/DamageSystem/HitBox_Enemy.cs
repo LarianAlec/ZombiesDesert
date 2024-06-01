@@ -19,4 +19,5 @@ public class HitBox_Enemy : HitBox
 
         enemy.GetHit();
     }
+
 }

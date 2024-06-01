@@ -49,6 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactForce: 10
   hitVFX: {fileID: 2944396702758532163, guid: 61119e223ef556742943aa13d0b96c09, type: 3}
+  fleshImpactSound: {fileID: 8300000, guid: 971f4da1b375d3146822ba359391edb9, type: 3}
+  sandImpactSound: {fileID: 0}
+  metalImpactSound: {fileID: 8300000, guid: 82f0973540bf2214aa2ea7fe499ac4ae, type: 3}
+  SFXVolume: 1
 --- !u!54 &413375221207449146
 Rigidbody:
   m_ObjectHideFlags: 0
