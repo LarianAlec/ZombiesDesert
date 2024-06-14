@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ZombiesDesert/Core/Maps/StartMenu.unity
+    path: Assets/ZombiesDesert/Core/Scenes/StartMenu.unity
     guid: 2fe9e3d2e43e6e44ab152ebbe522761d
   - enabled: 1
-    path: Assets/ZombiesDesert/Core/Maps/PersistentData.unity
+    path: Assets/ZombiesDesert/Core/Scenes/PersistentData.unity
     guid: 32f1171169309af45ad3e17d5515ce36
   - enabled: 1
-    path: Assets/ZombiesDesert/Maps/GYM/GYM.unity
+    path: Assets/ZombiesDesert/Scenes/Arena/Arena.unity
+    guid: da82ad92ece2a0e419c5a4fae8ebbf31
+  - enabled: 1
+    path: Assets/ZombiesDesert/Scenes/GYM/GYM.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/ZombiesDesert/Maps/GYM/GYMWithoutCharater.unity
+    path: Assets/ZombiesDesert/Scenes/GYM/GYMWithoutCharater.unity
     guid: fe42365b7e59df34b8da0dbc33b5d0da
   m_configObjects: {}

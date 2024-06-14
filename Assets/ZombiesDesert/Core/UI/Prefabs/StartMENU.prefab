@@ -816,8 +816,8 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 32f1171169309af45ad3e17d5515ce36, type: 3}
     m_SceneName: PersistentData
   levelScene:
-    m_SceneAsset: {fileID: 102900000, guid: fe42365b7e59df34b8da0dbc33b5d0da, type: 3}
-    m_SceneName: GYMWithoutCharater
+    m_SceneAsset: {fileID: 102900000, guid: da82ad92ece2a0e419c5a4fae8ebbf31, type: 3}
+    m_SceneName: Arena
   startMenuContentGO: {fileID: 6230395464810012542}
   optionsMenuContentGO: {fileID: 5467901032385921215}
   graphicsMenuContentGO: {fileID: 4326445231601319479}
