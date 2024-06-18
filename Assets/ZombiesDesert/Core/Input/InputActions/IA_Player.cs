@@ -488,7 +488,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""862e83b0-ce8d-4daa-9604-913fe201e425"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -596,6 +596,54 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""4d9849c5-c3d5-4fdb-90d4-9773cc817313"",
+            ""actions"": [
+                {
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""d12c4979-efb1-483d-9329-7d2ffe822c8e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""UnlockCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""87c0943e-e96b-4c45-8563-dcd2b4c30900"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""de4feeb5-461e-4236-b16b-8b73dd82b550"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""083d1a29-dd31-4c22-a214-cb63b2bd7e7a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UnlockCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -639,6 +687,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Character_DropCurrentWeapon = m_Character.FindAction("DropCurrentWeapon", throwIfNotFound: true);
         m_Character_EquipItem = m_Character.FindAction("EquipItem", throwIfNotFound: true);
         m_Character_MenuOpenClose = m_Character.FindAction("MenuOpenClose", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_RotateCamera = m_Camera.FindAction("RotateCamera", throwIfNotFound: true);
+        m_Camera_UnlockCamera = m_Camera.FindAction("UnlockCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -846,6 +898,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public CharacterActions @Character => new CharacterActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+    private readonly InputAction m_Camera_RotateCamera;
+    private readonly InputAction m_Camera_UnlockCamera;
+    public struct CameraActions
+    {
+        private @PlayerControls m_Wrapper;
+        public CameraActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RotateCamera => m_Wrapper.m_Camera_RotateCamera;
+        public InputAction @UnlockCamera => m_Wrapper.m_Camera_UnlockCamera;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void AddCallbacks(ICameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
+            @RotateCamera.started += instance.OnRotateCamera;
+            @RotateCamera.performed += instance.OnRotateCamera;
+            @RotateCamera.canceled += instance.OnRotateCamera;
+            @UnlockCamera.started += instance.OnUnlockCamera;
+            @UnlockCamera.performed += instance.OnUnlockCamera;
+            @UnlockCamera.canceled += instance.OnUnlockCamera;
+        }
+
+        private void UnregisterCallbacks(ICameraActions instance)
+        {
+            @RotateCamera.started -= instance.OnRotateCamera;
+            @RotateCamera.performed -= instance.OnRotateCamera;
+            @RotateCamera.canceled -= instance.OnRotateCamera;
+            @UnlockCamera.started -= instance.OnUnlockCamera;
+            @UnlockCamera.performed -= instance.OnUnlockCamera;
+            @UnlockCamera.canceled -= instance.OnUnlockCamera;
+        }
+
+        public void RemoveCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -880,5 +986,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDropCurrentWeapon(InputAction.CallbackContext context);
         void OnEquipItem(InputAction.CallbackContext context);
         void OnMenuOpenClose(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnRotateCamera(InputAction.CallbackContext context);
+        void OnUnlockCamera(InputAction.CallbackContext context);
     }
 }

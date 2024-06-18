@@ -466,7 +466,7 @@
                 {
                     "name": "",
                     "id": "862e83b0-ce8d-4daa-9604-913fe201e425",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -570,6 +570,54 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "MenuOpenClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "4d9849c5-c3d5-4fdb-90d4-9773cc817313",
+            "actions": [
+                {
+                    "name": "RotateCamera",
+                    "type": "Value",
+                    "id": "d12c4979-efb1-483d-9329-7d2ffe822c8e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "UnlockCamera",
+                    "type": "Button",
+                    "id": "87c0943e-e96b-4c45-8563-dcd2b4c30900",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "de4feeb5-461e-4236-b16b-8b73dd82b550",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "083d1a29-dd31-4c22-a214-cb63b2bd7e7a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "UnlockCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

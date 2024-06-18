@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3546996707660352991}
   - component: {fileID: 6755651091801724778}
   - component: {fileID: 8909278057437092398}
+  - component: {fileID: 3439470960536806111}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -91,3 +92,17 @@ MonoBehaviour:
   m_DefaultActionMap: Character
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3439470960536806111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909864840855049475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4bbcb7b4fa5f042910af1194b30635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
+  maxRotationSpeed: 0.15

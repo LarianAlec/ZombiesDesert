@@ -11,6 +11,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private TopDownAimComponent topDownAimComponent;
     [SerializeField] private CharacterEquipmentComponent characterEquipmentComponent;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private CameraMovementComponent cameraMovementComponent;
 
     // Components to deactivate when paused
     private List<MonoBehaviour> components;
@@ -25,7 +26,7 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-        components = new List<MonoBehaviour> { topDownAimComponent, characterEquipmentComponent, playerController };
+        components = new List<MonoBehaviour> { topDownAimComponent, characterEquipmentComponent, playerController, cameraMovementComponent };
     }
 
     public void Pause()

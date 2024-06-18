@@ -1,9 +1,12 @@
+using Cinemachine;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementComponent : MonoBehaviour
 {
+    [SerializeField] private Transform cameraOrientation;
     private PlayerCharacter player;
     private CharacterController characterController;
 
@@ -62,6 +65,11 @@ public class PlayerMovementComponent : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         speed = walkSpeed;
+
+        if (cameraOrientation == null)
+        {
+            cameraOrientation = FindObjectOfType<CinemachineVirtualCamera>().transform;
+        }
     }
 
     private void Update()
@@ -85,12 +93,14 @@ public class PlayerMovementComponent : MonoBehaviour
 
     private void ApplyMovement()
     {
-        movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        movementDirection =  cameraOrientation.forward * moveInput.y + cameraOrientation.right * moveInput.x;
+        //transform.forward * moveInput.y + transform.right * moveInput.x; 
+        //new Vector3(moveInput.x, 0, moveInput.y);
         ApplyGravity();
 
         if (movementDirection.magnitude > 0)
         {
-            characterController.Move(movementDirection * speed * Time.deltaTime);
+            characterController.Move(movementDirection.normalized * speed * Time.deltaTime);
         }
     }
 
