@@ -3,7 +3,17 @@ guid: b35d7ea4731b42a409566525f16d5377
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dunes
+    second: {fileID: 2100000, guid: e9202ab1d89487f49b8dea5151e69d1d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main
+    second: {fileID: 2100000, guid: e2177c6c68635a347956061b3de89147, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
