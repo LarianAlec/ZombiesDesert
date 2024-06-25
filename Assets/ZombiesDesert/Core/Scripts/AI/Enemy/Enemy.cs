@@ -4,7 +4,7 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IEnemy
 {
     [Header("Idle data")]
     public float idleTime;
