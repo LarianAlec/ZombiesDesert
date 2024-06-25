@@ -37,7 +37,7 @@ public static class Helper
             BaseCharacter characterOwner = currentTransform.GetComponent<BaseCharacter>();
             if(characterOwner != null)
             {
-                Debug.Log("TryGetCharacterOwner : Success!");
+                //Debug.Log("TryGetCharacterOwner : Success!");
                 return characterOwner;
             }
         }

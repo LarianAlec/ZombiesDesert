@@ -227,8 +227,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
             gunObj.SetActive(false);
         }
 
-        Debug.Log("WeaponsArray : " +string.Join(',', weaponsArray));
-        Debug.Log("AmmoLoadout : "+ string.Join(',', ammunitionArray));
     }
 
     public int GetAvaliableAmmunitionForCurrentWeapon()

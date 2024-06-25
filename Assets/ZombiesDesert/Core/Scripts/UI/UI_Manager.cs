@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,11 +44,15 @@ public class UI_Manager : MonoBehaviour
         playerCharacter = FindObjectOfType<PlayerCharacter>();
 
         // Assign events
-        AssignAmmoWidget();
-        AssignHealthWidget();
-
+        StartCoroutine(AssignWidgets());
     }
 
+    IEnumerator AssignWidgets()
+    {
+        yield return new WaitForEndOfFrame();
+        AssignAmmoWidget();
+        AssignHealthWidget();
+    }
 
     #region Assign events
 
@@ -64,13 +69,14 @@ public class UI_Manager : MonoBehaviour
     {
         CharacterEquipmentComponent equipComponent = playerCharacter.GetComponent<CharacterEquipmentComponent>();
         AmmoWidget ammoWidget = playerHUD.ammoWidget;
-        equipComponent.OnCurrentWeaponAmmoChangedEvent += ammoWidget.UpdateAmmoWidget;
-
+        Weapon weapon = equipComponent.GetCurrentEquippedWeapon();
 
         // Initial widget update
-        int weaponAmmo = equipComponent.GetCurrentEquippedWeapon().GetAmmo();
+        int weaponAmmo = weapon.GetAmmo();
         int totalAmmo = equipComponent.GetAvaliableAmmunitionForCurrentWeapon();
         ammoWidget.UpdateAmmoWidget(weaponAmmo, totalAmmo);
+        
+        equipComponent.OnCurrentWeaponAmmoChangedEvent += ammoWidget.UpdateAmmoWidget;
     }
 
     #endregion

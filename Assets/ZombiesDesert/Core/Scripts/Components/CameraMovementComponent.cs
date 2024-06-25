@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,7 +25,7 @@ public class CameraMovementComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        AssignInputEvents();
+        StartCoroutine(AssignInputNextFrame());
     }
 
     private void OnDisable()
@@ -54,7 +55,11 @@ public class CameraMovementComponent : MonoBehaviour
 
         float value = context.ReadValue<Vector2>().x;
         cameraTransform.rotation = Quaternion.Euler(cameraTransform.rotation.eulerAngles.x, value * maxRotationSpeed + cameraTransform.rotation.eulerAngles.y, cameraTransform.rotation.eulerAngles.z);
+    }
 
-        Debug.Log("Rotate Camera!");
+    IEnumerator AssignInputNextFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        playerControls.Camera.RotateCamera.performed += RotateCamera;
     }
 }

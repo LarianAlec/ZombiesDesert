@@ -30,13 +30,13 @@ public class Enemy : MonoBehaviour
         stateMachine = new EnemyStateMachine();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
-        player = GameObject.Find("Player").GetComponent<Transform>();
         health = GetComponent<HealthController_Enemy>();
     }
 
     protected virtual void Start()
     {
         InitializePatrolPoints();
+        player = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     protected virtual void Update()

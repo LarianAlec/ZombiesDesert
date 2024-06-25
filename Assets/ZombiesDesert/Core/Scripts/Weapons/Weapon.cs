@@ -101,12 +101,10 @@ public class Weapon : MonoBehaviour
         {
             case WeaponFireMode.Single:
                 MakeShot();
-                Debug.Log("Weapon::StartFire() : Fire mode is SINGLE");
                 break;
 
             case WeaponFireMode.FullAuto:
                 firingModeCoroutine = StartCoroutine(FullAutoFiring(GetShotTimerInterval()));
-                Debug.Log("Weapon::StartFire() : Fire mode is FULLAUTO");
                 break;
         }
     }
@@ -116,6 +114,9 @@ public class Weapon : MonoBehaviour
         bIsFiring = false;
         if (weaponFireMode == WeaponFireMode.FullAuto)
         {
+            if (firingModeCoroutine == null)
+                return;
+
             StopCoroutine(firingModeCoroutine);
         }
     }
