@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour, IEnemy
     public NavMeshAgent agent { get; private set; }
     public EnemyStateMachine stateMachine { get; private set; }
     public HealthController_Enemy health { get; private set; }
+    
+    public Action OnDeath;
 
     protected virtual void Awake()
     {
@@ -62,7 +65,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public virtual void Die()
     {
-
+        OnDeath?.Invoke();
     }
 
     public virtual void EnterBattleMode()

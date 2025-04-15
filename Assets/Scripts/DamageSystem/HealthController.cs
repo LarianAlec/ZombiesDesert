@@ -1,10 +1,11 @@
 using UnityEngine;
+using System;
 
 public class HealthController : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
-
+    
     protected virtual void Awake()
     {
         currentHealth = maxHealth;

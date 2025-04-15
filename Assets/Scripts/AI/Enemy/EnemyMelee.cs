@@ -98,7 +98,7 @@ public class EnemyMelee : Enemy
         
         if (Physics.SphereCast(transform.position + new Vector3(0, 1.0f, 0), 0.4f, transform.forward, out var hitInfo, 2.0f, playerLayer))
         {
-            Debug.Log("Attack " + hitInfo.collider.gameObject.name);
+            //Debug.Log("Attack " + hitInfo.collider.gameObject.name);
 
             IDamagable damagable = hitInfo.collider.gameObject.GetComponent<IDamagable>();
             damagable?.TakeDamage();
