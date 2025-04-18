@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -11,15 +12,17 @@ public class UI_Manager : MonoBehaviour
 
     [Header("Prefabs to create")]
     [SerializeField] private PlayerHUD playerHUDPrefab;
-    [SerializeField] private MainMenu menuPrefab;
+    [SerializeField] private MainMenu mainMenuPrefab;
+    [SerializeField] private GameMenu gameMenuPrefab;
 
-    private bool isMenuOpened= false;
+    private bool isMainMenuOpened = false;
 
     [Space]
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
 
     public MainMenu mainMenu;
+    public GameMenu gameMenu;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
 
@@ -35,7 +38,8 @@ public class UI_Manager : MonoBehaviour
     {
         // Creating canvases
         playerHUD = Instantiate(playerHUDPrefab);
-        mainMenu = Instantiate(menuPrefab);
+        gameMenu = Instantiate(gameMenuPrefab);
+        mainMenu = Instantiate(mainMenuPrefab);
 
         // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
@@ -99,7 +103,7 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenCloseMenu()
     {
-        if (isMenuOpened)
+        if (isMainMenuOpened)
         {
             // Close menu
             CloseMainMenu();
@@ -120,14 +124,14 @@ public class UI_Manager : MonoBehaviour
         ToggleCanvas(mainMenu.gameObject);
         mainMenu.OpenMainMenu();
         
-        isMenuOpened = true;
+        isMainMenuOpened = true;
     }
 
     public void CloseMainMenu()
     {
         Unpause();
         ToggleCanvas(playerHUD.gameObject);
-        isMenuOpened = false;
+        isMainMenuOpened = false;
     }
 
     private void ToggleCanvas(GameObject canvasToToggleGO)

@@ -2029,22 +2029,22 @@ PrefabInstance:
     - target: {fileID: 535248648854070375, guid: 03b15a400cb4cf547b1be0418e1f37f2,
         type: 3}
       propertyPath: waves.Array.data[0].spawnDelay
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 535248648854070375, guid: 03b15a400cb4cf547b1be0418e1f37f2,
         type: 3}
       propertyPath: waves.Array.data[1].spawnDelay
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 535248648854070375, guid: 03b15a400cb4cf547b1be0418e1f37f2,
         type: 3}
       propertyPath: waves.Array.data[0].enemiesCount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 535248648854070375, guid: 03b15a400cb4cf547b1be0418e1f37f2,
         type: 3}
       propertyPath: waves.Array.data[1].enemiesCount
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 535248648854070375, guid: 03b15a400cb4cf547b1be0418e1f37f2,
         type: 3}

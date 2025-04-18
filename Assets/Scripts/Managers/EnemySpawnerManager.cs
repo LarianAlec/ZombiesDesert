@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class EnemySpawnerManager : MonoBehaviour
@@ -76,7 +78,9 @@ public class EnemySpawnerManager : MonoBehaviour
         }
         else
         {
-            _victoryPresenter.ShowPopup();
+            //_victoryPresenter.ShowPopup();
+            GameManager gm = FindObjectOfType<GameManager>();
+            gm.OnPreparePhaseStarted?.Invoke();
         }
     }
 
