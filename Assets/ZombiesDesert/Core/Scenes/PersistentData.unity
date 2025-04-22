@@ -273,6 +273,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &260429063
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868659144817833465, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8712928073989463389, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_Name
+      value: VictoryPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8712928073989463389, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 88e0d186ef4bcfe4bbd1addb2191133a, type: 3}
 --- !u!114 &320542926 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7487610948025577016, guid: 19b5cd18aa0d2b349a4d589b70dae381,
@@ -1297,6 +1370,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f203639c5e69334da16da7510d046b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1406160085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2084176866967407026, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+    type: 3}
+  m_PrefabInstance: {fileID: 260429063}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2abdda59d81ae4f855c20012d07130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1785179688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1502,6 +1587,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
         type: 3}
+      propertyPath: endPopupView
+      value: 
+      objectReference: {fileID: 1406160085}
+    - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
+        type: 3}
       propertyPath: gameMenuPrefab
       value: 
       objectReference: {fileID: -7870606892879738052, guid: 98742659a4f9d82448d073889a0486c9,
@@ -1512,6 +1602,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7290852001636229019, guid: 7a00c2e30c019d24e8e31a6b8364d7f0,
         type: 3}
+    - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
+        type: 3}
+      propertyPath: victoryPopupView
+      value: 
+      objectReference: {fileID: 1406160085}
     - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
         type: 3}
       propertyPath: victoryPopupPrefab
@@ -1802,3 +1897,4 @@ SceneRoots:
   - {fileID: 129392119}
   - {fileID: 941869454}
   - {fileID: 1077377928}
+  - {fileID: 260429063}

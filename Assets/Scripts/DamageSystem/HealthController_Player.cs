@@ -22,12 +22,15 @@ public class HealthController_Player : HealthController
         base.ReduceHealth();
 
         if (ShouldDie())
+        {
             Die();
+            GameManager.instance.OnPlayerCharacterDied?.Invoke();
+        }
 
         OnCurrentHealthChanged(currentHealth, maxHealth);
     }
 
-    private void Die()
+    public void Die()
     {
         isDead = true;
 

@@ -13,6 +13,7 @@ abstract public class PopupPresenter : IPopupPresenter
     {
         _model.isVisible = true;
         _view.Show(_model.text);
+        
     }
 
     public void HidePopup()

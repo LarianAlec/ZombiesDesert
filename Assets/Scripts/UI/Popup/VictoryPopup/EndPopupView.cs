@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class VictoryPopupView : MonoBehaviour, IPopupView
+public class EndPopupView : MonoBehaviour, IPopupView
 {
     [SerializeField] private GameObject popupPanel;
     [SerializeField] private TextMeshProUGUI victoryText;

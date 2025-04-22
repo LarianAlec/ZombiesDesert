@@ -13,17 +13,26 @@ public class UI_Manager : MonoBehaviour
     [Header("Prefabs to create")]
     [SerializeField] private PlayerHUD playerHUDPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
-    [SerializeField] private VictoryPopupView victoryPopupPrefab;
 
     private bool isMainMenuOpened = false;
 
     [Space]
+    [Header("Victory Settings")]
+    [SerializeField] private EndPopupView endPopupView;
+    private VictoryPopupModel _victoryModel = new VictoryPopupModel();
+    private DefeatPopupModel _defeatModel = new DefeatPopupModel();
+    private EndPopupPresenter _victoryPresenter;
+    private EndPopupPresenter _defeatPresenter;
+
+    private bool isEndPopupOpened = false;
+
+    [Space]
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
-    public VictoryPopupView victoryPopup;
     public MainMenu mainMenu;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
+
 
     private void Awake()
     {
@@ -31,6 +40,9 @@ public class UI_Manager : MonoBehaviour
         {
             instance = this;
         }
+
+        _victoryPresenter = new EndPopupPresenter(_victoryModel, endPopupView);
+        _defeatPresenter = new EndPopupPresenter(_defeatModel, endPopupView);
     }
 
     private void Start()
@@ -38,8 +50,6 @@ public class UI_Manager : MonoBehaviour
         // Creating canvases
         playerHUD = Instantiate(playerHUDPrefab);
         mainMenu = Instantiate(mainMenuPrefab);
-        victoryPopup = Instantiate(victoryPopupPrefab);
-
 
         // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
@@ -136,16 +146,27 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenVictoryPopup()
     {
+        if (isEndPopupOpened) { return; }
+
         Pause();
-        ToggleCanvas(victoryPopup.gameObject);
-        victoryPopup.Show("Победа");
+        _victoryPresenter.ShowPopup();
     }
 
     public void CloseVictoryPopup()
     {
         Unpause();
-        ToggleCanvas(playerHUD.gameObject);
-        victoryPopup.Hide();
+        _victoryPresenter.HidePopup();
+    }
+
+    public void OpenDefeatPopup()
+    {
+        if (isEndPopupOpened) { return; }
+        _defeatPresenter.ShowPopup();  
+    }
+
+    public void CloseDefeatPopup()
+    {
+        _defeatPresenter.HidePopup();
     }
 
     private void ToggleCanvas(GameObject canvasToToggleGO)

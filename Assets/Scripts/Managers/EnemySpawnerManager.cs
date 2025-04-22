@@ -26,15 +26,7 @@ public class EnemySpawnerManager : MonoBehaviour
     private bool isSpawning = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
 
-    [Header("Victory Settings")]
-    [SerializeField] private VictoryPopupView victoryPopupView;
-    private VictoryPopupModel _victoryModel = new VictoryPopupModel();
-    private VictoryPopupPresenter _victoryPresenter;
     
-    private void Awake()
-    {
-        _victoryPresenter = new VictoryPopupPresenter(_victoryModel, victoryPopupView);
-    }
 
     private void Start()
     {
@@ -45,7 +37,7 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         if (currentWaveIndex >= waves.Length)
         {
-            _victoryPresenter.ShowPopup();
+            //_victoryPresenter.ShowPopup();
             Debug.Log("All waves completed!");
             return;
         }
