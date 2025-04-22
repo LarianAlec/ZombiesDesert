@@ -67,6 +67,7 @@ public class UI_Manager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         AssignAmmoWidget();
         AssignHealthWidget();
+        AssignWavesTimerWidget();
     }
 
     #region Assign events
@@ -92,6 +93,14 @@ public class UI_Manager : MonoBehaviour
         ammoWidget.UpdateAmmoWidget(weaponAmmo, totalAmmo);
         
         equipComponent.OnCurrentWeaponAmmoChangedEvent += ammoWidget.UpdateAmmoWidget;
+    }
+
+    private void AssignWavesTimerWidget()
+    {
+        WavesTimerWidget wavesTimerWidget = playerHUD.waveTimerWidget;
+        EnemySpawnerManager enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
+
+        enemySpawnerManager.OnWaveTimerChanged += wavesTimerWidget.UpdateWavesTime;
     }
 
     #endregion

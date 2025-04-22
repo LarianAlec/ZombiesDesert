@@ -34,8 +34,12 @@ public class EnemySpawnerManager : MonoBehaviour
     private int currentWaveIndex = 0;
     private bool isSpawning = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
+    private Coroutine waveTimerCoroutine;
 
-    
+    // События
+    public event Action<int> OnWaveStarted; // currentWaveIndex
+    public event Action<float> OnWaveTimerChanged; // remaingTime
+    public event Action OnAllWavesCompleted;
 
     private void Start()
     {
@@ -46,13 +50,17 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         if (currentWaveIndex >= waves.Length)
         {
-            //_victoryPresenter.ShowPopup();
             Debug.Log("All waves completed!");
+            OnAllWavesCompleted?.Invoke();
+
+            GameManager gm = GameManager.instance;
+            gm.OnPreparePhaseStarted?.Invoke();
             return;
         }
 
         Wave currentWave = waves[currentWaveIndex];
         Debug.Log($"Starting {currentWave.waveType} Wave: {currentWave.waveName}");
+        OnWaveStarted?.Invoke(currentWaveIndex);
 
         StartCoroutine(SpawnWave(currentWave));
     }
@@ -83,16 +91,33 @@ public class EnemySpawnerManager : MonoBehaviour
             Debug.Log($"Magazine wave completed. Additional delay: {wave.magazineWaveExtraDelay}");
         }
 
+        // Отсчет времени до следующей волны
         if (currentWaveIndex < waves.Length)
         {
-            yield return new WaitForSeconds(totalDelay);
+            waveTimerCoroutine = StartCoroutine(WaveTimerCountdown(totalDelay));
+            yield return waveTimerCoroutine;
             StartNextWave();
         }
         else
         {
+            OnAllWavesCompleted?.Invoke();
             GameManager gm = GameManager.instance;
             gm.OnPreparePhaseStarted?.Invoke();
         }
+    }
+
+    private IEnumerator WaveTimerCountdown(float delay)
+    {
+        float remainingTime = delay;
+
+        while (remainingTime > 0)
+        {
+            OnWaveTimerChanged?.Invoke(remainingTime);
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        OnWaveTimerChanged?.Invoke(0f);
     }
 
     private void SpawnEnemy(GameObject[] possibleEnemies)
