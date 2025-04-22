@@ -13,16 +13,15 @@ public class UI_Manager : MonoBehaviour
     [Header("Prefabs to create")]
     [SerializeField] private PlayerHUD playerHUDPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
-    [SerializeField] private GameMenu gameMenuPrefab;
+    [SerializeField] private VictoryPopupView victoryPopupPrefab;
 
     private bool isMainMenuOpened = false;
 
     [Space]
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
-
+    public VictoryPopupView victoryPopup;
     public MainMenu mainMenu;
-    public GameMenu gameMenu;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
 
@@ -38,8 +37,9 @@ public class UI_Manager : MonoBehaviour
     {
         // Creating canvases
         playerHUD = Instantiate(playerHUDPrefab);
-        gameMenu = Instantiate(gameMenuPrefab);
         mainMenu = Instantiate(mainMenuPrefab);
+        victoryPopup = Instantiate(victoryPopupPrefab);
+
 
         // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
@@ -132,6 +132,20 @@ public class UI_Manager : MonoBehaviour
         Unpause();
         ToggleCanvas(playerHUD.gameObject);
         isMainMenuOpened = false;
+    }
+
+    public void OpenVictoryPopup()
+    {
+        Pause();
+        ToggleCanvas(victoryPopup.gameObject);
+        victoryPopup.Show("Победа");
+    }
+
+    public void CloseVictoryPopup()
+    {
+        Unpause();
+        ToggleCanvas(playerHUD.gameObject);
+        victoryPopup.Hide();
     }
 
     private void ToggleCanvas(GameObject canvasToToggleGO)
