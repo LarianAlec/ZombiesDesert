@@ -7,14 +7,23 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : MonoBehaviour
 {
+    public enum WaveType
+    {
+        Combat,
+        Magazine
+    };
+
     [System.Serializable]
     public class Wave
     {
+        public WaveType waveType;
         public string waveName;
         public int enemiesCount;
         public GameObject[] enemyPrefabs;
         public float spawnDelay = 1f;
         public float waveDelay = 5f;
+        [Tooltip("Additional delay for Magazine waves")]
+        public float magazineWaveExtraDelay = 10f;
     }
 
     [Header("Wave Settings")] 
@@ -43,7 +52,7 @@ public class EnemySpawnerManager : MonoBehaviour
         }
 
         Wave currentWave = waves[currentWaveIndex];
-        Debug.Log($"Starting Wave: {currentWave.waveName}");
+        Debug.Log($"Starting {currentWave.waveType} Wave: {currentWave.waveName}");
 
         StartCoroutine(SpawnWave(currentWave));
     }
@@ -52,6 +61,7 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         isSpawning = true;
 
+        // Спавн врагов
         for (int i = 0; i < wave.enemiesCount; i++)
         {
             SpawnEnemy(wave.enemyPrefabs);
@@ -60,18 +70,27 @@ public class EnemySpawnerManager : MonoBehaviour
 
         isSpawning = false;
         currentWaveIndex++;
-
+        
+        // Ожидание смерти всех врагов
         yield return new WaitUntil(() => activeEnemies.Count == 0);
+
+        // Расчет задержки перед следующей волной
+        float totalDelay = wave.waveDelay;
+
+        if (wave.waveType == WaveType.Magazine)
+        {
+            totalDelay += wave.magazineWaveExtraDelay;
+            Debug.Log($"Magazine wave completed. Additional delay: {wave.magazineWaveExtraDelay}");
+        }
 
         if (currentWaveIndex < waves.Length)
         {
-            yield return new WaitForSeconds(wave.waveDelay);
+            yield return new WaitForSeconds(totalDelay);
             StartNextWave();
         }
         else
         {
-            //_victoryPresenter.ShowPopup();
-            GameManager gm = FindObjectOfType<GameManager>();
+            GameManager gm = GameManager.instance;
             gm.OnPreparePhaseStarted?.Invoke();
         }
     }

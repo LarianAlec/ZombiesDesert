@@ -13,12 +13,12 @@ public class UI_Manager : MonoBehaviour
     [Header("Prefabs to create")]
     [SerializeField] private PlayerHUD playerHUDPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
+    [SerializeField] private EndPopupView endPopupViewPrefab;
 
     private bool isMainMenuOpened = false;
 
     [Space]
     [Header("Victory Settings")]
-    [SerializeField] private EndPopupView endPopupView;
     private VictoryPopupModel _victoryModel = new VictoryPopupModel();
     private DefeatPopupModel _defeatModel = new DefeatPopupModel();
     private EndPopupPresenter _victoryPresenter;
@@ -30,6 +30,7 @@ public class UI_Manager : MonoBehaviour
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
     public MainMenu mainMenu;
+    public EndPopupView endPopupView;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
 
@@ -40,9 +41,6 @@ public class UI_Manager : MonoBehaviour
         {
             instance = this;
         }
-
-        _victoryPresenter = new EndPopupPresenter(_victoryModel, endPopupView);
-        _defeatPresenter = new EndPopupPresenter(_defeatModel, endPopupView);
     }
 
     private void Start()
@@ -50,6 +48,9 @@ public class UI_Manager : MonoBehaviour
         // Creating canvases
         playerHUD = Instantiate(playerHUDPrefab);
         mainMenu = Instantiate(mainMenuPrefab);
+        endPopupView = Instantiate(endPopupViewPrefab);
+        _victoryPresenter = new EndPopupPresenter(_victoryModel, endPopupView);
+        _defeatPresenter = new EndPopupPresenter(_defeatModel, endPopupView);
 
         // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
