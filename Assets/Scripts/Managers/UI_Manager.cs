@@ -100,7 +100,14 @@ public class UI_Manager : MonoBehaviour
         WavesTimerWidget wavesTimerWidget = playerHUD.waveTimerWidget;
         EnemySpawnerManager enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
 
+        // Assign widget
         enemySpawnerManager.OnWaveTimerChanged += wavesTimerWidget.UpdateWavesTime;
+        enemySpawnerManager.OnWaveNameChanged += wavesTimerWidget.SetWaveName;
+        enemySpawnerManager.OnWaveTypeChanged += wavesTimerWidget.SetWaveGoal;
+        // Initilize widget
+        wavesTimerWidget.UpdateWavesTime(0f);
+        wavesTimerWidget.SetWaveGoal((int)enemySpawnerManager.GetCurrentWave().waveType);
+        wavesTimerWidget.SetWaveName(enemySpawnerManager.GetCurrentWave().waveName);
     }
 
     #endregion

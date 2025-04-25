@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : MonoBehaviour
 {
+    // WaveType must be matching with WavesTimerWidget.WaveGoal for correct UI view
     public enum WaveType
     {
         Combat,
@@ -35,10 +36,12 @@ public class EnemySpawnerManager : MonoBehaviour
     private bool isSpawning = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
     private Coroutine waveTimerCoroutine;
-
-    // События
+    
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public event Action<int> OnWaveStarted; // currentWaveIndex
     public event Action<float> OnWaveTimerChanged; // remaingTime
+    public event Action<string> OnWaveNameChanged; // waveName
+    public event Action<int> OnWaveTypeChanged; // waveType
     public event Action OnAllWavesCompleted;
 
     private void Start()
@@ -61,6 +64,8 @@ public class EnemySpawnerManager : MonoBehaviour
         Wave currentWave = waves[currentWaveIndex];
         Debug.Log($"Starting {currentWave.waveType} Wave: {currentWave.waveName}");
         OnWaveStarted?.Invoke(currentWaveIndex);
+        OnWaveNameChanged?.Invoke(currentWave.waveName);
+        OnWaveTypeChanged?.Invoke((int)currentWave.waveType);
 
         StartCoroutine(SpawnWave(currentWave));
     }
@@ -69,7 +74,7 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         isSpawning = true;
 
-        // Спавн врагов
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         for (int i = 0; i < wave.enemiesCount; i++)
         {
             SpawnEnemy(wave.enemyPrefabs);
@@ -79,10 +84,10 @@ public class EnemySpawnerManager : MonoBehaviour
         isSpawning = false;
         currentWaveIndex++;
         
-        // Ожидание смерти всех врагов
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         yield return new WaitUntil(() => activeEnemies.Count == 0);
 
-        // Расчет задержки перед следующей волной
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         float totalDelay = wave.waveDelay;
 
         if (wave.waveType == WaveType.Magazine)
@@ -91,7 +96,7 @@ public class EnemySpawnerManager : MonoBehaviour
             Debug.Log($"Magazine wave completed. Additional delay: {wave.magazineWaveExtraDelay}");
         }
 
-        // Отсчет времени до следующей волны
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (currentWaveIndex < waves.Length)
         {
             waveTimerCoroutine = StartCoroutine(WaveTimerCountdown(totalDelay));
@@ -165,5 +170,10 @@ public class EnemySpawnerManager : MonoBehaviour
         {
             Gizmos.DrawWireCube(spawnPoint.position, spawnArea);
         }
+    }
+
+    public Wave GetCurrentWave()
+    {
+        return waves[currentWaveIndex];
     }
 }
