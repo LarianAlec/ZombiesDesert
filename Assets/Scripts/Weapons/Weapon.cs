@@ -29,6 +29,7 @@ public class Weapon : MonoBehaviour
     [Header("FireMode")]
     [SerializeField] protected WeaponFireMode weaponFireMode;
     [SerializeField] protected float fireRate = 1.0f; // Bullets per second
+    [SerializeField] protected int bulletsPerShot = 1;
     private float lastShootTime;
     [Header("Spread")]
     [SerializeField] protected float spreadAmount = 0.5f;
@@ -147,20 +148,25 @@ public class Weapon : MonoBehaviour
         
         SetAmmo(ammo - 1);
 
-        GameObject bullet = ObjectPool.instance.GetBullet();
-
-        if (bullet == null)
+        int bulletCounter = 0;
+        while (bulletCounter < bulletsPerShot)
         {
-            Debug.Log("Weapon::MakeShot() : Need object pool instance for bullets!");
+            GameObject bullet = ObjectPool.instance.GetBullet();
+
+            if (bullet == null)
+            {
+                Debug.Log("Weapon::MakeShot() : Need object pool instance for bullets!");
+            }
+
+            bullet.transform.position = muzzleSocket.position;
+            bullet.transform.rotation = Quaternion.LookRotation(muzzleSocket.forward);
+
+            Vector3 shotDirection = GetBulletDirection();
+            shotDirection = GetBulletSpreadOffset(shotDirection);
+
+            bullet.GetComponent<Rigidbody>().velocity = shotDirection * bulletSpeed;
+            bulletCounter++;
         }
-
-        bullet.transform.position = muzzleSocket.position;
-        bullet.transform.rotation = Quaternion.LookRotation(muzzleSocket.forward);
-
-        Vector3 shotDirection = GetBulletDirection();
-        shotDirection = GetBulletSpreadOffset(shotDirection);
-
-        bullet.GetComponent<Rigidbody>().velocity = shotDirection * bulletSpeed;
     }
 
     #region Utility methods
@@ -229,9 +235,10 @@ public class Weapon : MonoBehaviour
 
     private Vector3 GetBulletSpreadOffset(Vector3 originalDirection)
     {
-        float randomizedValue = UnityEngine.Random.Range(-spreadAmount, spreadAmount);
-        Quaternion spreadRoatation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
-        return spreadRoatation * originalDirection;
+        float horizontalSpread = UnityEngine.Random.Range(-spreadAmount, spreadAmount);
+        float verticalSpread = UnityEngine.Random.Range(-spreadAmount, spreadAmount);
+        Quaternion spreadRotation = Quaternion.Euler(verticalSpread, horizontalSpread, 0f);
+        return spreadRotation * originalDirection;
     }
 
     private bool ReadyToFire()
