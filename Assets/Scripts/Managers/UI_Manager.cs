@@ -192,4 +192,14 @@ public class UI_Manager : MonoBehaviour
         activeCanvasGO = canvasToToggleGO;
         activeCanvasGO.SetActive(true);
     }
+
+    public void ShowWaitNextWaveGoal()
+    {
+        WavesTimerWidget wavesTimerWidget = playerHUD.waveTimerWidget;
+        if (wavesTimerWidget != null)
+        {
+            //hardcode
+            wavesTimerWidget.SetWaveGoal(2);
+        }
+    }
 }

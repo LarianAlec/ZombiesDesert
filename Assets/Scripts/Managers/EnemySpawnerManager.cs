@@ -99,6 +99,12 @@ public class EnemySpawnerManager : MonoBehaviour
         // ������ ������� �� ��������� �����
         if (currentWaveIndex < waves.Length)
         {
+            // UI show wait next wave goal
+            if (wave.waveType != WaveType.Magazine)
+            {  
+                UI_Manager.instance.ShowWaitNextWaveGoal();
+            }
+            
             waveTimerCoroutine = StartCoroutine(WaveTimerCountdown(totalDelay));
             yield return waveTimerCoroutine;
             StartNextWave();

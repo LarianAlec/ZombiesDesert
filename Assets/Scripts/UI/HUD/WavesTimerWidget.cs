@@ -11,7 +11,8 @@ public class WavesTimerWidget : MonoBehaviour
     public enum WaveGoal
     {
         Survive,
-        Buy
+        Buy, 
+        WaitNextWave
     }
 
     public void UpdateWavesTime(float currentTime)
@@ -34,11 +35,15 @@ public class WavesTimerWidget : MonoBehaviour
         switch (goal)
         {
             case WaveGoal.Survive:
-                text = "Выживай!!!";
+                text = "Выживи!";
                 break;
             
             case WaveGoal.Buy:
-                text = "Снаряжайся!";
+                text = "Подготовься к бою!";
+                break;
+
+            case WaveGoal.WaitNextWave:
+                text = "До следующей волны осталось:";
                 break;
             
             default:
