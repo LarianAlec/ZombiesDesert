@@ -1519,6 +1519,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
         type: 3}
+      propertyPath: shopPopupPrefab
+      value: 
+      objectReference: {fileID: 6463226580220455966, guid: 76c3e847dbfd9144ab93db88b26e08a8,
+        type: 3}
+    - target: {fileID: 6325804587662331167, guid: bbcf72ab0a7b96e4eb7347e64c15c02a,
+        type: 3}
       propertyPath: victoryPopupView
       value: 
       objectReference: {fileID: 0}
