@@ -15,9 +15,14 @@ public class ShopPopupPresenter : PopupPresenter
 
     private void InitializeShopLogic()
     {
-        _shopView.HealthUpgradeButton.onClick.AddListener(OnHealthUpgrade);
-        _shopView.AmmoUpgradeButton.onClick.AddListener(OnAmmoUpgrade);
+        _shopView.HealthRestoreButton.onClick.AddListener(OnHealthRestore);
+        _shopView.PistolAmmoButton.onClick.AddListener(OnAddPistolAmmo);
+        _shopView.ShotgunAmmoButton.onClick.AddListener(OnAddShotgunAmmo);
+        _shopView.RifleAmmoButton.onClick.AddListener(OnAddRifleAmmo);
         _shopView.CloseButton.onClick.AddListener(() => UI_Manager.instance.CloseMagazineShop());
+        _shopView.PistolUpgradeButton.onClick.AddListener(OnPistolUpgrade);
+        _shopView.ShotgunUpgradeButton.onClick.AddListener(OnShotgunUpgrade);
+        _shopView.RifleUpgradeButton.onClick.AddListener(OnRifleUpgrade);
     }
 
     public new void ShowPopup()
@@ -32,20 +37,65 @@ public class ShopPopupPresenter : PopupPresenter
         base.HidePopup();
     }
 
-    private void OnHealthUpgrade()
+    private void OnHealthRestore()
     {
         if (_shopModel.TryBuyItem(200))
         {
-            Debug.Log("GameManager.instance.playerCharacter.IncreaseMaxHealth(50);");
+            Debug.Log("OnHealthRestore");
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }
 
-    private void OnAmmoUpgrade()
+    private void OnAddPistolAmmo()
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("GameManager.instance.playerCharacter.AddAmmo(100);");
+            Debug.Log("OnAddPistolAmmo");
+            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+        }
+    }
+    
+    private void OnAddShotgunAmmo()
+    {
+        if (_shopModel.TryBuyItem(150))
+        {
+            Debug.Log("OnAddShotgunAmmo");
+            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+        }
+    }
+    
+    private void OnAddRifleAmmo()
+    {
+        if (_shopModel.TryBuyItem(150))
+        {
+            Debug.Log("OnAddRifleAmmo");
+            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+        }
+    }
+    
+    private void OnPistolUpgrade()
+    {
+        if (_shopModel.TryBuyItem(150))
+        {
+            Debug.Log("OnPistolUpgrade");
+            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+        }
+    }
+
+    private void OnShotgunUpgrade()
+    {
+        if (_shopModel.TryBuyItem(150))
+        {
+            Debug.Log("OnShotgunUpgrade");
+            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+        }
+    }
+    
+    private void OnRifleUpgrade()
+    {
+        if (_shopModel.TryBuyItem(150))
+        {
+            Debug.Log("OnRifleUpgrade");
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }

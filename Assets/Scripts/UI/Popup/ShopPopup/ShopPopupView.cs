@@ -7,8 +7,13 @@ using UnityEngine.UI;
 public class ShopPopupView : MonoBehaviour, IPopupView
 {
     [Header("UI Elements")]
-    public Button AmmoUpgradeButton;
-    public Button HealthUpgradeButton;
+    public Button PistolUpgradeButton;
+    public Button PistolAmmoButton;
+    public Button ShotgunUpgradeButton;
+    public Button ShotgunAmmoButton;
+    public Button RifleUpgradeButton;
+    public Button RifleAmmoButton;
+    public Button HealthRestoreButton;
     public Button CloseButton;
     public TextMeshProUGUI HeaderText;
     public TextMeshProUGUI CoinsText;
