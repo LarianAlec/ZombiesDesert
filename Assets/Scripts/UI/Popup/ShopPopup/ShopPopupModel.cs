@@ -1,14 +1,20 @@
+using UnityEngine;
 public class ShopPopupModel : PopupModel
 {
-    public int PlayerCoins { get; private set; } = 500; // Example of started currency
+    [SerializeField] private ShopManager shop;
+
+    private void Start()
+    {
+        shop = ShopManager.instance;
+    }
 
     public bool TryBuyItem(int itemCost)
     {
-        if (PlayerCoins >= itemCost)
-        {
-            PlayerCoins -= itemCost;
-            return true;
-        }
-        return false;
+        return shop.TrySpendCoins(itemCost);
+    }
+
+    public int GetPlayerCoins()
+    {
+        return shop.GetPlayerCoins();
     }
 }
