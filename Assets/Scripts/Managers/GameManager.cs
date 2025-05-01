@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private UI_Manager UImanager;
 
-    private PlayerCharacter playerCharacter;
+    [SerializeField] private PlayerCharacter playerCharacter;
 
     public static GameManager instance;
 
@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Magazine phase start!");
         UImanager.OpenMagazineShop();
+    }
+
+    public PlayerCharacter GetPlayer()
+    {
+        return playerCharacter;
     }
 
     private void OnDestroy()

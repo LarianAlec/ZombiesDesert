@@ -39,10 +39,17 @@ public class ShopPopupPresenter : PopupPresenter
 
     private void OnHealthRestore()
     {
-        if (_shopModel.TryBuyItem(200))
+        int cost = 200;
+        if (_shopModel.TryBuyItem(cost))
         {
-            Debug.Log("OnHealthRestore");
-            _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+            if (ShopManager.instance.RestorePlayerHealth(25))
+            {
+                _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
+            }
+            else
+            {
+                ShopManager.instance.AddCoins(cost);
+            }
         }
     }
 
@@ -50,7 +57,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnAddPistolAmmo");
+            ShopManager.instance.AddPistolAmmo();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }
@@ -59,7 +66,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnAddShotgunAmmo");
+            ShopManager.instance.AddShotgunAmmo();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }
@@ -68,7 +75,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnAddRifleAmmo");
+            ShopManager.instance.AddRifleAmmo();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }

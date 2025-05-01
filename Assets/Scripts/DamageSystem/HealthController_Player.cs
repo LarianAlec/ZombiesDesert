@@ -30,6 +30,13 @@ public class HealthController_Player : HealthController
         OnCurrentHealthChanged(currentHealth, maxHealth);
     }
 
+    public override bool RestoreHealth(int health)
+    {
+        bool isSuccess = base.RestoreHealth(health);
+        OnCurrentHealthChanged(currentHealth, maxHealth);
+        return isSuccess;
+    }
+
     public void Die()
     {
         isDead = true;

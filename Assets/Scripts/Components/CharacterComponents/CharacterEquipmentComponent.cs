@@ -257,4 +257,9 @@ public class CharacterEquipmentComponent : MonoBehaviour
         }
     }
 
+    public void AddAmmo(AmmunitionType ammoType, int amount)
+    {
+        ammunitionArray[ammoType] += amount;
+        OnCurrentWeaponAmmoChanged(currentEquippedWeapon.GetAmmo());
+    }
 }

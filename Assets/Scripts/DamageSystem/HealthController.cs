@@ -26,5 +26,21 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public virtual bool RestoreHealth(int health)
+    {
+        if (isCanRestoreHP())
+        {
+            currentHealth += health;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            return true;
+        }
+        return false;
+    }    
+
+    public bool isCanRestoreHP() =>  currentHealth < maxHealth; 
+
     public bool ShouldDie() => currentHealth <= 0;
 }
