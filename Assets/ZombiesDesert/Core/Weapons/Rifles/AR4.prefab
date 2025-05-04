@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3142655132203342950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1583012706184940322}
+  m_Layer: 0
+  m_Name: SocketLeftHandIK
+  m_TagString: LeftHandIK
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1583012706184940322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3142655132203342950}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.276185, y: 0.50794965, z: 0.6894375, w: -0.4363313}
+  m_LocalPosition: {x: -0.32860702, y: 0.008145028, z: -0.12560639}
+  m_LocalScale: {x: 0.09999995, y: 0.09999999, z: 0.099999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7623284751430091279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5029712564513992566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2136301172429718040}
+  m_Layer: 0
+  m_Name: SocketMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2136301172429718040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029712564513992566}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.103, z: 0.571}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7623284751430091279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8866037035860857146
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7623284751430091279}
+  - component: {fileID: 1757521454484616674}
   m_Layer: 0
   m_Name: AR4
   m_TagString: Untagged
@@ -113,5 +176,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5071019569321306642}
+  - {fileID: 2136301172429718040}
+  - {fileID: 1583012706184940322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1757521454484616674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978204235266180366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponTier: 1
+  muzzleSocket: {fileID: 2136301172429718040}
+  leftHandIKSoket: {fileID: 1583012706184940322}
+  characterOwner: {fileID: 0}
+  weaponType: 3
+  ammoType: 3
+  maxAmmo: 30
+  weaponFireMode: 1
+  fireRate: 7
+  bulletsPerShot: 1
+  spreadAmount: 0.5
+  bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
+    type: 3}
+  bulletSpeed: 16
+  reloadClip: {fileID: 7400000, guid: 75b382d8e8b4e1f41b5326c6f0d61f24, type: 2}
+  equipClip: {fileID: 0}
+  fireSound: {fileID: 8300000, guid: 9eac3e3d02423f045a3ca5547d9f48ab, type: 3}
+  emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}

@@ -5,11 +5,20 @@ using UnityEngine;
 [System.Serializable]
 public class Weapon : MonoBehaviour
 {
+    public enum WeaponTier
+    {
+        FirstTier,
+        SecondTier, 
+        ThirdTier
+    };
+
     public delegate void FOnReloadComplete();
     public event FOnReloadComplete OnReloadComplete;
 
     public delegate void FOnAmmoChanged(int newAmmo);
     public event FOnAmmoChanged OnAmmoChanged;
+
+    public WeaponTier weaponTier;
 
     public Transform muzzleSocket;
     public Transform leftHandIKSoket;
