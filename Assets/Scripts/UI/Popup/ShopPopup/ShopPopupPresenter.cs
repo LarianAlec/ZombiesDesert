@@ -84,7 +84,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnPistolUpgrade");
+            ShopManager.instance.UpgradePistol();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }
@@ -93,7 +93,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnShotgunUpgrade");
+            ShopManager.instance.UpgradeShotgun();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }
@@ -102,7 +102,7 @@ public class ShopPopupPresenter : PopupPresenter
     {
         if (_shopModel.TryBuyItem(150))
         {
-            Debug.Log("OnRifleUpgrade");
+            ShopManager.instance.UpgradeRifle();
             _shopView.UpdateCoins(_shopModel.GetPlayerCoins());
         }
     }

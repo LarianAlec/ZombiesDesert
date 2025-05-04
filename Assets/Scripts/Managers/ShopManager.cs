@@ -4,6 +4,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
     [SerializeField] private int playerCoins;
+    private CharacterEquipmentComponent playerEquipmentComponent;
 
     private void Awake()
     {
@@ -11,6 +12,11 @@ public class ShopManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {
+        playerEquipmentComponent = GameManager.instance.GetPlayer().GetComponent<CharacterEquipmentComponent>();
     }
 
     public bool TrySpendCoins(int amount)
@@ -41,18 +47,33 @@ public class ShopManager : MonoBehaviour
 
     public void AddPistolAmmo()
     {
-        CharacterEquipmentComponent equipmentComponent = GameManager.instance.GetPlayer().GetComponent<CharacterEquipmentComponent>();
-        equipmentComponent.AddAmmo(AmmunitionType.Pistol, 30);
+        playerEquipmentComponent.AddAmmo(AmmunitionType.Pistol, 30);
     }
     public void AddShotgunAmmo()
     {
-        CharacterEquipmentComponent equipmentComponent = GameManager.instance.GetPlayer().GetComponent<CharacterEquipmentComponent>();
-        equipmentComponent.AddAmmo(AmmunitionType.Shotgun, 8);
+        playerEquipmentComponent.AddAmmo(AmmunitionType.Shotgun, 8);
     }
 
     public void AddRifleAmmo()
     {
-        CharacterEquipmentComponent equipmentComponent = GameManager.instance.GetPlayer().GetComponent<CharacterEquipmentComponent>();
-        equipmentComponent.AddAmmo(AmmunitionType.AutoRifle, 30);
+        playerEquipmentComponent.AddAmmo(AmmunitionType.AutoRifle, 30);
+    }
+
+    public void UpgradePistol()
+    {
+        Debug.Log("UpgradePistol");
+        playerEquipmentComponent.UpgradeWeapon(WeaponType.Pistol);
+    }
+
+    public void UpgradeShotgun()
+    {
+        Debug.Log("UpgradeShotgun");
+        playerEquipmentComponent.UpgradeWeapon(WeaponType.Shotgun);
+    }
+
+    public void UpgradeRifle()
+    {
+        Debug.Log("UpgradeRifle");
+        playerEquipmentComponent.UpgradeWeapon(WeaponType.AutoRifle);
     }
 }

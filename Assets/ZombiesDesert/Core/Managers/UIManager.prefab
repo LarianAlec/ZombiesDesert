@@ -46,9 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHUDPrefab: {fileID: 3393793163714351063, guid: f392b6ba347c85f4fb1d1576d11448e0,
     type: 3}
-  menuPrefab: {fileID: 7290852001636229019, guid: 7a00c2e30c019d24e8e31a6b8364d7f0,
+  mainMenuPrefab: {fileID: 7290852001636229019, guid: 7a00c2e30c019d24e8e31a6b8364d7f0,
+    type: 3}
+  endPopupViewPrefab: {fileID: 2084176866967407026, guid: 88e0d186ef4bcfe4bbd1addb2191133a,
+    type: 3}
+  shopPopupPrefab: {fileID: 6463226580220455966, guid: 76c3e847dbfd9144ab93db88b26e08a8,
     type: 3}
   activeCanvasGO: {fileID: 0}
   mainMenu: {fileID: 0}
+  endPopupView: {fileID: 0}
+  shopPopupView: {fileID: 0}
   playerHUD: {fileID: 0}
   playerCharacter: {fileID: 0}

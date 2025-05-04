@@ -5,13 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Weapon : MonoBehaviour
 {
-    public enum WeaponTier
-    {
-        FirstTier,
-        SecondTier, 
-        ThirdTier
-    };
-
     public delegate void FOnReloadComplete();
     public event FOnReloadComplete OnReloadComplete;
 

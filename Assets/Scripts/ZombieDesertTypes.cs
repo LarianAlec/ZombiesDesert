@@ -1,10 +1,17 @@
 using Unity.VisualScripting;
 
+public enum WeaponTier
+{
+    FirstTier,
+    SecondTier,
+    ThirdTier
+};
+
 public enum EquipmentSlots
 {
     None,
     SideArm,
-    PrimeryWeapon,
+    PrimaryWeapon,
     SecondaryWeapon,
     TretiaryWeapon
 }
