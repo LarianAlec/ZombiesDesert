@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Action OnPlayerCharacterDied;
 
     private UI_Manager UImanager;
+    private EnemySpawnerManager enemySpawnerManager;
 
     [SerializeField] private PlayerCharacter playerCharacter;
 
@@ -31,14 +32,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UImanager = FindObjectOfType<UI_Manager>();
-
-       
+        enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
+        enemySpawnerManager.OnAllWavesCompleted += AllWavesCompleted;
     }
 
     private void PreparePhaseStart()
     {
         Debug.Log("Prepare phase start!");
-        UImanager.OpenVictoryPopup();
     }
 
     private void CombatPhaseStart()
@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
         UImanager.OpenMagazineShop();
     }
 
+    private void AllWavesCompleted()
+    {
+        UImanager.OpenVictoryPopup();
+    }
+
     public PlayerCharacter GetPlayer()
     {
         return playerCharacter;
@@ -70,5 +75,6 @@ public class GameManager : MonoBehaviour
         OnCombatPhaseStarted -= CombatPhaseStart;
         OnPlayerCharacterDied -= PlayerCharacterDied;
         OnMagazinePhaseStarted -= MagazinePhaseStart;
+        enemySpawnerManager.OnAllWavesCompleted -= AllWavesCompleted;
     }
 }
