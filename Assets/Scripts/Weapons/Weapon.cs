@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviour
     public delegate void FOnAmmoChanged(int newAmmo);
     public event FOnAmmoChanged OnAmmoChanged;
 
+    public WeaponTier weaponTier;
+
     public Transform muzzleSocket;
     public Transform leftHandIKSoket;
     public BaseCharacter characterOwner;

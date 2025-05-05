@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponTier: 2
   muzzleSocket: {fileID: 2798470611349678775}
   leftHandIKSoket: {fileID: 1203648293610017231}
   characterOwner: {fileID: 0}
@@ -55,6 +56,7 @@ MonoBehaviour:
   maxAmmo: 30
   weaponFireMode: 1
   fireRate: 8
+  bulletsPerShot: 1
   spreadAmount: 5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}

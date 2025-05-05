@@ -27,10 +27,17 @@ public class UI_Manager : MonoBehaviour
     private bool isEndPopupOpened = false;
 
     [Space]
+    [Header("Shop Settings")]
+    [SerializeField] private ShopPopupView shopPopupPrefab;
+    private ShopPopupPresenter _shopPresenter;
+    private ShopPopupModel _shopModel = new ShopPopupModel();
+
+    [Space]
     [Header("Created instances / FOR DEBUG PURPOSE ONLY")]
     public GameObject activeCanvasGO;
     public MainMenu mainMenu;
     public EndPopupView endPopupView;
+    public ShopPopupView shopPopupView;
     public PlayerHUD playerHUD;
     public PlayerCharacter playerCharacter;
 
@@ -49,8 +56,10 @@ public class UI_Manager : MonoBehaviour
         playerHUD = Instantiate(playerHUDPrefab);
         mainMenu = Instantiate(mainMenuPrefab);
         endPopupView = Instantiate(endPopupViewPrefab);
+        shopPopupView = Instantiate(shopPopupPrefab);
         _victoryPresenter = new EndPopupPresenter(_victoryModel, endPopupView);
         _defeatPresenter = new EndPopupPresenter(_defeatModel, endPopupView);
+        _shopPresenter = new ShopPopupPresenter(_shopModel, shopPopupView);
 
         // Set active canvas (as default it's playerHUD)
         activeCanvasGO = playerHUD.gameObject;
@@ -144,6 +153,7 @@ public class UI_Manager : MonoBehaviour
 
     #endregion
 
+    #region Main menu methods
     public void OpenMainMenu()
     {
         Pause();
@@ -160,7 +170,28 @@ public class UI_Manager : MonoBehaviour
         ToggleCanvas(playerHUD.gameObject);
         isMainMenuOpened = false;
     }
+    #endregion
 
+    #region Magazine methods
+    public void OpenMagazineShop()
+    {
+        if (isEndPopupOpened) return;
+        Pause();
+        _shopPresenter.ShowPopup();
+        isEndPopupOpened = true;
+    }
+
+    public void CloseMagazineShop()
+    {
+        Unpause();
+        _shopPresenter.HidePopup();
+        isEndPopupOpened = false;
+        GameManager.instance.OnCombatPhaseStarted?.Invoke();
+    }
+
+    #endregion
+
+    #region Victory/Defeat methods
     public void OpenVictoryPopup()
     {
         if (isEndPopupOpened) { return; }
@@ -178,13 +209,14 @@ public class UI_Manager : MonoBehaviour
     public void OpenDefeatPopup()
     {
         if (isEndPopupOpened) { return; }
-        _defeatPresenter.ShowPopup();  
+        _defeatPresenter.ShowPopup();
     }
 
     public void CloseDefeatPopup()
     {
         _defeatPresenter.HidePopup();
     }
+    #endregion
 
     private void ToggleCanvas(GameObject canvasToToggleGO)
     {

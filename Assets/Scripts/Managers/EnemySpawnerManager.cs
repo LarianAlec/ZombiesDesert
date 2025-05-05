@@ -74,7 +74,7 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         isSpawning = true;
 
-        // ����� ������
+        // Spawn enemies
         for (int i = 0; i < wave.enemiesCount; i++)
         {
             SpawnEnemy(wave.enemyPrefabs);
@@ -84,10 +84,20 @@ public class EnemySpawnerManager : MonoBehaviour
         isSpawning = false;
         currentWaveIndex++;
         
-        // �������� ������ ���� ������
+        // Wait until all enemies will be died
         yield return new WaitUntil(() => activeEnemies.Count == 0);
 
-        // ������ �������� ����� ��������� ������
+        // Calling the appropriate event depending on the type of wave
+        if (wave.waveType == WaveType.Magazine)
+        {
+            GameManager.instance.OnMagazinePhaseStarted?.Invoke();
+        }
+        else
+        {
+            GameManager.instance.OnPreparePhaseStarted?.Invoke();
+        }
+
+        // Calculating totalDelay for start next wave
         float totalDelay = wave.waveDelay;
 
         if (wave.waveType == WaveType.Magazine)
@@ -96,7 +106,7 @@ public class EnemySpawnerManager : MonoBehaviour
             Debug.Log($"Magazine wave completed. Additional delay: {wave.magazineWaveExtraDelay}");
         }
 
-        // ������ ������� �� ��������� �����
+        // Taimer for next wave
         if (currentWaveIndex < waves.Length)
         {
             // UI show wait next wave goal
@@ -112,8 +122,7 @@ public class EnemySpawnerManager : MonoBehaviour
         else
         {
             OnAllWavesCompleted?.Invoke();
-            GameManager gm = GameManager.instance;
-            gm.OnPreparePhaseStarted?.Invoke();
+            GameManager.instance.OnPreparePhaseStarted?.Invoke();
         }
     }
 

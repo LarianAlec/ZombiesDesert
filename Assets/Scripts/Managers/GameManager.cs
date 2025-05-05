@@ -5,12 +5,13 @@ public class GameManager : MonoBehaviour
 {
     // CombatPhase, PreparingPhase
     public Action OnPreparePhaseStarted;
+    public Action OnMagazinePhaseStarted;
     public Action OnCombatPhaseStarted;
     public Action OnPlayerCharacterDied;
 
     private UI_Manager UImanager;
 
-    private PlayerCharacter playerCharacter;
+    [SerializeField] private PlayerCharacter playerCharacter;
 
     public static GameManager instance;
 
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         OnPreparePhaseStarted += PreparePhaseStart;
         OnCombatPhaseStarted += CombatPhaseStart;
         OnPlayerCharacterDied += PlayerCharacterDied;
+        OnMagazinePhaseStarted += MagazinePhaseStart;
     }
 
     private void Start()
@@ -51,10 +53,22 @@ public class GameManager : MonoBehaviour
         OnPlayerCharacterDied -= PlayerCharacterDied;
     }
 
+    private void MagazinePhaseStart()
+    {
+        Debug.Log("Magazine phase start!");
+        UImanager.OpenMagazineShop();
+    }
+
+    public PlayerCharacter GetPlayer()
+    {
+        return playerCharacter;
+    }
+
     private void OnDestroy()
     {
         OnPreparePhaseStarted -= PreparePhaseStart;
         OnCombatPhaseStarted -= CombatPhaseStart;
         OnPlayerCharacterDied -= PlayerCharacterDied;
+        OnMagazinePhaseStarted -= MagazinePhaseStart;
     }
 }

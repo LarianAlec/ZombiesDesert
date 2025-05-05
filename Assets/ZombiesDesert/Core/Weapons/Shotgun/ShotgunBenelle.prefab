@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponTier: 1
   muzzleSocket: {fileID: 6349106267334137042}
   leftHandIKSoket: {fileID: 854081896598027677}
   characterOwner: {fileID: 0}

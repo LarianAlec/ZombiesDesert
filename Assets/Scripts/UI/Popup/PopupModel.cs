@@ -1,6 +1,6 @@
 [System.Serializable]
 public class PopupModel
 {
-    public string text = "DEFAULT";
-    public bool isVisible = false;
+    public string text { get; set; } = "DEFAULT";
+    public bool isVisible { get; set; } = false;
 }

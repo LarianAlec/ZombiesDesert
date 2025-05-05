@@ -3071,6 +3071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8473c5586030b314c86668cae469f351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraOrientation: {fileID: 0}
   walkSpeed: 2
   runSpeed: 4
   rotaionRate: 12
@@ -3151,15 +3152,43 @@ MonoBehaviour:
     equipmentSlot: 1
     gunPrefab: {fileID: 492153027971526139, guid: 9fb2786701658d947b46842d3f7673ae,
       type: 3}
+    createOnStart: 1
   - weaponType: 2
     equipmentSlot: 3
-    gunPrefab: {fileID: 3142844652857876466, guid: 8b4621f31af8fb44db81e683e233e8d7,
+    gunPrefab: {fileID: 2782893942754653093, guid: 45454c4dfd3190f4eb61f3d40c538380,
       type: 3}
+    createOnStart: 0
   - weaponType: 3
     equipmentSlot: 2
-    gunPrefab: {fileID: 2043919239643040397, guid: 330dd9843d5b8a64289207cb5b7d4183,
+    gunPrefab: {fileID: 6155984702861805166, guid: f3279960faaeb9c4ca4aafe2189209d1,
       type: 3}
-  autoEquipSlot: 2
+    createOnStart: 0
+  autoEquipSlot: 1
+  upgradedWeapons:
+  - weaponType: 1
+    targetTier: 1
+    upgradedPrefab: {fileID: 8020053194192611858, guid: a1f98ce87dc9e6a4a80372f55e4fbd0a,
+      type: 3}
+  - weaponType: 2
+    targetTier: 0
+    upgradedPrefab: {fileID: 2782893942754653093, guid: 45454c4dfd3190f4eb61f3d40c538380,
+      type: 3}
+  - weaponType: 2
+    targetTier: 1
+    upgradedPrefab: {fileID: 3142844652857876466, guid: 8b4621f31af8fb44db81e683e233e8d7,
+      type: 3}
+  - weaponType: 3
+    targetTier: 0
+    upgradedPrefab: {fileID: 6155984702861805166, guid: f3279960faaeb9c4ca4aafe2189209d1,
+      type: 3}
+  - weaponType: 3
+    targetTier: 1
+    upgradedPrefab: {fileID: 8978204235266180366, guid: f7802883ba09f144899d02c17ee9dbf0,
+      type: 3}
+  - weaponType: 3
+    targetTier: 2
+    upgradedPrefab: {fileID: 2043919239643040397, guid: 330dd9843d5b8a64289207cb5b7d4183,
+      type: 3}
   currentEquippedWeapon: {fileID: 0}
   currentEquippedSlot: 0
 --- !u!114 &4439073231583696676
@@ -3174,7 +3203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3885a01fa69a1248ba66ea83628bcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 100
   currentHealth: 0
 --- !u!114 &5489173364173057585
 MonoBehaviour:
