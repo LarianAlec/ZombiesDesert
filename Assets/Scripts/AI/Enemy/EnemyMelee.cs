@@ -50,7 +50,13 @@ public class EnemyMelee : Enemy
     {
         base.Start();
 
-        stateMachine.Initialize(idleState);
+        if (player == null)
+        {
+            Debug.LogError("Player isn't found on scene!");
+            return;
+        }
+
+        stateMachine.Initialize(chaseState);
     }
 
     protected override void Update()
