@@ -63,6 +63,37 @@ Transform:
   - {fileID: 3614604011917620166}
   m_Father: {fileID: 8258192007151548666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &484488934372415753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 327231051796301614}
+  m_Layer: 0
+  m_Name: SyntyPlayer_LookAt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &327231051796301614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484488934372415753}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5133162516246815614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537109789594820187
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +697,37 @@ Transform:
   m_Children:
   - {fileID: 7413183255698562264}
   m_Father: {fileID: 7956680379565603763}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2683797628561964614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2005654409762095852}
+  m_Layer: 0
+  m_Name: TargetLockOnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2005654409762095852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683797628561964614}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5133162516246815614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2700153613013136195
 GameObject:
@@ -5254,9 +5316,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5133162516246815614}
   - component: {fileID: 4662933575393614346}
-  - component: {fileID: 3801956684839614781}
-  - component: {fileID: 9204770869075312869}
-  - component: {fileID: 932015476672249618}
+  - component: {fileID: 5723007421753078317}
+  - component: {fileID: 5229115920075470904}
+  - component: {fileID: 5122178990463120690}
   m_Layer: 0
   m_Name: Adventures_woman_03
   m_TagString: Untagged
@@ -5296,6 +5358,8 @@ Transform:
   - {fileID: 9017510885753579754}
   - {fileID: 6583992311560888777}
   - {fileID: 6781325654709390050}
+  - {fileID: 327231051796301614}
+  - {fileID: 2005654409762095852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4662933575393614346
@@ -5307,11 +5371,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5510005367386257860}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 6394fe946fddfaf41bfac9f21431cf99, type: 3}
   m_Controller: {fileID: 9100000, guid: a3a348fc313b53a44ab5b8f348e2a5eb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -5319,7 +5383,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!143 &3801956684839614781
+--- !u!143 &5723007421753078317
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5345,7 +5409,7 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &9204770869075312869
+--- !u!114 &5229115920075470904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5361,7 +5425,7 @@ MonoBehaviour:
   _moveComposite: {x: 0, y: 0}
   _movementInputDuration: 0
   _movementInputDetected: 0
---- !u!114 &932015476672249618
+--- !u!114 &5122178990463120690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5374,9 +5438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraController: {fileID: 0}
-  _inputReader: {fileID: 9204770869075312869}
+  _inputReader: {fileID: 5229115920075470904}
   _animator: {fileID: 4662933575393614346}
-  _controller: {fileID: 3801956684839614781}
+  _controller: {fileID: 5723007421753078317}
   _alwaysStrafe: 1
   _walkSpeed: 1.4
   _runSpeed: 2.5
