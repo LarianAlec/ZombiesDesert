@@ -1,10 +1,3 @@
-// Copyright (c) 2024 Synty Studios Limited. All rights reserved.
-//
-// Use of this software is subject to the terms and conditions of the Synty Studios End User Licence Agreement (EULA)
-// available at: https://syntystore.com/pages/end-user-licence-agreement
-//
-// Sample scripts are included only as examples and are not intended as production-ready.
-
 using Synty.AnimationBaseLocomotion.Samples.InputSystem;
 using UnityEngine;
 
@@ -14,12 +7,20 @@ namespace Synty.AnimationBaseLocomotion.Samples
     {
         private const int _LAG_DELTA_TIME_ADJUSTMENT = 20;
 
+        public enum ControlType
+        {
+            ThirdPerson,
+            TopDown
+        }
+
         [Tooltip("The character game object")]
         [SerializeField]
         private GameObject _syntyCharacter;
         [Tooltip("Main camera used for player perspective")]
         [SerializeField]
-        private Camera _mainCamera;
+        private Camera _thirdPersonCamera;
+        [SerializeField]
+        private Camera _topDownCamera;
 
         [SerializeField]
         private Transform _playerTarget;
@@ -37,7 +38,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
         [SerializeField]
         private float _cameraDistance = 5f;
         [SerializeField]
-        private float _cameraHeightOffset;
+        private float _cameraHeightOffset = 10f; // Увеличена высота для TopDown
         [SerializeField]
         private float _cameraHorizontalOffset;
         [SerializeField]
@@ -45,34 +46,37 @@ namespace Synty.AnimationBaseLocomotion.Samples
         [SerializeField]
         private Vector2 _cameraTiltBounds = new Vector2(-10f, 45f);
         [SerializeField]
-        private float _positionalCameraLag = 1f;
+        private float _positionalCameraLagThirdPerson = 1f;
+        [SerializeField]
+        private float _positionalCameraLagTopDown = 10f;
         [SerializeField]
         private float _rotationalCameraLag = 1f;
-        private float _cameraInversion;
+        [SerializeField]
+        public ControlType _controlType = ControlType.ThirdPerson;
 
+        private float _cameraInversion;
         private InputReader _inputReader;
         private float _lastAngleX;
         private float _lastAngleY;
-
         private Vector3 _lastPosition;
-
         private float _newAngleX;
-
         private float _newAngleY;
         private Vector3 _newPosition;
         private float _rotationX;
         private float _rotationY;
-
         private Transform _syntyCamera;
+        private Vector3 _topDownOffset;
+        private Quaternion _topDownRotation;
 
-        /// <inheritdoc cref="Start" />
         private void Start()
         {
             _syntyCamera = gameObject.transform.GetChild(0);
-
             _inputReader = _syntyCharacter.GetComponent<InputReader>();
             _playerTarget = _syntyCharacter.transform.Find("SyntyPlayer_LookAt");
             _lockOnTarget = _syntyCharacter.transform.Find("TargetLockOnPos");
+
+            _topDownOffset = _topDownCamera.transform.position - _playerTarget.position;
+            _topDownRotation = _topDownCamera.transform.rotation;
 
             if (_hideCursor)
             {
@@ -81,24 +85,34 @@ namespace Synty.AnimationBaseLocomotion.Samples
             }
 
             _cameraInversion = _invertCamera ? 1 : -1;
-
             transform.position = _playerTarget.position;
             transform.rotation = _playerTarget.rotation;
-
             _lastPosition = transform.position;
 
             _syntyCamera.localPosition = new Vector3(_cameraHorizontalOffset, _cameraHeightOffset, _cameraDistance * -1);
             _syntyCamera.localEulerAngles = new Vector3(_cameraTiltOffset, 0f, 0f);
+
+            SetControlType(_controlType);
         }
 
-        /// <inheritdoc cref="Update" />
         private void Update()
         {
-            float positionalFollowSpeed = 1 / (_positionalCameraLag / _LAG_DELTA_TIME_ADJUSTMENT);
+            if (_controlType == ControlType.ThirdPerson)
+            {
+                UpdateThirdPersonCamera();
+            }
+            else if (_controlType == ControlType.TopDown)
+            {
+                UpdateTopDownCamera();
+            }
+        }
+
+        private void UpdateThirdPersonCamera()
+        {
+            float positionalFollowSpeed = 1 / (_positionalCameraLagThirdPerson / _LAG_DELTA_TIME_ADJUSTMENT);
             float rotationalFollowSpeed = 1 / (_rotationalCameraLag / _LAG_DELTA_TIME_ADJUSTMENT);
 
             _rotationX = _inputReader._mouseDelta.y * _cameraInversion * _mouseSensitivity;
-
             _rotationY = _inputReader._mouseDelta.x * _mouseSensitivity;
 
             _newAngleX += _rotationX;
@@ -132,83 +146,84 @@ namespace Synty.AnimationBaseLocomotion.Samples
             _lastAngleY = _newAngleY;
         }
 
-        /// <summary>
-        ///     Locks the camera to aim at a specified target.
-        /// </summary>
-        /// <param name="enable">Whether lock on is enabled or not.</param>
-        /// <param name="newLockOnTarget">The target to lock on to.</param>
+        private void UpdateTopDownCamera()
+        {
+            Vector3 targetPosition = _playerTarget.position + _topDownOffset;
+            _topDownCamera.transform.position = Vector3.Lerp(_topDownCamera.transform.position, targetPosition, _positionalCameraLagTopDown * Time.deltaTime);
+            _topDownCamera.transform.rotation = _topDownRotation;
+        }
+
         public void LockOn(bool enable, Transform newLockOnTarget)
         {
             _isLockedOn = enable;
-
             if (newLockOnTarget != null)
             {
                 _lockOnTarget = newLockOnTarget;
             }
         }
 
-        /// <summary>
-        /// Gets the position of the camera.
-        /// </summary>
-        /// <returns>The position of the camera.</returns>
+        public void SetControlType(ControlType type)
+        {
+            _controlType = type;
+            if (_controlType == ControlType.ThirdPerson)
+            {
+                _thirdPersonCamera.enabled = true;
+                _topDownCamera.enabled = false;
+            }
+            else
+            {
+                _topDownCamera.enabled = true;
+                _thirdPersonCamera.enabled = false;
+            }
+        }
+
+        [ContextMenu("SetTopDownControlType")]
+        public void SetTopDownControlType()
+        {
+            SetControlType(ControlType.TopDown);
+        }
+
+        [ContextMenu("SetThirdPersonControlType")]
+        public void SetThirdPersonControlType()
+        {
+            SetControlType(ControlType.ThirdPerson);
+        }
+
         public Vector3 GetCameraPosition()
         {
-            return _mainCamera.transform.position;
+            return _controlType == ControlType.ThirdPerson ? _thirdPersonCamera.transform.position : _topDownCamera.transform.position;
         }
 
-        /// <summary>
-        /// Gets the forward vector of the camera.
-        /// </summary>
-        /// <returns>The forward vector of the camera.</returns>
         public Vector3 GetCameraForward()
         {
-            return _mainCamera.transform.forward;
+            return _controlType == ControlType.ThirdPerson ? _thirdPersonCamera.transform.forward : _topDownCamera.transform.forward;
         }
 
-        /// <summary>
-        /// Gets the forward vector of the camera with the Y value zeroed.
-        /// </summary>
-        /// <returns>The forward vector of the camera with the Y value zeroed.</returns>
         public Vector3 GetCameraForwardZeroedY()
         {
-            return new Vector3(_mainCamera.transform.forward.x, 0, _mainCamera.transform.forward.z);
+            Vector3 forward = GetCameraForward();
+            return new Vector3(forward.x, 0, forward.z);
         }
 
-        /// <summary>
-        /// Gets the normalised forward vector of the camera with the Y value zeroed.
-        /// </summary>
-        /// <returns>The normalised forward vector of the camera with the Y value zeroed.</returns>
         public Vector3 GetCameraForwardZeroedYNormalised()
         {
             return GetCameraForwardZeroedY().normalized;
         }
 
-
-        /// <summary>
-        /// Gets the right vector of the camera with the Y value zeroed.
-        /// </summary>
-        /// <returns>The right vector of the camera with the Y value zeroed.</returns>
         public Vector3 GetCameraRightZeroedY()
         {
-            return new Vector3(_mainCamera.transform.right.x, 0, _mainCamera.transform.right.z);
+            Vector3 right = _controlType == ControlType.ThirdPerson ? _thirdPersonCamera.transform.right : _topDownCamera.transform.right;
+            return new Vector3(right.x, 0, right.z);
         }
 
-        /// <summary>
-        /// Gets the normalised right vector of the camera with the Y value zeroed.
-        /// </summary>
-        /// <returns>The normalised right vector of the camera with the Y value zeroed.</returns>
         public Vector3 GetCameraRightZeroedYNormalised()
         {
             return GetCameraRightZeroedY().normalized;
         }
 
-        /// <summary>
-        /// Gets the X value of the camera tilt.
-        /// </summary>
-        /// <returns>The X value of the camera tilt.</returns>
         public float GetCameraTiltX()
         {
-            return _mainCamera.transform.eulerAngles.x;
+            return _controlType == ControlType.ThirdPerson ? _thirdPersonCamera.transform.eulerAngles.x : _topDownCamera.transform.eulerAngles.x;
         }
     }
 }
