@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -53,6 +54,10 @@ public class CharacterEquipmentComponent : MonoBehaviour
     private void Awake()
     {
         holderSocket = transform.Find(Constants.WeaponHolderSocket);
+        if (holderSocket == null ) 
+        {
+            Debug.LogWarning($"CharacterEquipmentComponent: holderSocket is null. Check the path of WeaponHolderSocket = {Constants.WeaponHolderSocket}");
+        }
         _animationController = GetComponent<SamplePlayerAnimationController>();
     }
 
@@ -108,10 +113,12 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
         if (currentEquippedWeapon != null)
         {
+            bIsEquipping = true;
             animator.SetInteger(_animationController._weaponTypeHash, (int)currentEquippedWeapon.GetWeaponType());
+            animator.ResetTrigger(_animationController._equipWeaponHash);
             animator.SetTrigger(_animationController._equipWeaponHash);
-            AttachCurrentWeaponToEquippedSocket();
-            currentEquippedSlot = slot;
+            // Show up new weapon via ShowWeapon() Animation Event
+            StartCoroutine(WaitForEquipAnimation());
         }
 
         if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
@@ -121,7 +128,38 @@ public class CharacterEquipmentComponent : MonoBehaviour
             OnCurrentWeaponAmmoChanged(rangedWeapon.GetAmmo());
         }
     }
-    
+
+    public void OnEquipAnimationEnd()
+    {
+        bIsEquipping = false;
+    }
+
+    private IEnumerator WaitForEquipAnimation()
+    {
+        if (currentEquippedWeapon != null)
+        {
+            AnimationClip equipClip = currentEquippedWeapon.GetCharacterEquipClip();
+            if (equipClip != null)
+            {
+                yield return new WaitForSeconds(equipClip.length);
+            }
+            else
+            {
+                Debug.LogWarning("equipClip is null");
+                yield return new WaitForSeconds(1f);
+            }
+        }
+        bIsEquipping = false;
+    }
+
+    public void ShowWeapon()
+    {
+        if (currentEquippedWeapon != null)
+        {
+            AttachCurrentWeaponToEquippedSocket();
+        }
+    }
+
     public void AttachCurrentWeaponToEquippedSocket()
     {
         currentEquippedWeapon.gameObject.SetActive(true);
@@ -140,14 +178,35 @@ public class CharacterEquipmentComponent : MonoBehaviour
                 rangedWeapon.OnReloadComplete -= OnWeaponReloadComplete_Event;
             }
             animator.SetTrigger(_animationController._unequipWeaponHash);
+            StartCoroutine(WaitForUnEquipAnimation());
         }
+    }
 
-        if (currentEquippedWeapon)
+    private IEnumerator WaitForUnEquipAnimation()
+    {
+        if (currentEquippedWeapon != null)
+        {
+            AnimationClip unEquipClip = currentEquippedWeapon.GetCharacterUnEquipClip();
+            if (unEquipClip != null)
+            {
+                yield return new WaitForSeconds(unEquipClip.length);
+            }
+            else
+            {
+                Debug.LogWarning("unEquipClip is null");
+                yield return new WaitForSeconds(1f);
+            }
+        }
+    }
+
+    public void HideWeapon()
+    {
+        if (currentEquippedWeapon != null)
         {
             currentEquippedWeapon.gameObject.SetActive(false);
         }
     }
-    
+
     public void EquipNextItem()
     {
         var validSlots = weaponsArray
@@ -388,4 +447,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
             Debug.Log($"Created base {weaponType} (Tier {targetTier}) in slot {slot}");
         }
     }
+
+
 }

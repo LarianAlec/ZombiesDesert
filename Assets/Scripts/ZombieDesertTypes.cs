@@ -55,7 +55,7 @@ public enum AnimationLayers
 
 public static class Constants
 {
-    public const string WeaponHolderSocket = "Mannequin/root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/SocketWeaponHolder";
+    public const string WeaponHolderSocket = "root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/SocketWeaponHolder";
     public const string MuzzleSocket = "SocketMuzzle";
     public const string IKTagKey = "LeftHandIK";
 

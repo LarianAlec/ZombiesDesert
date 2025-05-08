@@ -8,6 +8,7 @@ public abstract class Weapon : MonoBehaviour
     public Transform leftHandIKSoket;
     public BaseCharacter characterOwner;
     [SerializeField] private AnimationClip equipClip;
+    [SerializeField] private AnimationClip unEquipClip;
 
     private void InitializeCharacterOwner()
     {
@@ -18,6 +19,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public AnimationClip GetCharacterEquipClip() => equipClip;
+    public AnimationClip GetCharacterUnEquipClip() => unEquipClip;
     public BaseCharacter GetCharacterOwner() => characterOwner;
     public void SetOwner(BaseCharacter newOwner) => characterOwner = newOwner;
     public abstract WeaponType GetWeaponType();

@@ -132,7 +132,8 @@ MonoBehaviour:
   weaponTier: 0
   leftHandIKSoket: {fileID: 4411173117688604931}
   characterOwner: {fileID: 0}
-  equipClip: {fileID: 0}
+  equipClip: {fileID: 7400000, guid: fb232817626f9b140bfac69a5d5eceab, type: 2}
+  unEquipClip: {fileID: 7400000, guid: c0b04981684151141ae98df61cf08ef1, type: 2}
   attackRange: 2
   attackDamage: 25
   attackCooldown: 0.5

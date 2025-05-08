@@ -50,7 +50,8 @@ MonoBehaviour:
   weaponTier: 0
   leftHandIKSoket: {fileID: 4843057204813778208}
   characterOwner: {fileID: 0}
-  equipClip: {fileID: 7400000, guid: c4564ee1f1966c34b8488e9a918d0059, type: 2}
+  equipClip: {fileID: 7400000, guid: 72327a0401ebe4249bf156defbb9f9cd, type: 2}
+  unEquipClip: {fileID: 7400000, guid: 72327a0401ebe4249bf156defbb9f9cd, type: 2}
   weaponType: 2
   muzzleSocket: {fileID: 5045490514105040765}
   ammoType: 1

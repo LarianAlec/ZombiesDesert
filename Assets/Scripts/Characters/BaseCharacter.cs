@@ -17,7 +17,7 @@ public class BaseCharacter : MonoBehaviour
         aim = GetComponent<TopDownAimComponent>();
         movementComponent = GetComponent<PlayerMovementComponent>();
         characterEquipmentComponent = GetComponent<CharacterEquipmentComponent>();
-        animInstance = GetComponentInChildren<AnimatorController>();
+        animInstance = GetComponent<AnimatorController>();
     }
 
     public virtual void Move(Vector2 input) { }

@@ -343,7 +343,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
         private void Start()
         {
-            _equipmentComponent = GetComponent<CharacterEquipmentComponent>();
+            if (_equipmentComponent == null)
+                _equipmentComponent = GetComponent<CharacterEquipmentComponent>();
+
             _targetLockOnPos = transform.Find("TargetLockOnPos");
 
             _inputReader.onLockOnToggled += ToggleLockOn;
