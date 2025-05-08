@@ -96,11 +96,16 @@ public class UI_Manager : MonoBehaviour
         AmmoWidget ammoWidget = playerHUD.ammoWidget;
         Weapon weapon = equipComponent.GetCurrentEquippedWeapon();
 
-        // Initial widget update
-        int weaponAmmo = weapon.GetAmmo();
-        int totalAmmo = equipComponent.GetAvaliableAmmunitionForCurrentWeapon();
-        ammoWidget.UpdateAmmoWidget(weaponAmmo, totalAmmo);
-        
+        int weaponAmmo = 0;
+        int totalAmmo = 0;
+
+        // ѕровер€ем, €вл€етс€ ли оружие дальнобойным
+        if (weapon is IRangedWeapon rangedWeapon)
+        {
+            weaponAmmo = rangedWeapon.GetAmmo();
+            totalAmmo = equipComponent.GetAvaliableAmmunitionForCurrentWeapon();
+        }
+
         equipComponent.OnCurrentWeaponAmmoChangedEvent += ammoWidget.UpdateAmmoWidget;
     }
 

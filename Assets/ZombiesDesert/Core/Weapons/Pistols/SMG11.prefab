@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6588756913006339858}
-  - component: {fileID: 4033172210493604751}
+  - component: {fileID: 501843718658864817}
   m_Layer: 0
   m_Name: SMG11
   m_TagString: Untagged
@@ -181,7 +181,7 @@ Transform:
   - {fileID: 4705908181284417459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4033172210493604751
+--- !u!114 &501843718658864817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,24 +190,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8020053194192611858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Script: {fileID: 11500000, guid: f5ea3123f279a53498edac4487f8057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTier: 1
-  muzzleSocket: {fileID: 4825837762348617792}
+  weaponTier: 0
   leftHandIKSoket: {fileID: 4705908181284417459}
   characterOwner: {fileID: 0}
-  weaponType: 1
+  equipClip: {fileID: 7400000, guid: c4564ee1f1966c34b8488e9a918d0059, type: 2}
+  weaponType: 2
+  muzzleSocket: {fileID: 4825837762348617792}
   ammoType: 1
   maxAmmo: 30
   weaponFireMode: 1
-  fireRate: 8
+  fireRate: 4
   bulletsPerShot: 1
   spreadAmount: 0.5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
-  bulletSpeed: 25
-  reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}
-  equipClip: {fileID: 0}
+  bulletSpeed: 15
   fireSound: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
   emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
+  reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}

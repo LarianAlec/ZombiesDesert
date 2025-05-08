@@ -13,9 +13,9 @@ public class HitBox_Player : HitBox
         player = GetComponentInParent<PlayerCharacter>();
     }
 
-    public override void TakeDamage()
+    public override void TakeDamage(float amount)
     {
-        base.TakeDamage();
+        base.TakeDamage(amount);
 
         player.health.ReduceHealth();
     }

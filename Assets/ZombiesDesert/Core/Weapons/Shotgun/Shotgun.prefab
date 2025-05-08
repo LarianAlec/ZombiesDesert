@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2365788768843719657}
-  - component: {fileID: 4988870631918480852}
+  - component: {fileID: 3559518892966086432}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   - {fileID: 4622749984578334406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4988870631918480852
+--- !u!114 &3559518892966086432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,27 +75,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2782893942754653093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Script: {fileID: 11500000, guid: f5ea3123f279a53498edac4487f8057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponTier: 0
-  muzzleSocket: {fileID: 4622749984578334406}
   leftHandIKSoket: {fileID: 5866886882393534384}
   characterOwner: {fileID: 0}
-  weaponType: 2
+  equipClip: {fileID: 7400000, guid: b8c777159f51df64aa3aec2ba5d6346a, type: 2}
+  weaponType: 3
+  muzzleSocket: {fileID: 4622749984578334406}
   ammoType: 2
   maxAmmo: 6
   weaponFireMode: 0
-  fireRate: 0.6
-  bulletsPerShot: 6
-  spreadAmount: 16
+  fireRate: 1
+  bulletsPerShot: 8
+  spreadAmount: 15
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
-  bulletSpeed: 15
-  reloadClip: {fileID: 7400000, guid: 02b6770b5933dc14088d923e76f69624, type: 2}
-  equipClip: {fileID: 0}
-  fireSound: {fileID: 8300000, guid: 122e1bc442181464ca037ca291edb46b, type: 3}
+  bulletSpeed: 6
+  fireSound: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
   emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
+  reloadClip: {fileID: 7400000, guid: 02b6770b5933dc14088d923e76f69624, type: 2}
 --- !u!1 &4083829489239128226
 GameObject:
   m_ObjectHideFlags: 0

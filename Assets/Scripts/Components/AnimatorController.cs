@@ -18,6 +18,9 @@ public class AnimatorController : MonoBehaviour
     [SerializeField] private WeaponType currentEquippedWeaponType = WeaponType.None;
     [SerializeField] Transform socketLeftHandIK_Target;
 
+    [Header("Animation Clips")]
+    [SerializeField] private AnimationClip meleeAttackClip;
+
     private void Start()
     {
         cachedCharacter = GetComponent<BaseCharacter>();
@@ -117,7 +120,23 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
-#region Switching animation layers
+
+    public void PlayMeleeAttackAnimation()
+    {
+        animator.Play(meleeAttackClip.name);
+    }
+
+    public void PlayAnimation(AnimationClip clip)
+    {
+        animator.Play(clip.name);
+    }
+
+    public void PlayAnimation(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
+    }
+
+    #region Switching animation layers
     private void SwitchOnPistolAnimationLayer()
     {
         SwitchOffAllAnimationLayers();

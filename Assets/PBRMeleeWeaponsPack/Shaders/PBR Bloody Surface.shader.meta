@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d921f5964a2d6a94eb20a6820856991e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _BloodNormalMap: {fileID: 2800000, guid: 3ebeb8125bc0c0d4f918324c9bd89a91, type: 3}
+  - _TopTexture1: {fileID: 2800000, guid: 2e99d2453020f3044956ea25a5c957ba, type: 3}
+  - _TopTexture0: {fileID: 2800000, guid: 0aa4471809917df42b4d5fcbbf6035de, type: 3}
+  - _BloodAlbedo: {fileID: 2800000, guid: 0aa4471809917df42b4d5fcbbf6035de, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

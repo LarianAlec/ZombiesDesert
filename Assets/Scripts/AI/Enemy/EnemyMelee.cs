@@ -106,10 +106,8 @@ public class EnemyMelee : Enemy
         {
             //Debug.Log("Attack " + hitInfo.collider.gameObject.name);
 
-            IDamagable damagable = hitInfo.collider.gameObject.GetComponent<IDamagable>();
-            damagable?.TakeDamage();
+            IDamageable damagable = hitInfo.collider.gameObject.GetComponent<IDamageable>();
+            damagable?.TakeDamage(1f);
         }
     }
-
-    
 }

@@ -7,6 +7,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -36,6 +37,25 @@ namespace Synty.AnimationBaseLocomotion.Samples.InputSystem
         public Action onSprintDeactivated;
 
         public Action onWalkToggled;
+
+        // TODO: rework weapon input
+        public UnityAction onFirePerformed;
+        public UnityAction onReloadPerformed;
+        public UnityAction<int> onWeaponSwitchPerformed;
+
+        private void Update()
+        {
+            {
+                if (Input.GetButtonDown("Fire1"))
+                    onFirePerformed?.Invoke();
+                if (Input.GetKeyDown(KeyCode.R))
+                    onReloadPerformed?.Invoke();
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                    onWeaponSwitchPerformed?.Invoke(1); // Closerange weapon
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                    onWeaponSwitchPerformed?.Invoke(2); // Pistol
+            }
+        }
 
         /// <inheritdoc cref="OnEnable" />
         private void OnEnable()

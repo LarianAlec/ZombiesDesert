@@ -10,10 +10,12 @@ public enum WeaponTier
 public enum EquipmentSlots
 {
     None,
-    SideArm,
-    PrimaryWeapon,
-    SecondaryWeapon,
-    TretiaryWeapon
+    FirstSlot,
+    SecondSlot,
+    ThirdSlot,
+    FourthSlot,
+    FifthSlot,
+    SixSlot
 }
 
 public enum AmmunitionType
@@ -28,6 +30,7 @@ public enum AmmunitionType
 public enum WeaponType
 {
     None,
+    Melee,
     Pistol,
     Shotgun,
     AutoRifle,
@@ -42,6 +45,8 @@ public enum WeaponFireMode
 
 public enum AnimationLayers
 {
+    None = 0,
+    Melee = 1,
     Pistol = 2,
     Shotgun = 3,
     AutoRifle = 4,

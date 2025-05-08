@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 279771295407647755}
-  - component: {fileID: -487835363897792597}
+  - component: {fileID: 6541113077898546694}
   m_Layer: 0
   m_Name: KA74U
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   - {fileID: 2444535790657296184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-487835363897792597
+--- !u!114 &6541113077898546694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,27 +75,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6155984702861805166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Script: {fileID: 11500000, guid: f5ea3123f279a53498edac4487f8057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTier: 0
-  muzzleSocket: {fileID: 1193336293863571017}
+  weaponTier: 2
   leftHandIKSoket: {fileID: 2444535790657296184}
   characterOwner: {fileID: 0}
-  weaponType: 3
-  ammoType: 3
+  equipClip: {fileID: 7400000, guid: b8c777159f51df64aa3aec2ba5d6346a, type: 2}
+  weaponType: 4
+  muzzleSocket: {fileID: 1193336293863571017}
+  ammoType: 0
   maxAmmo: 30
-  weaponFireMode: 1
-  fireRate: 3
+  weaponFireMode: 0
+  fireRate: 9
   bulletsPerShot: 1
   spreadAmount: 0.5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
-  bulletSpeed: 14
-  reloadClip: {fileID: 7400000, guid: 75b382d8e8b4e1f41b5326c6f0d61f24, type: 2}
-  equipClip: {fileID: 0}
-  fireSound: {fileID: 8300000, guid: 9eac3e3d02423f045a3ca5547d9f48ab, type: 3}
+  bulletSpeed: 16
+  fireSound: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
   emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
+  reloadClip: {fileID: 7400000, guid: 75b382d8e8b4e1f41b5326c6f0d61f24, type: 2}
 --- !u!1 &6889788006793245332
 GameObject:
   m_ObjectHideFlags: 0

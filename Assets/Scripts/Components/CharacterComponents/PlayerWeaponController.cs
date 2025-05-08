@@ -35,15 +35,10 @@ public class PlayerWeaponController : MonoBehaviour
     
     public void Shoot()
     {
-        if (!currentWeapon.CanShoot())
+        if (currentWeapon is RangedWeapon rangedWeapon && !rangedWeapon.CanShoot())
         {
             return;
         }
-        //currentWeapon.ammoInMagazine--;
-
-        /*GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.LookRotation(muzzle.forward));
-        bullet.GetComponent<Rigidbody>().velocity = GetBulletDirection() * bulletSpeed;
-        Destroy(bullet, 10);*/
         GetComponentInChildren<Animator>().SetTrigger("MakeShoot");
     }
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2678668300564060976}
-  - component: {fileID: 7047389998938867216}
+  - component: {fileID: 43430355979294458}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4843057204813778208}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 3.427, y: -8.815, z: -3.652}
---- !u!114 &7047389998938867216
+--- !u!114 &43430355979294458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,25 +44,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 492153027971526139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Script: {fileID: 11500000, guid: f5ea3123f279a53498edac4487f8057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleSocket: {fileID: 5045490514105040765}
+  weaponTier: 0
   leftHandIKSoket: {fileID: 4843057204813778208}
   characterOwner: {fileID: 0}
-  weaponType: 1
+  equipClip: {fileID: 7400000, guid: c4564ee1f1966c34b8488e9a918d0059, type: 2}
+  weaponType: 2
+  muzzleSocket: {fileID: 5045490514105040765}
   ammoType: 1
-  maxAmmo: 12
+  maxAmmo: 30
   weaponFireMode: 0
-  fireRate: 6
+  fireRate: 1
+  bulletsPerShot: 1
   spreadAmount: 0.5
   bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
     type: 3}
-  bulletSpeed: 20
-  reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}
-  equipClip: {fileID: 0}
+  bulletSpeed: 15
   fireSound: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
   emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
+  reloadClip: {fileID: 7400000, guid: 84a3c641ea7b3f049a1611362dd682b6, type: 2}
 --- !u!1 &974480818553976727
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
-        damagable?.TakeDamage();
+        IDamageable damagable = collision.gameObject.GetComponent<IDamageable>();
+        damagable?.TakeDamage(1f);
         ApplyBulletImpactToEnemy(collision);
 
         if (collision.contacts.Length > 0)

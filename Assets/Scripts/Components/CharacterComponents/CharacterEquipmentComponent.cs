@@ -1,3 +1,4 @@
+using Synty.AnimationBaseLocomotion.Samples;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
         public WeaponType weaponType;
         public EquipmentSlots equipmentSlot;
         public GameObject gunPrefab;
-        [Tooltip("Создавать ли это оружие при старте игры?")]
+        [Tooltip("Should create weapon on start?")]
         public bool createOnStart = true;
     }
 
@@ -47,10 +48,12 @@ public class CharacterEquipmentComponent : MonoBehaviour
     private Dictionary<AmmunitionType, int> ammunitionArray;
     private Dictionary<EquipmentSlots, Weapon> weaponsArray;
 
+    private SamplePlayerAnimationController _animationController;
 
     private void Awake()
     {
         holderSocket = transform.Find(Constants.WeaponHolderSocket);
+        _animationController = GetComponent<SamplePlayerAnimationController>();
     }
 
     void Start()
@@ -59,7 +62,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
         CreateLoadout();
         AutoEquip();
     }
-
+    
     public WeaponType GetCurrentEquippedWeaponType()
     {
         WeaponType result = WeaponType.None;
@@ -69,29 +72,25 @@ public class CharacterEquipmentComponent : MonoBehaviour
         }
         return result;
     }
-
+    
     public Weapon GetCurrentEquippedWeapon()
     {
         return currentEquippedWeapon;
     }
-
+    
     public bool IsEquipping() => bIsEquipping;
-
+    
     public void ReloadCurrentWeapon()
     {
-        if (currentEquippedWeapon == null)
+        if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
         {
-            return;
-        }
-        int avaliableAmmunition = GetAvaliableAmmunitionForCurrentWeapon();
-        if (avaliableAmmunition <= 0)
-        {
-            return;
-        }
+            int avaliableAmmunition = GetAvaliableAmmunitionForCurrentWeapon();
+            if (avaliableAmmunition <= 0) return;
 
-        currentEquippedWeapon.StartReload();
+            rangedWeapon.StartReload();
+        }
     }
-
+    
     public void EquipItemInSlot(EquipmentSlots slot)
     {
         if (bIsEquipping) return;
@@ -102,50 +101,45 @@ public class CharacterEquipmentComponent : MonoBehaviour
             return;
         }
 
+        Animator animator = GetComponent<SamplePlayerAnimationController>().GetAnimator();
+
         UnEquipCurrentItem();
         currentEquippedWeapon = weaponsArray[slot];
 
         if (currentEquippedWeapon != null)
         {
-            /*Animator animator = cachedCharacter.GetAnimInstance().animator;
-            int currentAnimatorLayerIndex = cachedCharacter.GetAnimInstance().GetCurrentAnimationLayerIndex();
-            animator.Play("Equip", 1);
-            /*AnimationClip equipClip = currentEquippedWeapon.GetCharacterEquipClip();
-            if (equipClip)
-            {
-                bIsEquipping = true;
-                float equipDuration = 1.0f;
-                SetEquippingBoolToFalse(equipDuration);
-            }
-            else
-            {
-                AttachCurrentWeaponToEquippedSocket();
-            }*/
+            animator.SetInteger(_animationController._weaponTypeHash, (int)currentEquippedWeapon.GetWeaponType());
+            animator.SetTrigger(_animationController._equipWeaponHash);
             AttachCurrentWeaponToEquippedSocket();
             currentEquippedSlot = slot;
         }
 
-        if (currentEquippedWeapon != null)
+        if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
         {
-            currentEquippedWeapon.OnAmmoChanged += OnCurrentWeaponAmmoChanged;
-            currentEquippedWeapon.OnReloadComplete += OnWeaponReloadComplete_Event;
-            OnCurrentWeaponAmmoChanged(currentEquippedWeapon.GetAmmo());
+            rangedWeapon.OnAmmoChanged += OnCurrentWeaponAmmoChanged;
+            rangedWeapon.OnReloadComplete += OnWeaponReloadComplete_Event;
+            OnCurrentWeaponAmmoChanged(rangedWeapon.GetAmmo());
         }
     }
-
+    
     public void AttachCurrentWeaponToEquippedSocket()
     {
         currentEquippedWeapon.gameObject.SetActive(true);
     }
-
+    
     public void UnEquipCurrentItem()
     {
+        Animator animator = GetComponent<SamplePlayerAnimationController>().GetAnimator();
         if (currentEquippedWeapon)
         {
-            currentEquippedWeapon.StopFire();
-            currentEquippedWeapon.EndReload(false);
-            currentEquippedWeapon.OnAmmoChanged -= OnCurrentWeaponAmmoChanged;
-            currentEquippedWeapon.OnReloadComplete -= OnWeaponReloadComplete_Event;
+            if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
+            {
+                rangedWeapon.StopFire();
+                rangedWeapon.EndReload(false);
+                rangedWeapon.OnAmmoChanged -= OnCurrentWeaponAmmoChanged;
+                rangedWeapon.OnReloadComplete -= OnWeaponReloadComplete_Event;
+            }
+            animator.SetTrigger(_animationController._unequipWeaponHash);
         }
 
         if (currentEquippedWeapon)
@@ -153,7 +147,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
             currentEquippedWeapon.gameObject.SetActive(false);
         }
     }
-
+    
     public void EquipNextItem()
     {
         var validSlots = weaponsArray
@@ -167,12 +161,11 @@ public class CharacterEquipmentComponent : MonoBehaviour
         int nextIndex = (currentIndex + 1) % validSlots.Count;
         EquipItemInSlot(validSlots[nextIndex]);
     }
-
+    
     public void EquipPreviousItem()
     {
         if (bIsEquipping) return;
 
-        // Получаем все слоты с оружием
         var validSlots = weaponsArray
             .Where(kvp => kvp.Value != null)
             .Select(kvp => kvp.Key)
@@ -180,17 +173,15 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
         if (validSlots.Count == 0) return;
 
-        // Находим текущий индекс в списке
         int currentIndex = validSlots.IndexOf(currentEquippedSlot);
         if (currentIndex == -1) currentIndex = 0;
 
-        // Вычисляем предыдущий индекс
         int previousIndex = (currentIndex - 1 + validSlots.Count) % validSlots.Count;
         EquipmentSlots previousSlot = validSlots[previousIndex];
 
         EquipItemInSlot(previousSlot);
     }
-
+    
     private int NextWeaponArraySlotIndex(int currentSlotIndex)
     {
         if (currentSlotIndex == weaponsArray.Count)
@@ -202,7 +193,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
             return currentSlotIndex + 1;
         }
     }
-
+    
     private int PreviousWeaponArraySlotIndex(int currentSlotIndex)
     {
         if (currentSlotIndex == 1)
@@ -248,22 +239,25 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
     public int GetAvaliableAmmunitionForCurrentWeapon()
     {
-        if (currentEquippedWeapon == null)
+        if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
         {
-            return 0;
+            return ammunitionArray[rangedWeapon.GetAmmoType()];
         }
-        return ammunitionArray[GetCurrentEquippedWeapon().GetAmmoType()];
+        return 0;
     }
 
     private void OnWeaponReloadComplete_Event()
     {
-        int avaliableAmmunition = GetAvaliableAmmunitionForCurrentWeapon();
-        int currentAmmo = currentEquippedWeapon.GetAmmo();
-        int ammoToReload = currentEquippedWeapon.GetMaxAmmo() - currentAmmo;
-        int reloadedAmmo = Math.Min(avaliableAmmunition, ammoToReload);
+        if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
+        {
+            int avaliableAmmunition = GetAvaliableAmmunitionForCurrentWeapon();
+            int currentAmmo = rangedWeapon.GetAmmo();
+            int ammoToReload = rangedWeapon.GetMaxAmmo() - currentAmmo;
+            int reloadedAmmo = Math.Min(avaliableAmmunition, ammoToReload);
 
-        ammunitionArray[currentEquippedWeapon.GetAmmoType()] -= reloadedAmmo;
-        currentEquippedWeapon.SetAmmo(reloadedAmmo + currentAmmo);
+            ammunitionArray[rangedWeapon.GetAmmoType()] -= reloadedAmmo;
+            rangedWeapon.SetAmmo(reloadedAmmo + currentAmmo);
+        }
     }
 
     private void OnCurrentWeaponAmmoChanged(int ammo)
@@ -277,17 +271,16 @@ public class CharacterEquipmentComponent : MonoBehaviour
     public void AddAmmo(AmmunitionType ammoType, int amount)
     {
         ammunitionArray[ammoType] += amount;
-        OnCurrentWeaponAmmoChanged(currentEquippedWeapon.GetAmmo());
+        if (currentEquippedWeapon is IRangedWeapon rangedWeapon)
+            OnCurrentWeaponAmmoChanged(rangedWeapon.GetAmmo());
     }
 
     public void UpgradeWeapon(WeaponType weaponType)
     {
-        // Проверяем существующие слоты с оружием
         var existingSlots = weaponsArray
             .Where(kvp => kvp.Value != null && kvp.Value.GetWeaponType() == weaponType)
             .ToList();
 
-        // Если оружия нет, создаем базовую версию FirstTier
         if (existingSlots.Count == 0)
         {
             CreateBaseWeaponIfNeeded(weaponType);
@@ -295,24 +288,20 @@ public class CharacterEquipmentComponent : MonoBehaviour
                 .Where(kvp => kvp.Value != null && kvp.Value.GetWeaponType() == weaponType)
                 .ToList();
 
-            // Если создание не удалось - выходим
             if (existingSlots.Count == 0)
             {
                 Debug.LogError($"Failed to create base {weaponType}");
                 return;
             }
 
-            // Обновляем интерфейс для нового оружия и выходим без апгрейда
             var newWeapon = existingSlots.First().Value;
             if (currentEquippedSlot == existingSlots.First().Key)
             {
-                currentEquippedWeapon = newWeapon;
-                OnCurrentWeaponAmmoChanged(newWeapon.GetAmmo());
+                OnCurrentWeaponAmmoChanged((currentEquippedWeapon as IRangedWeapon)?.GetAmmo() ?? 0);
             }
             return;
         }
 
-        // Логика апгрейда существующих экземпляров
         var possibleUpgrades = upgradedWeapons
             .Where(u => u.weaponType == weaponType)
             .OrderBy(u => u.targetTier)
@@ -323,13 +312,11 @@ public class CharacterEquipmentComponent : MonoBehaviour
             EquipmentSlots eqSlot = slot.Key;
             Weapon oldWeapon = slot.Value;
 
-            // Находим следующий доступный тир (строго выше текущего)
             var nextTier = possibleUpgrades.FirstOrDefault(u =>
                 (int)u.targetTier > (int)oldWeapon.weaponTier);
 
             if (nextTier == null) continue;
 
-            // Замена оружия
             Destroy(oldWeapon.gameObject);
             GameObject newGun = Instantiate(nextTier.upgradedPrefab, holderSocket, false);
             Weapon newWeapon = newGun.GetComponent<Weapon>();
@@ -337,15 +324,17 @@ public class CharacterEquipmentComponent : MonoBehaviour
             weaponsArray[eqSlot] = newWeapon;
             newGun.SetActive(false);
 
-            // Обновляем текущее оружие если нужно
             if (currentEquippedSlot == eqSlot)
             {
                 UnEquipCurrentItem();
-                currentEquippedWeapon = newWeapon;
                 currentEquippedWeapon.gameObject.SetActive(true);
-                currentEquippedWeapon.OnAmmoChanged += OnCurrentWeaponAmmoChanged;
-                currentEquippedWeapon.OnReloadComplete += OnWeaponReloadComplete_Event;
-                OnCurrentWeaponAmmoChanged(currentEquippedWeapon.GetAmmo());
+                currentEquippedWeapon = newWeapon;
+                if (newWeapon is IRangedWeapon rangedNewWeapon)
+                {
+                    rangedNewWeapon.OnAmmoChanged += OnCurrentWeaponAmmoChanged;
+                    rangedNewWeapon.OnReloadComplete += OnWeaponReloadComplete_Event;
+                    OnCurrentWeaponAmmoChanged(rangedNewWeapon.GetAmmo());
+                }
             }
         }
     }
@@ -359,7 +348,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
         EquipmentSlots slot = EquipmentSlots.None;
         WeaponTier targetTier = WeaponTier.FirstTier;
 
-        // Если оружие не создавалось при старте
         if (startConfig != null && !startConfig.createOnStart)
         {
             UpgradedWeapon upgradedConfig = upgradedWeapons.FirstOrDefault(u =>
@@ -378,7 +366,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
         }
         else
         {
-            // Стандартное создание из startWeapons
             startConfig = startWeapons.FirstOrDefault(w =>
                 w.weaponType == weaponType && w.gunPrefab != null);
 
@@ -391,7 +378,6 @@ public class CharacterEquipmentComponent : MonoBehaviour
             slot = startConfig.equipmentSlot;
         }
 
-        // Создаем оружие если слот пуст
         if (!weaponsArray.ContainsKey(slot) || weaponsArray[slot] == null)
         {
             GameObject gunObj = Instantiate(basePrefab, holderSocket, false);

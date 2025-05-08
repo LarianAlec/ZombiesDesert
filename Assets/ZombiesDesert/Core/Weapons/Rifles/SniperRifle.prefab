@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2858174864684661237}
-  - component: {fileID: 856840138060208220}
+  - component: {fileID: 5648776514167836797}
   m_Layer: 0
   m_Name: SniperRifle
   m_TagString: Untagged
@@ -180,7 +180,7 @@ Transform:
   - {fileID: 3098699175442147320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &856840138060208220
+--- !u!114 &5648776514167836797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,16 +189,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7493781963721761513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b8f783ebbe0bd458c7ab0a58bad90e, type: 3}
+  m_Script: {fileID: 11500000, guid: f5ea3123f279a53498edac4487f8057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleSocket: {fileID: 6105432172700160032}
+  weaponTier: 0
   leftHandIKSoket: {fileID: 3098699175442147320}
   characterOwner: {fileID: 0}
-  weaponType: 4
-  weaponFireMode: 0
+  equipClip: {fileID: 7400000, guid: b8c777159f51df64aa3aec2ba5d6346a, type: 2}
+  weaponType: 5
+  muzzleSocket: {fileID: 6105432172700160032}
   ammoType: 4
-  maxAmmo: 12
-  bulletPrefab: {fileID: 5215578968320018894, guid: b18a885e73d8c1d4baae8158ea2321ff,
-    type: 3}
-  bulletSpeed: 50
+  maxAmmo: 6
+  weaponFireMode: 0
+  fireRate: 1
+  bulletsPerShot: 1
+  spreadAmount: 0.5
+  bulletPrefab: {fileID: 0}
+  bulletSpeed: 0
+  fireSound: {fileID: 8300000, guid: a38ea4af3b4336c4894c55ffe152da58, type: 3}
+  emptyAmmoSound: {fileID: 8300000, guid: 6920663b061272c4394ca51e4f11b974, type: 3}
+  reloadClip: {fileID: 7400000, guid: 0e540b8c13b94de42bca10091b7444bf, type: 2}

@@ -14,7 +14,8 @@ namespace Synty.AnimationBaseLocomotion.Samples
             Locomotion,
             Jump,
             Fall,
-            Crouch
+            Crouch,
+            WeaponAction
         }
 
         private enum GaitState
@@ -68,6 +69,12 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
         private readonly int _locomotionStartDirectionHash = Animator.StringToHash("LocomotionStartDirection");
 
+        public readonly int _weaponTypeHash = Animator.StringToHash("WeaponType");
+        private readonly int _isFiringHash = Animator.StringToHash("IsFiring");
+        private readonly int _isReloadingHash = Animator.StringToHash("IsReloading");
+        public readonly int _equipWeaponHash = Animator.StringToHash("EquipWeapon");
+        public readonly int _unequipWeaponHash = Animator.StringToHash("UnequipWeapon");
+
         #endregion
 
         #region Player Settings Variables
@@ -91,6 +98,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
         [Tooltip("Character Controller component for controlling player movement")]
         [SerializeField]
         private CharacterController _controller;
+        [Tooltip("Character Equipment Component for acting with weapons")]
+        [SerializeField]
+        private CharacterEquipmentComponent _equipmentComponent;
 
         #endregion
 
@@ -333,6 +343,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
         private void Start()
         {
+            _equipmentComponent = GetComponent<CharacterEquipmentComponent>();
             _targetLockOnPos = transform.Find("TargetLockOnPos");
 
             _inputReader.onLockOnToggled += ToggleLockOn;
@@ -343,6 +354,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
             _inputReader.onCrouchDeactivated += DeactivateCrouch;
             _inputReader.onAimActivated += ActivateAim;
             _inputReader.onAimDeactivated += DeactivateAim;
+            _inputReader.onFirePerformed += FireWeapon;
+            _inputReader.onReloadPerformed += ReloadWeapon;
+            _inputReader.onWeaponSwitchPerformed += SwitchWeapon;
 
             _isStrafing = _alwaysStrafe;
 
@@ -487,6 +501,41 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
         #endregion
 
+        #region Weapon Actions
+
+        private void FireWeapon()
+        {
+            if (_equipmentComponent != null && 
+                _currentState != AnimationState.Jump &&
+                _currentState != AnimationState.Fall &&
+                _equipmentComponent.currentEquippedWeapon is IRangedWeapon rangedWeapon)
+            {
+                rangedWeapon.StartFire();
+                _animator.SetBool(_isFiringHash, true);
+                SwitchState(AnimationState.WeaponAction);
+            }
+        }
+
+        private void ReloadWeapon()
+        {
+            if (_equipmentComponent != null &&
+                _currentState != AnimationState.Jump &&
+                _currentState != AnimationState.Fall &&
+                _equipmentComponent.currentEquippedWeapon is IRangedWeapon rangedWeapon)
+            {
+                rangedWeapon.StartReload();
+                _animator.SetBool(_isReloadingHash, true);
+                SwitchState(AnimationState.WeaponAction);
+            }
+        }
+
+        private void SwitchWeapon(int weaponIndex)
+        {
+            _equipmentComponent.EquipItemInSlot((EquipmentSlots)weaponIndex);
+        }
+
+        #endregion
+
         #endregion
 
         #region Shared State
@@ -519,6 +568,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
                 case AnimationState.Crouch:
                     EnterCrouchState();
                     break;
+                case AnimationState.WeaponAction:
+                    EnterWeaponActionState();
+                    break;
             }
         }
 
@@ -534,6 +586,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
                     break;
                 case AnimationState.Crouch:
                     ExitCrouchState();
+                    break;
+                case AnimationState.WeaponAction:
+                    ExitWeaponActionState();
                     break;
             }
         }
@@ -557,6 +612,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
                     break;
                 case AnimationState.Crouch:
                     UpdateCrouchState();
+                    break;
+                case AnimationState.WeaponAction:
+                    UpdateWeaponActionState();
                     break;
             }
         }
@@ -1385,6 +1443,59 @@ namespace Synty.AnimationBaseLocomotion.Samples
             DeactivateCrouch();
             SwitchState(AnimationState.Locomotion);
         }
+
+        #endregion
+
+        #region Weapon State
+
+        private void EnterWeaponActionState()
+        {
+            // nothing to do yet
+        }
+
+        private void UpdateWeaponActionState()
+        {
+            UpdateBestTarget();
+            GroundedCheck();
+
+            if (!_isGrounded)
+            {
+                _animator.SetBool(_isFiringHash, false);
+                _animator.SetBool(_isReloadingHash, false);
+                SwitchState(AnimationState.Fall);
+                return;
+            }
+
+            if (_equipmentComponent.currentEquippedWeapon is IRangedWeapon rangedWeapon)
+            {
+                if (!rangedWeapon.IsReloading())
+                    _animator.SetBool(_isReloadingHash, false);
+
+                if (!Input.GetButton("Fire1") && !rangedWeapon.IsReloading())
+                {
+                    _animator.SetBool(_isFiringHash, false);
+                    rangedWeapon.StopFire();
+                    SwitchState(AnimationState.Locomotion);
+                }
+            }
+
+            CalculateMoveDirection();
+            FaceMoveDirection();
+            Move();
+            UpdateAnimatorController();
+        }
+
+        private void ExitWeaponActionState()
+        {
+            _animator.SetBool(_isFiringHash, false);
+            _animator.SetBool(_isReloadingHash, false);
+        }
+
+        #endregion
+
+        #region Getters
+
+        public Animator GetAnimator() => _animator;
 
         #endregion
     }

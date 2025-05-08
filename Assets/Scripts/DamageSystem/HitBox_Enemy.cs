@@ -13,9 +13,9 @@ public class HitBox_Enemy : HitBox
         enemy = GetComponentInParent<Enemy>();
     }
 
-    public override void TakeDamage()
+    public override void TakeDamage(float amount)
     {
-        base.TakeDamage();
+        base.TakeDamage(amount);
 
         enemy.GetHit();
     }

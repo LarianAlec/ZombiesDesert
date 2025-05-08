@@ -147,7 +147,15 @@ public class TopDownAimComponent : MonoBehaviour
 
     public Vector3 GetAimDirection()
     {
-        Vector3 muzzleSocketPosition = player.GetEquipmentComponent().GetCurrentEquippedWeapon().muzzleSocket.position;
+        Vector3 muzzleSocketPosition = Vector3.zero;
+        if (player.GetEquipmentComponent().GetCurrentEquippedWeapon() is RangedWeapon rangedWeapon)
+        {
+            muzzleSocketPosition = rangedWeapon.muzzleSocket.position;
+        }
+        else
+        {
+            muzzleSocketPosition = transform.position + transform.forward; // Fallback позиция
+        }
         Vector3 aimDirection = (aimTarget.position - muzzleSocketPosition).normalized;
         return aimDirection;
     }

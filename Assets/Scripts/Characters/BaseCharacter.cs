@@ -37,7 +37,7 @@ public class BaseCharacter : MonoBehaviour
         Weapon currentWeapon = characterEquipmentComponent.GetCurrentEquippedWeapon();
         if (currentWeapon != null)
         {
-            currentWeapon.StartFire();
+            currentWeapon.StartAction();
         }
     }
 
@@ -46,7 +46,7 @@ public class BaseCharacter : MonoBehaviour
         Weapon currentRangeWeapon = characterEquipmentComponent.GetCurrentEquippedWeapon();
         if (currentRangeWeapon != null)
         {
-            currentRangeWeapon.StopFire();
+            currentRangeWeapon.StopAction();
         }
     }
 

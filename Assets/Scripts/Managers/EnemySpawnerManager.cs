@@ -36,8 +36,7 @@ public class EnemySpawnerManager : MonoBehaviour
     private bool isSpawning = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
     private Coroutine waveTimerCoroutine;
-    
-    // �������
+
     public event Action<int> OnWaveStarted; // currentWaveIndex
     public event Action<float> OnWaveTimerChanged; // remaingTime
     public event Action<string> OnWaveNameChanged; // waveName
