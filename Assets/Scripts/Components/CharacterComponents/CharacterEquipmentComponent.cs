@@ -108,8 +108,25 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
         Animator animator = GetComponent<SamplePlayerAnimationController>().GetAnimator();
 
-        UnEquipCurrentItem();
-        currentEquippedWeapon = weaponsArray[slot];
+        Weapon newWeapon = weaponsArray[slot];
+        EquipmentSlots newSlot = slot;
+
+        if (currentEquippedWeapon != null)
+        {
+            UnEquipCurrentItem();
+        }
+        else
+        {
+            EquipNewWeapon(newWeapon, newSlot);
+        }
+    }
+
+    private void EquipNewWeapon(Weapon newWeapon, EquipmentSlots newSlot)
+    {
+        Animator animator = GetComponent<SamplePlayerAnimationController>().GetAnimator();
+
+        currentEquippedWeapon = newWeapon;
+        currentEquippedSlot = newSlot;
 
         if (currentEquippedWeapon != null)
         {
@@ -117,7 +134,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
             animator.SetInteger(_animationController._weaponTypeHash, (int)currentEquippedWeapon.GetWeaponType());
             animator.ResetTrigger(_animationController._equipWeaponHash);
             animator.SetTrigger(_animationController._equipWeaponHash);
-            // Show up new weapon via ShowWeapon() Animation Event
+            
             StartCoroutine(WaitForEquipAnimation());
         }
 
@@ -154,6 +171,7 @@ public class CharacterEquipmentComponent : MonoBehaviour
 
     public void ShowWeapon()
     {
+        Debug.Log($"ShowWeapon {currentEquippedWeapon} called at: " + Time.time);
         if (currentEquippedWeapon != null)
         {
             AttachCurrentWeaponToEquippedSocket();
@@ -178,29 +196,28 @@ public class CharacterEquipmentComponent : MonoBehaviour
                 rangedWeapon.OnReloadComplete -= OnWeaponReloadComplete_Event;
             }
             animator.SetTrigger(_animationController._unequipWeaponHash);
-            StartCoroutine(WaitForUnEquipAnimation());
+            StartCoroutine(WaitForUnEquipAnimationAndEquip());
         }
     }
 
-    private IEnumerator WaitForUnEquipAnimation()
+    private IEnumerator WaitForUnEquipAnimationAndEquip()
     {
         if (currentEquippedWeapon != null)
         {
             AnimationClip unEquipClip = currentEquippedWeapon.GetCharacterUnEquipClip();
-            if (unEquipClip != null)
-            {
-                yield return new WaitForSeconds(unEquipClip.length);
-            }
-            else
-            {
-                Debug.LogWarning("unEquipClip is null");
-                yield return new WaitForSeconds(1f);
-            }
+            float waitTime = unEquipClip != null ? unEquipClip.length : 1f;
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        if (weaponsArray.ContainsKey(currentEquippedSlot) && weaponsArray[currentEquippedSlot] != null)
+        {
+            EquipNewWeapon(weaponsArray[currentEquippedSlot], currentEquippedSlot);
         }
     }
 
     public void HideWeapon()
     {
+        Debug.Log($"HideWeapon {currentEquippedWeapon} called at: " + Time.time);
         if (currentEquippedWeapon != null)
         {
             currentEquippedWeapon.gameObject.SetActive(false);
